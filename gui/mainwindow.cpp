@@ -1,8 +1,14 @@
-#include "mainwindow.h"
-#include "prayertimes/location.h"
+ #include "mainwindow.h"
+#include "prayertimeswidget.h"
+#include <QMdiArea>
+#include "locationsettings.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    new Location();
+    mMdiArea = new QMdiArea(this);
+    mMdiArea->setViewMode(QMdiArea::TabbedView);
+    mMdiArea->addSubWindow(new PrayerTimesWidget(this));
+    mMdiArea->addSubWindow(new LocationSettings(this));
+    setCentralWidget(mMdiArea);
 }

@@ -36,7 +36,8 @@ Code Repository:
 http://code.ebrahim.ir/prayertimes/
 
 \*--------------------------------------------------------------------------*/
-
+#ifndef PRAYERTIMES_H
+#define PRAYERTIMES_H
 #include <cstdio>
 #include <cmath>
 #include <string>
@@ -116,16 +117,16 @@ public:
 	// Time IDs
 	enum TimeID
 	{
-		Fajr,
-		Sunrise,
-		Dhuhr,
-		Asr,
-		Sunset,
-		Maghrib,
-		Isha,
+        Fajr    =0,
+        Sunrise =1,
+        Dhuhr   =2,
+        Asr     =3,
+        Sunset  =4,
+        Maghrib =5,
+        Isha    =6,
 
-		TimesCount
-	};
+        TimesCount=7
+    };
 
 /* -------------------- Interface Functions -------------------- */
 
@@ -167,7 +168,7 @@ public:
 	/* set the calculation method  */
 	void set_calc_method(CalculationMethod method_id)
 	{
-		calc_method = method_id;
+        calc_method = method_id;
 	}
 
 	/* set the juristic method for Asr */
@@ -387,10 +388,11 @@ private:
 	// array parameters must be at least of size TimesCount
 
 	/* compute prayer times at given julian date */
-	void compute_times(double times[])
+    void compute_times(double times[TimesCount])
 	{
 		day_portion(times);
-
+        method_params[calc_method].fajr_angle = method_params[calc_method].fajr_angle;
+        times[Fajr] = times[Fajr];
 		times[Fajr]    = compute_time(180.0 - method_params[calc_method].fajr_angle, times[Fajr]);
 		times[Sunrise] = compute_time(180.0 - 0.833, times[Sunrise]);
 		times[Dhuhr]   = compute_mid_day(times[Dhuhr]);
@@ -618,7 +620,7 @@ private:
 private:
 /* ---------------------- Private Variables -------------------- */
 
-	MethodConfig method_params[CalculationMethodsCount];
+    MethodConfig method_params[CalculationMethodsCount];
 
 	CalculationMethod calc_method;		// caculation method
 	JuristicMethod asr_juristic;		// Juristic method for Asr
@@ -634,3 +636,5 @@ private:
 
 	static const int NUM_ITERATIONS = 1;		// number of iterations needed to compute times
 };
+
+#endif

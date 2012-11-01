@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class QMdiArea;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -13,6 +15,8 @@ signals:
     
 public slots:
     
+private:
+    QMdiArea *mMdiArea;
 };
 
 #endif // MAINWINDOW_H
