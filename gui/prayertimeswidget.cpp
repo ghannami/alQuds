@@ -30,29 +30,4 @@ void PrayerTimesWidget::updateTimes()
     ui->asrTime->setText(mAthanManager->getAsr().toString("hh:mm"));
     ui->maghribTime->setText(mAthanManager->getMaghrib().toString("hh:mm"));
     ui->ishaTime->setText(mAthanManager->getIsha().toString("hh:mm"));
-
-//    ui->untilTime->setText(mAthanManager->untilNextPrayer().toString());
-//    if(mAthanManager->getNextPrayerTime() == PrayerTimes::Fajr)
-//        ui->fajrIcon->setPixmap(QPixmap(":/icons/12/active.png"));
-//    else ui->fajrIcon->setPixmap(QPixmap(""));
-
-//    if(mAthanManager->getNextPrayerTime() == PrayerTimes::Sunrise)
-//        ui->shurukIcon->setPixmap(QPixmap(":/icons/12/active.png"));
-//    else ui->shurukIcon->setPixmap(QPixmap(""));
-
-//    if(mAthanManager->getNextPrayerTime() == PrayerTimes::Dhuhr)
-//        ui->dhurIcon->setPixmap(QPixmap(":/icons/12/active.png"));
-//    else ui->dhurIcon->setPixmap(QPixmap(""));
-
-//    if(mAthanManager->getNextPrayerTime() ==  PrayerTimes::Asr)
-//        ui->asrIcon->setPixmap(QPixmap(":/icons/12/active.png"));
-//    else ui->asrIcon->setPixmap(QPixmap(""));
-
-//    if(mAthanManager->getNextPrayerTime() ==  PrayerTimes::Maghrib)
-//        ui->maghribIcon->setPixmap(QPixmap(":/icons/12/active.png"));
-//    else ui->maghribIcon->setPixmap(QPixmap(""));
-
-//    if(mAthanManager->getNextPrayerTime() ==   PrayerTimes::Isha)
-//        ui->ishaIcon->setPixmap(QPixmap(":/icons/12/active.png"));
-//    else ui->ishaIcon->setPixmap(QPixmap(""));
 }
