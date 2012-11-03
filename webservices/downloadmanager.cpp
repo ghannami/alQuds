@@ -23,7 +23,7 @@ DownloadManager::DownloadManager()
 
 void DownloadManager::Download(QString url)
 {
-    qDebug()<<"DownloadManager::doDownload "<<url;
+//    qDebug()<<"DownloadManager::doDownload "<<url;
     manager->get(QNetworkRequest(QUrl(url)));
 
 }

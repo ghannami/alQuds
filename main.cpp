@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
 
     QApplication a(argc, argv);
-
     a.setApplicationName("Al Quds");
     a.setApplicationVersion("2.01");
     a.setOrganizationName("Ghannami");

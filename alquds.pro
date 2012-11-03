@@ -14,7 +14,10 @@ SOURCES += \
     gui/prayertimeswidget.cpp \
     gui/prayertimessettings.cpp \
     gui/locationsettings.cpp \
-    webservices/downloadmanager.cpp
+    webservices/downloadmanager.cpp \
+    gui/winwidget.cpp \
+    gui/winaction.cpp \
+    multimedia/audiomanager.cpp
 
 HEADERS += \
     gui/mainwindow.h \
@@ -26,9 +29,19 @@ HEADERS += \
     gui/prayertimeswidget.h \
     gui/prayertimessettings.h \
     gui/locationsettings.h \
-    webservices/downloadmanager.h
+    webservices/downloadmanager.h \
+    gui/winwidget.h \
+    gui/winaction.h \
+    multimedia/audiomanager.h
 
 FORMS += \
     gui/prayertimeswidget.ui \
     gui/prayertimessettings.ui \
     gui/locationsettings.ui
+
+RESOURCES += \
+    src/main.qrc \
+    src/icons.qrc
+
+OTHER_FILES += \
+    src/stylesheet.qss.css

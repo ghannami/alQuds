@@ -1,7 +1,7 @@
 #ifndef PRAYERTIMESWIDGET_H
 #define PRAYERTIMESWIDGET_H
 
-#include <QWidget>
+#include "winwidget.h"
 class AthanManager;
 class QStandardItemModel;
 
@@ -9,7 +9,7 @@ namespace Ui {
 class PrayerTimesWidget;
 }
 
-class PrayerTimesWidget : public QWidget
+class PrayerTimesWidget : public WinWidget
 {
     Q_OBJECT
     
@@ -18,11 +18,10 @@ public:
     ~PrayerTimesWidget();
     
 public slots:
-    void updateModel();
+    void updateTimes();
 private:
     Ui::PrayerTimesWidget *ui;
     AthanManager *mAthanManager;
-    QStandardItemModel *mModel;
 };
 
 #endif // PRAYERTIMESWIDGET_H

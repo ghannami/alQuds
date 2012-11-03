@@ -3,7 +3,11 @@
 
 #include <QMainWindow>
 
-class QMdiArea;
+class QToolBar;
+class WinAction;
+class WinWidget;
+class QDockWidget;
+class QHBoxLayout;
 
 class MainWindow : public QMainWindow
 {
@@ -14,9 +18,16 @@ public:
 signals:
     
 public slots:
-    
+    void setCentralWidget(WinWidget *xCurr);
 private:
-    QMdiArea *mMdiArea;
+    QToolBar *mWidgetsToolBar;
+    WinAction *mHomeAct;
+    WinAction *mPrayerConfAct;
+    WinWidget *mHomeWidget;
+    WinWidget *mPrayerConfWidget;
+    WinWidget *mCurrentWin;
+    QHBoxLayout *mMainLayout;
+    QWidget *mCentralWidget;
 };
 
 #endif // MAINWINDOW_H

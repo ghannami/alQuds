@@ -6,20 +6,15 @@
 #include <QStandardItemModel>
 
 PrayerTimesWidget::PrayerTimesWidget(QWidget *parent) :
-    QWidget(parent),
+    WinWidget(parent),
     ui(new Ui::PrayerTimesWidget)
 {
     ui->setupUi(this);
     mAthanManager = new AthanManager(this);
-    mModel = new QStandardItemModel(6, 2);
-    mModel->setHeaderData(0, Qt::Horizontal, tr("Prayer"));
-    mModel->setHeaderData(1, Qt::Horizontal, tr("Time"));
-    ui->tableView->setModel(mModel);
+    connect(Settings::instance(), SIGNAL(locationChanged()), this, SLOT(updateTimes()));
+    connect(Settings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(updateTimes()));
 
-    connect(Settings::instance(), SIGNAL(locationChanged()), this, SLOT(updateModel()));
-    connect(Settings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(updateModel()));
-
-    updateModel();
+    updateTimes();
 }
 
 PrayerTimesWidget::~PrayerTimesWidget()
@@ -27,19 +22,37 @@ PrayerTimesWidget::~PrayerTimesWidget()
     delete ui;
 }
 
-void PrayerTimesWidget::updateModel()
+void PrayerTimesWidget::updateTimes()
 {
-    int i=0;
-    mModel->setItem(i, 0, new QStandardItem(tr("Fajr")));
-    mModel->setItem(i++, 1, new QStandardItem(mAthanManager->getFajr().toString()));
-    mModel->setItem(i, 0, new QStandardItem(tr("Shuruk")));
-    mModel->setItem(i++, 1, new QStandardItem(mAthanManager->getSunrise().toString()));
-    mModel->setItem(i, 0, new QStandardItem(tr("Dhur")));
-    mModel->setItem(i++, 1, new QStandardItem(mAthanManager->getDhuhr().toString()));
-    mModel->setItem(i, 0, new QStandardItem(tr("Asr")));
-    mModel->setItem(i++, 1, new QStandardItem(mAthanManager->getAsr().toString()));
-    mModel->setItem(i, 0, new QStandardItem(tr("Marghib")));
-    mModel->setItem(i++, 1, new QStandardItem(mAthanManager->getMaghrib().toString()));
-    mModel->setItem(i, 0, new QStandardItem(tr("Isha")));
-    mModel->setItem(i++, 1, new QStandardItem(mAthanManager->getIsha().toString()));
+    ui->fajrTime->setText(mAthanManager->getFajr().toString("hh:mm"));
+    ui->shurukTime->setText(mAthanManager->getSunrise().toString("hh:mm"));
+    ui->dhurTime->setText(mAthanManager->getDhuhr().toString("hh:mm"));
+    ui->asrTime->setText(mAthanManager->getAsr().toString("hh:mm"));
+    ui->maghribTime->setText(mAthanManager->getMaghrib().toString("hh:mm"));
+    ui->ishaTime->setText(mAthanManager->getIsha().toString("hh:mm"));
+
+//    ui->untilTime->setText(mAthanManager->untilNextPrayer().toString());
+//    if(mAthanManager->getNextPrayerTime() == PrayerTimes::Fajr)
+//        ui->fajrIcon->setPixmap(QPixmap(":/icons/12/active.png"));
+//    else ui->fajrIcon->setPixmap(QPixmap(""));
+
+//    if(mAthanManager->getNextPrayerTime() == PrayerTimes::Sunrise)
+//        ui->shurukIcon->setPixmap(QPixmap(":/icons/12/active.png"));
+//    else ui->shurukIcon->setPixmap(QPixmap(""));
+
+//    if(mAthanManager->getNextPrayerTime() == PrayerTimes::Dhuhr)
+//        ui->dhurIcon->setPixmap(QPixmap(":/icons/12/active.png"));
+//    else ui->dhurIcon->setPixmap(QPixmap(""));
+
+//    if(mAthanManager->getNextPrayerTime() ==  PrayerTimes::Asr)
+//        ui->asrIcon->setPixmap(QPixmap(":/icons/12/active.png"));
+//    else ui->asrIcon->setPixmap(QPixmap(""));
+
+//    if(mAthanManager->getNextPrayerTime() ==  PrayerTimes::Maghrib)
+//        ui->maghribIcon->setPixmap(QPixmap(":/icons/12/active.png"));
+//    else ui->maghribIcon->setPixmap(QPixmap(""));
+
+//    if(mAthanManager->getNextPrayerTime() ==   PrayerTimes::Isha)
+//        ui->ishaIcon->setPixmap(QPixmap(":/icons/12/active.png"));
+//    else ui->ishaIcon->setPixmap(QPixmap(""));
 }
