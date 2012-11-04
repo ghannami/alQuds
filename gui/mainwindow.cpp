@@ -33,11 +33,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow::setCentralWidget(mCentralWidget);
     setCentralWidget(mHomeWidget);
 
-
-    QFile tFile(":qss/stylesheet.css");
-    tFile.open(QFile::ReadOnly);
-    QString tStyleSheet = QLatin1String(tFile.readAll());
-    qApp->setStyleSheet(tStyleSheet);
+//    QFile tFile(":qss/stylesheet.css");
+//    tFile.open(QFile::ReadOnly);
+//    QString tStyleSheet = QLatin1String(tFile.readAll());
+//    qApp->setStyleSheet(tStyleSheet);
 }
 
 void MainWindow::setCentralWidget(WinWidget *xCurr)
@@ -46,10 +45,10 @@ void MainWindow::setCentralWidget(WinWidget *xCurr)
         return;
     if(mCurrentWin)
     {
-        mCurrentWin->setHidden(true);
+        //mCurrentWin->setHidden(true);
         mMainLayout->removeWidget(mCurrentWin);
+        mCurrentWin->setParent(0);
     }
     mMainLayout->addWidget(xCurr);
     mCurrentWin = xCurr;
-    mCurrentWin->setVisible(true);
 }

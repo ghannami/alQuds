@@ -17,7 +17,7 @@ SOURCES += \
     webservices/downloadmanager.cpp \
     gui/winwidget.cpp \
     gui/winaction.cpp \
-    multimedia/audiomanager.cpp
+    multimedia/multimediamanager.cpp
 
 HEADERS += \
     gui/mainwindow.h \
@@ -32,7 +32,7 @@ HEADERS += \
     webservices/downloadmanager.h \
     gui/winwidget.h \
     gui/winaction.h \
-    multimedia/audiomanager.h
+    multimedia/multimediamanager.h
 
 FORMS += \
     gui/prayertimeswidget.ui \
