@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AthanEditor</class>
+ <widget class="QWidget" name="AthanEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>371</width>
+    <height>312</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Athan Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Athan</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="enableSilent">
+        <property name="text">
+         <string>Enable silent mode</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Fajr</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="fajrBox"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Asr</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="asrBox"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Dhuhr</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="dhurBox"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Maghrib</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="ishaBox"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Isha</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="maghribBox"/>
+        </item>
+        <item row="0" column="2">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="playFajr">
+            <property name="text">
+             <string>Play</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopFajr">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="playDhur">
+            <property name="text">
+             <string>Play</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopDhur">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="playAsr">
+            <property name="text">
+             <string>Play</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopAsr">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QPushButton" name="playMaghrib">
+            <property name="text">
+             <string>Play</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopMaghrib">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="playIsha">
+            <property name="text">
+             <string>Play</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopIsha">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="playDua">
+        <property name="text">
+         <string>Play dua after athan</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

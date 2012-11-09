@@ -1,51 +1,72 @@
  #include "mainwindow.h"
-#include "prayertimeswidget.h"
+#include "prayertimeseditor.h"
 #include <QMdiArea>
-#include "locationsettings.h"
+#include "locationeditor.h"
 #include <QFile>
 #include <QDebug>
 #include <QApplication>
 #include <QtGui>
 #include "winaction.h"
+#include "athaneditor.h"
+#include "../webservices/islamwayparser.h"
+#include "homewidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    mHomeWidget = new PrayerTimesWidget();
-    mPrayerConfWidget= new LocationSettings();
+    HomeWidget *tHomeWidget = new HomeWidget();
+    PrayerTimesEditor *tPrayerEditor= new PrayerTimesEditor();
+    LocationEditor *tLocationEditor= new LocationEditor();
 
     mWidgetsToolBar = new QToolBar("", this);
-    mHomeAct = new WinAction(mHomeWidget, tr("Home"));
-    mPrayerConfAct = new WinAction(mPrayerConfWidget, tr("Payer settings"));
+    WinAction *tHomeAct = new WinAction(tHomeWidget, tr("Home"));
+    WinAction *tPrayerEditorAct = new WinAction(tPrayerEditor, tr("Payer settings"));
+    WinAction *tLocationEditorAct = new WinAction(tLocationEditor, tr("Location"));
 
-    mWidgetsToolBar->addAction(mHomeAct);
-    mWidgetsToolBar->addAction(mPrayerConfAct);
+    WinWidget *tAthanSettings = new WinWidget;
+    QHBoxLayout *tAthanSettingsLay = new QHBoxLayout;
+    tAthanSettingsLay->addWidget(new AthanEditor);
+    tAthanSettings->setLayout(tAthanSettingsLay);
+    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan settings"));
 
-    connect(mHomeAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
-    connect(mPrayerConfAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
+    mWidgetsToolBar->addAction(tHomeAct);
+    mWidgetsToolBar->addAction(tLocationEditorAct);
+    mWidgetsToolBar->addAction(tAthanSettingsAct);
+    mWidgetsToolBar->addAction(tPrayerEditorAct);
+
+    connect(tHomeAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
+    connect(tLocationEditorAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
+    connect(tPrayerEditorAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
+    connect(tAthanSettingsAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
+
     addToolBar(mWidgetsToolBar);
 
     mMainLayout = new QHBoxLayout();
+    mMainLayout->setContentsMargins(0,0,0,0);
     mCentralWidget = new QWidget;
     mCentralWidget->setLayout(mMainLayout);
     mCurrentWin = 0;
 
     QMainWindow::setCentralWidget(mCentralWidget);
-    setCentralWidget(mHomeWidget);
+    setCentralWidget(tHomeWidget);
 
-//    QFile tFile(":qss/stylesheet.css");
-//    tFile.open(QFile::ReadOnly);
-//    QString tStyleSheet = QLatin1String(tFile.readAll());
-//    qApp->setStyleSheet(tStyleSheet);
+    QFile tFile(":qss/stylesheet.css");
+    tFile.open(QFile::ReadOnly);
+    QString tStyleSheet = QLatin1String(tFile.readAll());
+    qApp->setStyleSheet(tStyleSheet);
+
+    //qApp->setStyleSheet("MainWindow{ background-color: red; }");
+    setMaximumSize(QSize(500,400));
+    setMinimumSize(QSize(500,400));
+
 }
 
 void MainWindow::setCentralWidget(WinWidget *xCurr)
 {
-    if(!xCurr)
+    if(!xCurr || xCurr == mCurrentWin)
         return;
     if(mCurrentWin)
     {
-        //mCurrentWin->setHidden(true);
         mMainLayout->removeWidget(mCurrentWin);
         mCurrentWin->setParent(0);
     }

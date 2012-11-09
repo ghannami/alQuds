@@ -1,7 +1,7 @@
 #include "prayertimeswidget.h"
 #include "ui_prayertimeswidget.h"
 #include "../prayertimes/athanmanager.h"
-#include "../tools/settings.h"
+#include "../settings/locationsettings.h"
 #include <QDebug>
 #include <QStandardItemModel>
 
@@ -11,8 +11,8 @@ PrayerTimesWidget::PrayerTimesWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     mAthanManager = new AthanManager(this);
-    connect(Settings::instance(), SIGNAL(locationChanged()), this, SLOT(updateTimes()));
-    connect(Settings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(updateTimes()));
+    connect(LocationSettings::instance(), SIGNAL(locationChanged()), this, SLOT(updateTimes()));
+    connect(LocationSettings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(updateTimes()));
 
     updateTimes();
 }

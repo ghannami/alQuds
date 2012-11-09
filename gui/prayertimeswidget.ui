@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>197</width>
-    <height>319</height>
+    <width>181</width>
+    <height>224</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../src/main.qrc">:/icons/icons/12/active.png</pixmap>
+        <pixmap>:/icons/icons/12/active.png</pixmap>
        </property>
       </widget>
      </item>
@@ -74,7 +74,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="dhurLabel">
        <property name="text">
-        <string>Dhur</string>
+        <string>Dhuhr</string>
        </property>
       </widget>
      </item>
@@ -190,8 +190,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../src/main.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -1,22 +1,27 @@
 #ifndef PRAYERTIMESSETTINGS_H
 #define PRAYERTIMESSETTINGS_H
 
-#include <QWidget>
+#include "winwidget.h"
 
 namespace Ui {
-class PrayerTimesSettings;
+class PrayerTimesEditor;
 }
 
-class PrayerTimesSettings : public QWidget
+class PrayerTimesEditor : public WinWidget
 {
     Q_OBJECT
     
 public:
-    explicit PrayerTimesSettings(QWidget *parent = 0);
-    ~PrayerTimesSettings();
-    
+    explicit PrayerTimesEditor(QWidget *parent = 0);
+    ~PrayerTimesEditor();
+
+public slots:
+    void OnMethodChanged(int xIndex);
+    void OnAdjustChanged(int xIndex);
+    void OnAsrMethodChanged(int xIndex);
+
 private:
-    Ui::PrayerTimesSettings *ui;
+    Ui::PrayerTimesEditor *ui;
 };
 
 #endif // PRAYERTIMESSETTINGS_H

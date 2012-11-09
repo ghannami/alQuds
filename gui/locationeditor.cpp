@@ -1,69 +1,43 @@
-#include "locationsettings.h"
-#include "ui_locationsettings.h"
-#include "../tools/settings.h"
+#include "locationeditor.h"
+#include "ui_locationeditor.h"
+#include "../settings/locationsettings.h"
 #include "webservices/downloadmanager.h"
 #include <QDomDocument>
 #include <QTreeWidgetItem>
 #include "../prayertimes/prayertimes.hpp"
 
-LocationSettings::LocationSettings(QWidget *parent) :
+LocationEditor::LocationEditor(QWidget *parent) :
     WinWidget(parent),
-    ui(new Ui::LocationSettings)
+    ui(new Ui::LocationEditor)
 {
     ui->setupUi(this);
-    ui->cityEdit->setText(Settings::instance()->city());
-    ui->countryEdit->setText(Settings::instance()->country());
-    ui->latitudeEdit->setValue(Settings::instance()->latitude());
-    ui->longitudeEdit->setValue(Settings::instance()->longitude());
-    ui->timezoneEdit->setValue(Settings::instance()->timezone());
-    ui->useSystemTZEdit->setChecked(Settings::instance()->useSystemTimezone());
+    ui->cityEdit->setText(LocationSettings::instance()->city());
+    ui->countryEdit->setText(LocationSettings::instance()->country());
+    ui->latitudeEdit->setValue(LocationSettings::instance()->latitude());
+    ui->longitudeEdit->setValue(LocationSettings::instance()->longitude());
+    ui->timezoneEdit->setValue(LocationSettings::instance()->timezone());
+    ui->useSystemTZEdit->setChecked(LocationSettings::instance()->useSystemTimezone());
     ui->timezoneEdit->setDisabled(ui->useSystemTZEdit->isChecked());
     //ui->resultView->setHidden(true);
-    connect(ui->latitudeEdit, SIGNAL(valueChanged(double)), Settings::instance(), SLOT(setLatitude(double)));
-    connect(ui->longitudeEdit, SIGNAL(valueChanged(double)), Settings::instance(), SLOT(setLongitude(double)));
-    connect(ui->timezoneEdit, SIGNAL(valueChanged(double)), Settings::instance(), SLOT(setTimezone(double)));
-    connect(ui->cityEdit, SIGNAL(textChanged(QString)), Settings::instance(), SLOT(setCity(QString)));
-    connect(ui->countryEdit, SIGNAL(textChanged(QString)), Settings::instance(), SLOT(setCountry(QString)));
-    connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), Settings::instance(), SLOT(setUseSystemTimezone(bool)));
+    connect(ui->latitudeEdit, SIGNAL(valueChanged(double)), LocationSettings::instance(), SLOT(setLatitude(double)));
+    connect(ui->longitudeEdit, SIGNAL(valueChanged(double)), LocationSettings::instance(), SLOT(setLongitude(double)));
+    connect(ui->timezoneEdit, SIGNAL(valueChanged(double)), LocationSettings::instance(), SLOT(setTimezone(double)));
+    connect(ui->cityEdit, SIGNAL(textChanged(QString)), LocationSettings::instance(), SLOT(setCity(QString)));
+    connect(ui->countryEdit, SIGNAL(textChanged(QString)), LocationSettings::instance(), SLOT(setCountry(QString)));
+    connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), LocationSettings::instance(), SLOT(setUseSystemTimezone(bool)));
     connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), ui->timezoneEdit, SLOT(setDisabled(bool)));
 
     connect(ui->searchButton, SIGNAL(clicked()), this, SLOT(OnSearchClicked()));
     connect(ui->resultView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(OnLocationItemClicked(QTreeWidgetItem*)));
 
-    ui->calcMethEdit->addItem(tr("Ithna Ashari"), PrayerTimes::Jafari);
-//    ui->calcMethEdit->addItem(tr("University of Islamic Sciences, Karachi"), PrayerTimes::Karachi);
-    ui->calcMethEdit->addItem(tr("Karachi"), PrayerTimes::Karachi);
-//    ui->calcMethEdit->addItem(tr("Islamic Society of North America (ISNA)"), PrayerTimes::ISNA);
-    ui->calcMethEdit->addItem(tr("ISNA"), PrayerTimes::ISNA);
-//    ui->calcMethEdit->addItem(tr("Muslim World League (MWL)"), PrayerTimes::MWL);
-    ui->calcMethEdit->addItem(tr("Muslim World League"), PrayerTimes::MWL);
-    ui->calcMethEdit->addItem(tr("Umm al-Qura"), PrayerTimes::Makkah);
-    ui->calcMethEdit->addItem(tr("Egyptian"), PrayerTimes::Egypt);
-    ui->calcMethEdit->setCurrentIndex(Settings::instance()->calculationMethod());
-    connect(ui->calcMethEdit, SIGNAL(currentIndexChanged(int)), this, SLOT(OnMethodChanged(int)));
-
-    ui->adjMethEdit->addItem(tr("No adjustment"), PrayerTimes::None);
-    ui->adjMethEdit->addItem(tr("Middle of night"), PrayerTimes::MidNight);
-    ui->adjMethEdit->addItem(tr("1/7th of night"), PrayerTimes::OneSeventh);
-    ui->adjMethEdit->addItem(tr("Angle/60th of night"), PrayerTimes::AngleBased);
-    ui->adjMethEdit->setCurrentIndex(Settings::instance()->adjustingMethod());
-    connect(ui->adjMethEdit, SIGNAL(currentIndexChanged(int)), this, SLOT(OnAdjustChanged(int)));
-
-    ui->asrMethEdit->addItem(tr("Shafii, Maliki, Hanbali"), PrayerTimes::Shafii);
-    ui->asrMethEdit->addItem(tr("Hanafi"), PrayerTimes::Hanafi);
-    ui->asrMethEdit->setCurrentIndex(Settings::instance()->asrMethod());
-    connect(ui->asrMethEdit, SIGNAL(currentIndexChanged(int)), this, SLOT(OnAsrMethodChanged(int)));
-
-    ui->dhurMinutesEdit->setValue(Settings::instance()->dhuhrMinutes());
-    connect(ui->dhurMinutesEdit, SIGNAL(valueChanged(double)), Settings::instance(), SLOT(setDhuhrMinutes(double)));
 }
 
-LocationSettings::~LocationSettings()
+LocationEditor::~LocationEditor()
 {
     delete ui;
 }
 
-void LocationSettings::OnSearchClicked()
+void LocationEditor::OnSearchClicked()
 {
     if(ui->findCityEdit->text().isEmpty())
         return;
@@ -74,7 +48,7 @@ void LocationSettings::OnSearchClicked()
     ui->resultView->setVisible(true);
 }
 
-void LocationSettings::OnGeoDownloaded(QByteArray xData)
+void LocationEditor::OnGeoDownloaded(QByteArray xData)
 {
     QDomDocument doc("citysettings");
     doc.setContent(xData) ;
@@ -100,7 +74,7 @@ void LocationSettings::OnGeoDownloaded(QByteArray xData)
     ui->resultView->resizeColumnToContents(2);
 }
 
-void LocationSettings::OnLocationItemClicked(QTreeWidgetItem *xItem)
+void LocationEditor::OnLocationItemClicked(QTreeWidgetItem *xItem)
 {
     if(!xItem)
         return;
@@ -110,19 +84,4 @@ void LocationSettings::OnLocationItemClicked(QTreeWidgetItem *xItem)
     ui->latitudeEdit->setValue(xItem->text(3).toDouble());
     ui->longitudeEdit->setValue(xItem->text(4).toDouble());
     ui->timezoneEdit->setValue(xItem->text(5).toDouble());
-}
-
-void LocationSettings::OnMethodChanged(int xIndex)
-{
-    Settings::instance()->setCalculationMethod(ui->calcMethEdit->itemData(xIndex).toInt());
-}
-
-void LocationSettings::OnAdjustChanged(int xIndex)
-{
-    Settings::instance()->setAdjustingMethod(ui->adjMethEdit->itemData(xIndex).toInt());
-}
-
-void LocationSettings::OnAsrMethodChanged(int xIndex)
-{
-    Settings::instance()->setAsrMethod(ui->asrMethEdit->itemData(xIndex).toInt());
 }

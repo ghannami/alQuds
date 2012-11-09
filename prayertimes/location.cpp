@@ -1,14 +1,14 @@
 #include "location.h"
 #include "prayertimesadapter.h"
-#include "../tools/settings.h"
+#include "../settings/locationsettings.h"
 #include <QDebug>
 
 Location::Location(QObject *parent)
     :QObject(parent)
 {
-    mPrayerTimes = new PrayerTimesAdapter(Settings::instance()->latitude(), Settings::instance()->longitude(),Settings::instance()->timezone());
-    connect(Settings::instance(), SIGNAL(locationChanged()), this, SLOT(readLocationSettings()));
-    connect(Settings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(readPrayerSettings()));
+    mPrayerTimes = new PrayerTimesAdapter(LocationSettings::instance()->latitude(), LocationSettings::instance()->longitude(),LocationSettings::instance()->timezone());
+    connect(LocationSettings::instance(), SIGNAL(locationChanged()), this, SLOT(readLocationSettings()));
+    connect(LocationSettings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(readPrayerSettings()));
 
     readLocationSettings();
     readPrayerSettings();
@@ -17,19 +17,19 @@ Location::Location(QObject *parent)
 
 void Location::readLocationSettings()
 {
-    mCity = Settings::instance()->city();
-    mCountry = Settings::instance()->country();
-    mPrayerTimes->setLocation(Settings::instance()->latitude(), Settings::instance()->longitude());
-    mPrayerTimes->setTimezone(Settings::instance()->timezone());
+    mCity = LocationSettings::instance()->city();
+    mCountry = LocationSettings::instance()->country();
+    mPrayerTimes->setLocation(LocationSettings::instance()->latitude(), LocationSettings::instance()->longitude());
+    mPrayerTimes->setTimezone(LocationSettings::instance()->timezone());
     mPrayerTimes->setAdjustingMethod((PrayerTimes::AdjustingMethod)1);
 }
 
 void Location::readPrayerSettings()
 {
-    mPrayerTimes->setAdjustingMethod(Settings::instance()->adjustingMethod());
-    mPrayerTimes->setAsrMethod(Settings::instance()->asrMethod());
-    mPrayerTimes->setCalculationMethod(Settings::instance()->calculationMethod());
-    mPrayerTimes->setDhuhrMinutes(Settings::instance()->dhuhrMinutes());
+    mPrayerTimes->setAdjustingMethod(LocationSettings::instance()->adjustingMethod());
+    mPrayerTimes->setAsrMethod(LocationSettings::instance()->asrMethod());
+    mPrayerTimes->setCalculationMethod(LocationSettings::instance()->calculationMethod());
+    mPrayerTimes->setDhuhrMinutes(LocationSettings::instance()->dhuhrMinutes());
 }
 
 QString Location::city()

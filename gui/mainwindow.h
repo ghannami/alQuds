@@ -21,10 +21,7 @@ public slots:
     void setCentralWidget(WinWidget *xCurr);
 private:
     QToolBar *mWidgetsToolBar;
-    WinAction *mHomeAct;
-    WinAction *mPrayerConfAct;
-    WinWidget *mHomeWidget;
-    WinWidget *mPrayerConfWidget;
+
     WinWidget *mCurrentWin;
     QHBoxLayout *mMainLayout;
     QWidget *mCentralWidget;

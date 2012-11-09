@@ -5,6 +5,7 @@
 #include "prayertimes.hpp"
 
 class Location;
+#include <QDate>
 #include <QTimer>
 
 class AthanManager : public QObject
@@ -24,15 +25,19 @@ public:
     PrayerTimes::TimeID nextPrayerTime();
 
     QTime untilNextPrayer();
+    static QString prayerTimeByName(PrayerTimes::TimeID xTimeID);
 
 public slots:
-    void oneMinuteTimeOut();
+    void oneSecondTimeOut();
+
 signals:
-    void updateUntilNextTime(QTime);
     void updateNextPrayer(PrayerTimes::TimeID);
+    void athanTime(PrayerTimes::TimeID);
+    void updateUntilNextTime(QTime);
+
 private:
     Location *mLocation;
-    QTimer *mOneMinuteTimer;
+    QTimer *mOneSecondTimer;
     PrayerTimes::TimeID mNextPrayer;
 };
 

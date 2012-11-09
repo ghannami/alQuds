@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/qss">
         <file>stylesheet.css</file>
-        <file>apple/stylesheet.css</file>
     </qresource>
     <qresource prefix="/">
         <file>icons/24/active.png</file>
         <file>icons/12/active.png</file>
+        <file>images/moschee.jpg</file>
+        <file>images/quds-moschee.png</file>
     </qresource>
 </RCC>

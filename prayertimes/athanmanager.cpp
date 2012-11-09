@@ -1,14 +1,22 @@
 #include "athanmanager.h"
 #include "location.h"
 #include "prayertimes.hpp"
+#include "../settings/locationsettings.h"
+#include "../multimedia/mediamanager.h"
+#include <QDebug>
 
 AthanManager::AthanManager(QObject *parent)
     :QObject(parent)
 {
     mLocation = new Location(this);
-    mOneMinuteTimer = new QTimer(this);
-    mOneMinuteTimer->setInterval(6000);
-    connect(mOneMinuteTimer, SIGNAL(timeout()), this,  SLOT(oneMinuteTimeOut()));
+
+    mOneSecondTimer = new QTimer(this);
+
+    connect(this, SIGNAL(athanTime(PrayerTimes::TimeID)), MediaManager::instance(), SLOT(playAthan(PrayerTimes::TimeID)));
+
+    connect(mOneSecondTimer, SIGNAL(timeout()), this,  SLOT(oneSecondTimeOut()));
+    mNextPrayer = nextPrayerTime();
+    mOneSecondTimer->start(1000);
 }
 
 QTime AthanManager::getFajr()
@@ -54,22 +62,35 @@ QTime AthanManager::getNextTime()
 PrayerTimes::TimeID AthanManager::nextPrayerTime()
 {
     QTime tCurrTime = QTime::currentTime();
-    PrayerTimes::TimeID tTimeID;
-    for(int i = 0; i < PrayerTimes::TimesCount; i++)
-    {
-        if(tCurrTime < mLocation->getPrayerTimes()[i] &&
-                (PrayerTimes::TimeID)i != PrayerTimes::Sunrise && (PrayerTimes::TimeID)i != PrayerTimes::Sunset)
-        {
-            tTimeID = (PrayerTimes::TimeID)i;
-            break;
-        }
-    }
-    return tTimeID;
+
+    if(tCurrTime > getFajr() && tCurrTime <= getDhuhr())
+        return PrayerTimes::Dhuhr;
+
+    if(tCurrTime > getDhuhr() && tCurrTime <= getAsr())
+        return PrayerTimes::Asr;
+
+    if(tCurrTime > getAsr() && tCurrTime <= getMaghrib())
+        return PrayerTimes::Maghrib;
+
+    if(tCurrTime > getMaghrib() && tCurrTime <= getIsha())
+        return PrayerTimes::Isha;
+
+    if(tCurrTime > getIsha() || tCurrTime <= getFajr())
+        return PrayerTimes::Fajr;
 }
 
-void AthanManager::oneMinuteTimeOut()
+void AthanManager::oneSecondTimeOut()
 {
-    emit updateUntilNextTime(untilNextPrayer());
+    QTime start(0,0,0);
+    QTime untilTime = untilNextPrayer();
+    int diff = start.secsTo(untilTime);
+
+    if(diff == 0)
+    {
+        emit athanTime(mNextPrayer);
+    }
+    else emit updateUntilNextTime(untilTime);
+
     if(mNextPrayer != nextPrayerTime())
     {
         mNextPrayer = nextPrayerTime();
@@ -82,4 +103,18 @@ QTime AthanManager::untilNextPrayer()
     QTime tNextTime = getNextTime();
     QTime tUntilTime(0,0,0);
     return tUntilTime.addSecs(QTime::currentTime().secsTo(tNextTime));
+}
+
+QString AthanManager::prayerTimeByName(PrayerTimes::TimeID xTimeID)
+{
+    if(xTimeID == PrayerTimes::Fajr)
+        return tr("Fajr");
+    else if(xTimeID == PrayerTimes::Dhuhr)
+        return tr("Dhuhr");
+    else if(xTimeID == PrayerTimes::Asr)
+        return tr("Asr");
+    else if(xTimeID == PrayerTimes::Maghrib)
+        return tr("Maghrib");
+    else if(xTimeID == PrayerTimes::Isha)
+        return tr("Isha");
 }
