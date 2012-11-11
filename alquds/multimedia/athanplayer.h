@@ -1,6 +1,6 @@
 #ifndef ATHANPLAYER_H
 #define ATHANPLAYER_H
-#include "prayertimes/prayertimes.hpp"
+#include "../prayertimes/prayertimes.hpp"
 #include "playerinterface.h"
 
 class MediaPlayer;

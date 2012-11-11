@@ -19,12 +19,14 @@ DownloadManager::DownloadManager()
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(OnDownloadFinished(QNetworkReply*)));
+
 }
 
 void DownloadManager::Download(QString url)
 {
 //    qDebug()<<"DownloadManager::doDownload "<<url;
-    manager->get(QNetworkRequest(QUrl(url)));
+    QNetworkReply *tReply = manager->get(QNetworkRequest(QUrl(url)));
+    connect(tReply, SIGNAL(downloadProgress(qint64,qint64)), this, SIGNAL(downloadProgress(qint64,qint64)));
 
 }
 

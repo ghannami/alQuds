@@ -2,7 +2,7 @@
 #define MEDIAMANAGER_H
 
 #include <QObject>
-#include "prayertimes/prayertimes.hpp"
+#include "../prayertimes/prayertimes.hpp"
 
 class AthanPlayer;
 

@@ -1,7 +1,7 @@
 #include "locationeditor.h"
 #include "ui_locationeditor.h"
 #include "../settings/locationsettings.h"
-#include "webservices/downloadmanager.h"
+#include "../webservices/downloadmanager.h"
 #include <QDomDocument>
 #include <QTreeWidgetItem>
 #include "../prayertimes/prayertimes.hpp"

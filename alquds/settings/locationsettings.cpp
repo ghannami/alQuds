@@ -1,6 +1,6 @@
 #include "locationsettings.h"
 #include <QSettings>
-#include "prayertimes/prayertimes.hpp"
+#include "../prayertimes/prayertimes.hpp"
 #include <QDate>
 
 LocationSettings *LocationSettings::mInstance = 0;

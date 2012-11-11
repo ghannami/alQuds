@@ -59,6 +59,14 @@ MainWindow::MainWindow(QWidget *parent) :
     setMaximumSize(QSize(500,400));
     setMinimumSize(QSize(500,400));
 
+
+//         QString program = "/Applications/Skype.app/Contents/MacOS/Skype";
+//         QStringList arguments;
+//         arguments << "-style" << "motif";
+
+//         QProcess *myProcess = new QProcess(this);
+//         myProcess->start(program, arguments);
+
 }
 
 void MainWindow::setCentralWidget(WinWidget *xCurr)

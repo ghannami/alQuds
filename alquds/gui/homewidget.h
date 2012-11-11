@@ -2,7 +2,7 @@
 #define HOMEWIDGET_H
 
 #include "winwidget.h"
-#include "prayertimes/prayertimes.hpp"
+#include "../prayertimes/prayertimes.hpp"
 #include <QTime>
 #include <QMap>
 #include <QDomDocument>

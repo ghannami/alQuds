@@ -1,7 +1,7 @@
 #ifndef LOCATIONSETTINGS_H
 #define LOCATIONSETTINGS_H
 #include <QObject>
-#include "prayertimes/prayertimes.hpp"
+#include "../prayertimes/prayertimes.hpp"
 
 class QSettings;
 class LocationSettings : public QObject
