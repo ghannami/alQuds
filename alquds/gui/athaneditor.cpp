@@ -16,7 +16,8 @@ AthanEditor::AthanEditor(QWidget *parent) :
     connect(ui->asrBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectAsrFile(int)));
     connect(ui->maghribBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectMaghribFile(int)));
     connect(ui->ishaBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectIshaFile(int)));
-    mPlayer = new AthanPlayer(this);
+
+    mPlayer = new AthanPlayer();
 
     connect(ui->playFajr, SIGNAL(clicked()), mPlayer, SLOT(playFajrAthan()));
     connect(ui->playDhur, SIGNAL(clicked()), mPlayer, SLOT(playDhurAthan()));

@@ -62,6 +62,7 @@ QString AthanSettings::ishaFile()
 void AthanSettings::setFajrFile(QString xFile)
 {
     mSettings->setValue("athan/fajrfile", xFile);
+
     emit prayerFilesChanged();
 }
 

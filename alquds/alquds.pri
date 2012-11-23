@@ -26,8 +26,7 @@ SOURCES += \
     ../alquds/webservices/webparser.cpp \
     ../alquds/webservices/islamwayparser.cpp \
     ../alquds/gui/homewidget.cpp \
-    ../alquds/webservices/wathakkerservice.cpp \
-    ../alquds/alqudslauncher.cpp
+    ../alquds/webservices/wathakkerservice.cpp
 
 HEADERS += \
     ../alquds/gui/mainwindow.h \
@@ -52,8 +51,7 @@ HEADERS += \
     ../alquds/webservices/webparser.h \
     ../alquds/webservices/islamwayparser.h \
     ../alquds/gui/homewidget.h \
-    ../alquds/webservices/wathakkerservice.h \
-    ../alquds/alqudslauncher.h
+    ../alquds/webservices/wathakkerservice.h
 
 FORMS += \
     ../alquds/gui/prayertimeswidget.ui \

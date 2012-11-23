@@ -2,7 +2,11 @@
 TEMPLATE    = subdirs
 SUBDIRS	    = alquds \
               badi \
-              wakib
+              wakib \
+              app
+
+#DESTDIR = $$PWD/install
+
 #! [0]
 
 # install

@@ -41,12 +41,26 @@ http://code.ebrahim.ir/prayertimes/
 #include <cstdio>
 #include <cmath>
 #include <string>
+#include <time.h>
+#include <limits.h>
+#include <math.h>
 
 #ifdef __APPLE__
 inline bool isnan(double x) {
     return __inline_isnand(x);
 }
 #endif
+#ifdef _WIN32
+#ifndef isnan
+inline bool isnan(double x) {
+    return x != x;
+}
+#endif
+#endif
+#ifndef M_PI
+#define M_PI       3.14159265358979323846
+#endif
+using namespace std;
 /* -------------------- PrayerTimes Class --------------------- */
 
 class PrayerTimes
@@ -56,7 +70,7 @@ public:
 	{
 		VERSION_MAJOR = 1,
 		VERSION_MINOR = 0,
-	};
+    };
 /* --------------------- User Interface ----------------------- */
 /*
 	PrayerTimes(CalculationMethod calc_method = Jafari,
@@ -149,11 +163,11 @@ public:
 	}
 
 	/* return prayer times for a given date */
-	void get_prayer_times(int year, int month, int day, double _latitude, double _longitude, double _timezone, double times[])
+    void get_prayer_times(int year, int month, int day, double _latitude, double _longitude, double _tzone, double times[])
 	{
 		latitude = _latitude;
 		longitude = _longitude;
-		timezone = _timezone;
+        timezone = _tzone;
 		julian_date = get_julian_date(year, month, day) - longitude / (double) (15 * 24);
 		compute_day_times(times);
 	}
@@ -162,7 +176,7 @@ public:
 	void get_prayer_times(time_t date, double latitude, double longitude, double timezone, double times[])
 	{
 		tm* t = localtime(&date);
-		get_prayer_times(1900 + t->tm_year, t->tm_mon + 1, t->tm_mday, latitude, longitude, timezone, times);
+        get_prayer_times(1900 + t->tm_year, t->tm_mon + 1, t->tm_mday, latitude, longitude, timezone, times);
 	}
 
 	/* set the calculation method  */

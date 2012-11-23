@@ -6,7 +6,7 @@ class PlayerInterface : public QObject
 {
     Q_OBJECT
 public:
-    PlayerInterface(QObject *parent);
+    PlayerInterface(QObject *parent = 0);
 
 public slots:
 

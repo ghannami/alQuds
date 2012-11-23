@@ -13,7 +13,7 @@ LocationSettings::LocationSettings()
         mSettings->setValue("location/latitude",21.408966);
         mSettings->setValue("location/longitude",39.818573);
         mSettings->setValue("location/city","Mekka");
-        mSettings->setValue("location/longitude","Saudi");
+        mSettings->setValue("location/country","Saudi");
         mSettings->setValue("location/useSystemTimezone","true");
         mSettings->setValue("location/configured","true");
     }

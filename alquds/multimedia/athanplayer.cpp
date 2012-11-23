@@ -1,7 +1,7 @@
 #include "athanplayer.h"
 #include "../settings/athansettings.h"
 #include "mediaplayer.h"
-#include <QMediaContent>
+#include <qmediacontent.h>
 #include <QUrl>
 
 AthanPlayer::AthanPlayer(QObject *parent):
@@ -29,12 +29,14 @@ void AthanPlayer::playAthan(PrayerTimes::TimeID xTime)
 
 void AthanPlayer::stopAthan()
 {
-    mPlayer->stop();
+    if(mPlayer->state() == MediaPlayer::PlayingState)
+        mPlayer->stop();
 }
 
 void AthanPlayer::playFajrAthan()
 {
-    mPlayer->stop();
+
+    stopAthan();
     QUrl url(mFileList[PrayerTimes::Fajr]);
     QMediaContent tContent(url);
     mPlayer->setMedia(tContent);
@@ -44,7 +46,7 @@ void AthanPlayer::playFajrAthan()
 
 void AthanPlayer::playDhurAthan()
 {
-    mPlayer->stop();
+    stopAthan();
     QUrl url(mFileList[PrayerTimes::Dhuhr]);
     QMediaContent tContent(url);
     mPlayer->setMedia(tContent);
@@ -54,7 +56,7 @@ void AthanPlayer::playDhurAthan()
 
 void AthanPlayer::playAsrAthan()
 {
-    mPlayer->stop();
+    stopAthan();
     QUrl url(mFileList[PrayerTimes::Asr]);
     QMediaContent tContent(url);
     mPlayer->setMedia(tContent);
@@ -64,7 +66,7 @@ void AthanPlayer::playAsrAthan()
 
 void AthanPlayer::playMaghribAthan()
 {
-    mPlayer->stop();
+    stopAthan();
     QUrl url(mFileList[PrayerTimes::Maghrib]);
     QMediaContent tContent(url);
     mPlayer->setMedia(tContent);
@@ -74,7 +76,7 @@ void AthanPlayer::playMaghribAthan()
 
 void AthanPlayer::playIshaAthan()
 {
-    mPlayer->stop();
+    stopAthan();
     QUrl url(mFileList[PrayerTimes::Isha]);
     QMediaContent tContent(url);
     mPlayer->setMedia(tContent);

@@ -74,7 +74,7 @@ bool  ZipZap::UnzipTo(QFile *zipfile, const QString outputdir )
            if ( dira.mkpath(infofile.absolutePath()) ) {
            /* dir is exist*/
            /////////qDebug() << "### name  " << name;
-           /////qDebug() << "### namedir yes  " << infofile.absolutePath();
+//           /////qDebug() << "### namedir yes  " << infofile.absolutePath();
 
                QString fileqinfo = zip.getCurrentFileName();
                 QByteArray fe = fileqinfo.toAscii();
@@ -98,3 +98,5 @@ bool  ZipZap::UnzipTo(QFile *zipfile, const QString outputdir )
 
 return extractsuccess;
 }
+
+//void ZipZap::UnzipTo(const QString zipfile, const QString outputdir)

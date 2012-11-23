@@ -10,7 +10,7 @@ class AthanPlayer : public PlayerInterface
     Q_OBJECT
 
 public:
-    AthanPlayer(QObject *parent);
+    AthanPlayer(QObject *parent = 0);
 
 public slots:
     void playAthan(PrayerTimes::TimeID xTime);

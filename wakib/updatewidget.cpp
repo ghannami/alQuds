@@ -13,10 +13,10 @@ UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     //ui->progressBar->setHidden(true);
 
 #if defined(Q_OS_WIN)
-    mCastUrl = "http://ghannami.de/files/win/alqudscast.xml";
+    mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/wincast.xml";
 
 #elif defined(Q_OS_MAC)
-    mCastUrl = "http://ghannami.de/files/mac/alqudscast.xml";
+    mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/wincast.xml";
 #endif
 
     DownloadManager *request = new DownloadManager;
@@ -41,7 +41,11 @@ void UpdateWidget::onUpdateClicked()
     //connect(request, SIGNAL())
     ui->updateButton->setEnabled(false);
     ui->skipButton->setEnabled(false);
+    QUrl url(mUpdateFileUrl);
+    if(!url.isValid())
+        launchProgramm();
     ui->progressBar->setVisible(true);
+
     DownloadManager *request = new DownloadManager;
     request->Download(mUpdateFileUrl);
     connect(request, SIGNAL(DownloadFinished(QByteArray)), this, SLOT(updateFileDownloaded(QByteArray)));
@@ -63,17 +67,17 @@ void UpdateWidget::castFileDownloaded(QByteArray xData)
     ui->progressBar->setHidden(true);
     QDomDocument tDoc("xml");
     tDoc.setContent(xData);
-    ui->titelLabel->setText("<b>"+tDoc.firstChildElement().firstChildElement().firstChildElement("item").firstChildElement("title").text()+"</b>");
-    ui->descriptionLabel->setText(tDoc.firstChildElement().firstChildElement().firstChildElement("item").firstChildElement("description").text());
+    ui->titelLabel->setText("<b>"+tDoc.firstChildElement().firstChildElement().firstChildElement("title").text()+"</b>");
+    ui->descriptionLabel->setText(tDoc.firstChildElement().firstChildElement().firstChildElement("description").text());
 
-    mUpdateFileUrl = tDoc.firstChildElement().firstChildElement().firstChildElement("item").firstChildElement("enclosure").attribute("url");
+    mUpdateFileUrl = "http://cloud.github.com/downloads/ghannami/Alquds/";
+    mUpdateFileUrl += tDoc.firstChildElement().firstChildElement().firstChildElement("downloads").firstChildElement("file").firstChildElement("name").text();
 }
 
 void UpdateWidget::updateFileDownloaded(QByteArray xData)
 {
     QTemporaryFile file;
          if (file.open()) {
-             // file.fileName() returns the unique file name
              file.write(xData);
              if(ZipZap::UnzipTo(&file, QDir::currentPath()+"/"))
              {
