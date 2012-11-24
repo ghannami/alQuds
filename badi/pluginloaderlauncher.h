@@ -14,8 +14,11 @@ public:
     PluginLoaderLauncher();
     virtual void launch();
 
-private:
+public slots:
+    virtual void activateWindow();
 
+private:
+    PluginLoader *mPluginLoader;
 };
 
 #endif // PLUGINLOADERLAUNCHER_H

@@ -10,37 +10,33 @@
 PluginLoader::PluginLoader(QObject *parent)
     :QPluginLoader(parent)
 {
-    loadLauncher("wakib");
+    mAlquds = 0;
 }
 
 void PluginLoader::loadLauncher(QString fileName)
 {
+    QString tFileName = fileName;
+
     QDir pluginsDir(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
-//    if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
-//        pluginsDir.cdUp();
-//    pluginsDir.cdUp();
     pluginsDir.cd("plugins");
-    fileName = fileName+".dll";
+    tFileName = tFileName+".dll";
 #elif defined(Q_OS_MAC)
     if (pluginsDir.dirName() == "MacOS") {
         pluginsDir.cdUp();
-        pluginsDir.cdUp();
-        pluginsDir.cdUp();
-        pluginsDir.cdUp();
-        pluginsDir.cd(fileName);
+        pluginsDir.cd("plugins");
     }
-    fileName = "lib"+fileName+".dylib";
+    tFileName = "lib"+tFileName+".dylib";
 #endif
 
-    setFileName(pluginsDir.absoluteFilePath(fileName));
+    setFileName(pluginsDir.absoluteFilePath(tFileName));
     if(!load())
     {
         QMessageBox *msg = new QMessageBox();
         msg->setWindowTitle("Error");
         msg->setText(errorString());
         msg->exec();
-        qDebug()<<"PluginLoader::loadLauncher "<<pluginsDir.absolutePath()+"/"+fileName <<isLoaded() <<" "<<errorString();
+        qDebug()<<"PluginLoader::loadLauncher "<<pluginsDir.absolutePath()+"/"+tFileName <<isLoaded() <<" "<<errorString();
         exit(0);
     }
     QObject *plugin = instance();
@@ -50,6 +46,14 @@ void PluginLoader::loadLauncher(QString fileName)
         {
             launcher->setPluginLoader(this);
             launcher->launch();
+            if(fileName == "alquds")
+                mAlquds = launcher;
         }
     }
+}
+
+void PluginLoader::activateWindow()
+{
+    if(mAlquds)
+        mAlquds->activateWindow();
 }

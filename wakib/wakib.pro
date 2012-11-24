@@ -1,6 +1,6 @@
 TEMPLATE  = lib
 CONFIG   += plugin
-CONFIG   += release
+#CONFIG   += release
 
 SOURCES += \
     wakiblauncher.cpp
@@ -25,6 +25,9 @@ release{
     LIBS+=-L$$PWD/../third-party/win/quazip/lib
     LIBS+=-lquazip1
 }
+    DESTDIR = $$PWD/../install/plugins
 }
 
-DESTDIR = $$PWD/../install/plugins
+unix{
+    DESTDIR = $$PWD/../install/alquds.app/Contents/plugins
+}

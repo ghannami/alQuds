@@ -1,35 +1,14 @@
-#include <QtGui>
-#include <QPluginLoader>
-#include "../badi/launcher.h"
+#include <qtsingleapplication.h>
+#include "app.h"
 
-//! [0]
-int main(int argv, char *args[])
+int main(int argc, char **argv)
 {
-    QApplication app(argv, args);
-
-    QPluginLoader pluginLoader;
-#ifdef Q_WS_WIN
-    pluginLoader.setFileName("badi.dll");
-#elif Q_WS_MAC
-    pluginLoader.setFileName("libbadi.dylib");
-#endif
-
-    if(!pluginLoader.load())
-    {
-        QMessageBox *msg = new QMessageBox();
-        msg->setWindowTitle("Error");
-        msg->setText(pluginLoader.errorString());
-        msg->exec();
-        exit(0);
-    }
-    QObject *plugin = pluginLoader.instance();
-    if (plugin) {
-        Launcher *launcher = qobject_cast<Launcher *>(plugin);
-        if (launcher)
-        {
-            launcher->launch();
-        }
-    }
-    return app.exec();
+    QtSingleApplication instance(argc, argv);
+    if (instance.sendMessage("Wake up!"))
+        return 0;
+    App app;
+    app.laodApplication();
+    QObject::connect(&instance, SIGNAL(messageReceived(const QString&)),
+                     &app, SLOT(activeApplication()));
+    return instance.exec();
 }
-//! [0]

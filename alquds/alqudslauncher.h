@@ -3,6 +3,8 @@
 #include <QObject>
 #include "../badi/launcher.h"
 
+class MainWindow;
+
 class AlqudsLauncher : public QObject, public Launcher
 {
     Q_OBJECT
@@ -12,6 +14,10 @@ class AlqudsLauncher : public QObject, public Launcher
 public:
     AlqudsLauncher();
     virtual void launch();
+    void activateWindow();
+
+private:
+    MainWindow *mWindow;
 };
 
 #endif // ALQUDSLAUNCHER_H

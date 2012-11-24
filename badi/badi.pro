@@ -1,7 +1,7 @@
 TARGET = badi
 TEMPLATE = lib
 CONFIG  += plugin
-CONFIG += release
+#CONFIG += release
 
 QT  += core
 
@@ -16,4 +16,9 @@ SOURCES += \
     ../badi/pluginloaderlauncher.cpp
 
 
-DESTDIR = $$PWD/../install
+win32{
+    DESTDIR = $$PWD/../install
+}
+unix{
+    DESTDIR = $$PWD/../install/alquds.app/Contents/plugins
+}

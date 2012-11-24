@@ -1,3 +1,4 @@
+
 #include "alqudslauncher.h"
 #include "gui/mainwindow.h"
 #include <QtPlugin>
@@ -5,13 +6,22 @@
 
 AlqudsLauncher::AlqudsLauncher()
 {
-
+    mWindow = 0;
 }
 
 void AlqudsLauncher::launch()
 {
-    MainWindow *window = new MainWindow();
-    window->show();
+    mWindow = new MainWindow();
+    mWindow->show();
+}
+
+void AlqudsLauncher::activateWindow()
+{
+    if (mWindow) {
+        mWindow->setWindowState(mWindow->windowState() & ~Qt::WindowMinimized);
+        mWindow->raise();
+        mWindow->activateWindow();
+    }
 }
 
 Q_EXPORT_PLUGIN2(alqudslauncher, AlqudsLauncher);

@@ -9,7 +9,13 @@ PluginLoaderLauncher::PluginLoaderLauncher()
 
 void PluginLoaderLauncher::launch()
 {
-    PluginLoader *tPluginLoader = new PluginLoader;
+    mPluginLoader = new PluginLoader;
+    mPluginLoader->loadLauncher("wakib");
+}
+
+void PluginLoaderLauncher::activateWindow()
+{
+    mPluginLoader->activateWindow();
 }
 
 Q_EXPORT_PLUGIN2(pluginloaderlauncher, PluginLoaderLauncher);

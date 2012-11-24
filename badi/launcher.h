@@ -13,7 +13,7 @@ public:
     {
         mPluginLoader->loadLauncher(name);
     }
-
+    virtual void activateWindow(){}
     virtual void launch()  = 0;
 
 protected:
