@@ -10,6 +10,7 @@ HEADERS += \
 
 include(wakib.pri)
 include(../badi/badi.pri)
+include(../alquds/alquds.pri)
 include($$[QT_INSTALL_PREFIX]/src/3rdparty/zlib.pri)
 
 mac:LIBS +=/opt/local/lib/libquazip.dylib

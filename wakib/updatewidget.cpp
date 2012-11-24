@@ -1,7 +1,7 @@
 #include "updatewidget.h"
 #include "ui_updatewidget.h"
 #include <QtGui>
-#include "webservices/downloadmanager.h"
+#include "../alquds/webservices/downloadmanager.h"
 #include <QDomDocument>
 #include "zipzap.h"
 #include <wakiblauncher.h>

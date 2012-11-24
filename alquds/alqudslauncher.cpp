@@ -21,6 +21,7 @@ void AlqudsLauncher::activateWindow()
         mWindow->setWindowState(mWindow->windowState() & ~Qt::WindowMinimized);
         mWindow->raise();
         mWindow->activateWindow();
+        mWindow->show();
     }
 }
 

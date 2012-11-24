@@ -67,6 +67,22 @@ MainWindow::MainWindow(QWidget *parent) :
 //         QProcess *myProcess = new QProcess(this);
 //         myProcess->start(program, arguments);
 
+    setWindowTitle("");
+    setWindowIcon(QIcon(":/icon/128x128/kubbetussahra.png"));
+#ifdef Q_WS_WIN
+    QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+                       QSettings::NativeFormat);
+    if(settings.contains("alquds"))
+        qDebug()<<"MainWindow::MainWindow alquds Register ist bereit registriert ...";
+    else
+    {
+        QString file(qApp->applicationFilePath());
+        file.replace("/","\\");
+        settings.setValue("alquds", "\""+file+"\"");
+    }
+
+#endif
+
 }
 
 void MainWindow::setCentralWidget(WinWidget *xCurr)
@@ -80,4 +96,10 @@ void MainWindow::setCentralWidget(WinWidget *xCurr)
     }
     mMainLayout->addWidget(xCurr);
     mCurrentWin = xCurr;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    hide();
+    event->ignore();
 }

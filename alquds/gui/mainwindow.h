@@ -19,6 +19,9 @@ signals:
     
 public slots:
     void setCentralWidget(WinWidget *xCurr);
+
+protected:
+    void closeEvent(QCloseEvent *);
 private:
     QToolBar *mWidgetsToolBar;
 
