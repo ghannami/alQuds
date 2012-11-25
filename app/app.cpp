@@ -2,6 +2,7 @@
 #include <QPluginLoader>
 #include <QtGui>
 #include "../badi/launcher.h"
+#include "../alquds/settings/pathsettings.h"
 
 App::App(QObject *parent) :
     QObject(parent)
@@ -12,14 +13,15 @@ App::App(QObject *parent) :
 void App::laodApplication()
 {
     QPluginLoader pluginLoader;
-#if defined(Q_WS_WIN)
-    pluginLoader.setFileName("badi.dll");
+    QString tFileName = "badi";
+
+#if defined(Q_OS_WIN)
+    tFileName = tFileName+".dll";
 #elif defined(Q_OS_MAC)
-    QDir tDir = QDir::currentPath();
-    if(QDir::current().dirName()=="MacOS")
-        tDir.cdUp();
-        pluginLoader.setFileName(tDir.absoluteFilePath("plugins/libbadi.dylib"));
+    tFileName = "lib"+tFileName+".dylib";
 #endif
+
+    pluginLoader.setFileName(PathSettings::instance()->pluginsPath().absoluteFilePath(tFileName));
 
     if(!pluginLoader.load())
     {
@@ -46,4 +48,3 @@ void App::activeApplication()
     if(mLauncher)
         mLauncher->activateWindow();
 }
-

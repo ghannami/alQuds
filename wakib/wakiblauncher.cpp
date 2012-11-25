@@ -2,8 +2,10 @@
 #include "updatewidget.h"
 #include <QtPlugin>
 #include <QtGui>
+#include "../badi/pluginloader.h"
 
-WakibLauncher::WakibLauncher()
+WakibLauncher::WakibLauncher():
+    Launcher()
 {
     mWidget = new UpdateWidget(this);
 }
@@ -11,12 +13,16 @@ WakibLauncher::WakibLauncher()
 void WakibLauncher::launch()
 {
     mWidget->show();
-    //loadLauncher("alquds");
 }
 
-void WakibLauncher::launchProgramm()
+void WakibLauncher::setPluginLoader(PluginLoader *loader)
 {
-    mWidget->close();
+    Launcher::setPluginLoader(loader);
+    connect(this, SIGNAL(relaunchAll()), mPluginLoader, SLOT(relaunchAll()));
+}
+
+void WakibLauncher::launchAlquds()
+{
     mPluginLoader->loadLauncher("alquds");
 }
 

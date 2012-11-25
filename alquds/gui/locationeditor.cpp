@@ -11,6 +11,29 @@ LocationEditor::LocationEditor(QWidget *parent) :
     ui(new Ui::LocationEditor)
 {
     ui->setupUi(this);
+    //ui->resultView->setHidden(true);
+
+    connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), ui->timezoneEdit, SLOT(setDisabled(bool)));
+    connect(ui->searchButton, SIGNAL(clicked()), this, SLOT(OnSearchClicked()));
+    connect(ui->resultView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(OnLocationItemClicked(QTreeWidgetItem*)));
+    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveLocation()));
+    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(readLocation()));
+    connect(ui->latitudeEdit, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged()));
+    connect(ui->longitudeEdit, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged()));
+    connect(ui->cityEdit, SIGNAL(textChanged(QString)), this, SLOT(onValueChanged()));
+    connect(ui->countryEdit, SIGNAL(textChanged(QString)), this, SLOT(onValueChanged()));
+    connect(ui->timezoneEdit, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged()));
+    connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), this, SLOT(onValueChanged()));
+    readLocation();
+}
+
+LocationEditor::~LocationEditor()
+{
+    delete ui;
+}
+
+void LocationEditor::readLocation()
+{
     ui->cityEdit->setText(LocationSettings::instance()->city());
     ui->countryEdit->setText(LocationSettings::instance()->country());
     ui->latitudeEdit->setValue(LocationSettings::instance()->latitude());
@@ -18,23 +41,18 @@ LocationEditor::LocationEditor(QWidget *parent) :
     ui->timezoneEdit->setValue(LocationSettings::instance()->timezone());
     ui->useSystemTZEdit->setChecked(LocationSettings::instance()->useSystemTimezone());
     ui->timezoneEdit->setDisabled(ui->useSystemTZEdit->isChecked());
-    //ui->resultView->setHidden(true);
-    connect(ui->latitudeEdit, SIGNAL(valueChanged(double)), LocationSettings::instance(), SLOT(setLatitude(double)));
-    connect(ui->longitudeEdit, SIGNAL(valueChanged(double)), LocationSettings::instance(), SLOT(setLongitude(double)));
-    connect(ui->timezoneEdit, SIGNAL(valueChanged(double)), LocationSettings::instance(), SLOT(setTimezone(double)));
-    connect(ui->cityEdit, SIGNAL(textChanged(QString)), LocationSettings::instance(), SLOT(setCity(QString)));
-    connect(ui->countryEdit, SIGNAL(textChanged(QString)), LocationSettings::instance(), SLOT(setCountry(QString)));
-    connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), LocationSettings::instance(), SLOT(setUseSystemTimezone(bool)));
-    connect(ui->useSystemTZEdit, SIGNAL(toggled(bool)), ui->timezoneEdit, SLOT(setDisabled(bool)));
-
-    connect(ui->searchButton, SIGNAL(clicked()), this, SLOT(OnSearchClicked()));
-    connect(ui->resultView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(OnLocationItemClicked(QTreeWidgetItem*)));
-
+    ui->saveButton->setDisabled(true);
 }
 
-LocationEditor::~LocationEditor()
+void LocationEditor::saveLocation()
 {
-    delete ui;
+    LocationSettings::instance()->setLatitude(ui->latitudeEdit->value());
+    LocationSettings::instance()->setLongitude(ui->longitudeEdit->value());
+    LocationSettings::instance()->setTimezone(ui->timezoneEdit->value());
+    LocationSettings::instance()->setCity(ui->cityEdit->text());
+    LocationSettings::instance()->setCountry(ui->countryEdit->text());
+    LocationSettings::instance()->setUseSystemTimezone(ui->useSystemTZEdit->isChecked());
+    ui->saveButton->setDisabled(true);
 }
 
 void LocationEditor::OnSearchClicked()
@@ -84,4 +102,9 @@ void LocationEditor::OnLocationItemClicked(QTreeWidgetItem *xItem)
     ui->latitudeEdit->setValue(xItem->text(3).toDouble());
     ui->longitudeEdit->setValue(xItem->text(4).toDouble());
     ui->timezoneEdit->setValue(xItem->text(5).toDouble());
+}
+
+void LocationEditor::onValueChanged()
+{
+    ui->saveButton->setEnabled(true);
 }

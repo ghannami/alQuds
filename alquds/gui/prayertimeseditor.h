@@ -16,9 +16,9 @@ public:
     ~PrayerTimesEditor();
 
 public slots:
-    void OnMethodChanged(int xIndex);
-    void OnAdjustChanged(int xIndex);
-    void OnAsrMethodChanged(int xIndex);
+    void saveSettings();
+    void readFields();
+    void onFieldChanged();
 
 private:
     Ui::PrayerTimesEditor *ui;

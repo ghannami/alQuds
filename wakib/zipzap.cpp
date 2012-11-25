@@ -71,6 +71,8 @@ bool  ZipZap::UnzipTo(QFile *zipfile, const QString outputdir )
            QFile meminfo(name);
            QFileInfo infofile(meminfo);
            QDir dira(infofile.absolutePath());
+
+//           qDebug()<<"name: "<<name<<" outputdir: "<<outputdir<<" infofile.absolutePath(): "<<infofile.absolutePath();
            if ( dira.mkpath(infofile.absolutePath()) ) {
            /* dir is exist*/
            /////////qDebug() << "### name  " << name;

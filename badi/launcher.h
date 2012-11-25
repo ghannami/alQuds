@@ -5,7 +5,7 @@ class Launcher
 {
 public:
     virtual ~Launcher() {}
-    void setPluginLoader(PluginLoader *loader){
+    virtual void setPluginLoader(PluginLoader *loader){
         mPluginLoader = loader;
     }
 

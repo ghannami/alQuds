@@ -35,6 +35,14 @@ AthanEditor::AthanEditor(QWidget *parent) :
     connect(ui->enableSilent, SIGNAL(toggled(bool)), AthanSettings::instance(), SLOT(setSilentMode(bool)));
     ui->playDua->setChecked(AthanSettings::instance()->playDua());
     connect(ui->playDua, SIGNAL(toggled(bool)), AthanSettings::instance(), SLOT(setPlayDua(bool)));
+
+    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveAthanFiles()));
+    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(readAthanFiles()));
+    connect(ui->cancelButton, SIGNAL(clicked(bool)), ui->saveButton, SLOT(setEnabled(bool)));
+
+    readAthanFiles();
+    ui->saveButton->setDisabled(true);
+
 }
 
 AthanEditor::~AthanEditor()
@@ -44,36 +52,50 @@ AthanEditor::~AthanEditor()
 
 void AthanEditor::readAthanFiles()
 {
+    mFajrFile = AthanSettings::instance()->fajrFile();
+    mDuhrFile = AthanSettings::instance()->dhurFile();
+    mAsrFile  = AthanSettings::instance()->asrFile();
+    mMaghribFile = AthanSettings::instance()->maghribFile();
+    mIshaFile = AthanSettings::instance()->ishaFile();
+    initAthanFiles();
+}
+
+void AthanEditor::initAthanFiles()
+{
     ui->fajrBox->clear();
-    QFileInfo tFileInfo(AthanSettings::instance()->fajrFile());
+    QFileInfo tFileInfo(mFajrFile);
     ui->fajrBox->addItem(tFileInfo.fileName());
+
     ui->fajrBox->insertSeparator(1);
     ui->fajrBox->addItem("Select...", PrayerTimes::Fajr);
 
     ui->dhurBox->clear();
-    tFileInfo = QFileInfo(AthanSettings::instance()->dhurFile());
+    tFileInfo = QFileInfo(mDuhrFile);
     ui->dhurBox->addItem(tFileInfo.fileName());
+    mDuhrFile = tFileInfo.fileName();
     ui->dhurBox->insertSeparator(1);
     ui->dhurBox->addItem("Select...", PrayerTimes::Dhuhr);
 
     ui->asrBox->clear();
-    tFileInfo = QFileInfo(AthanSettings::instance()->asrFile());
+    tFileInfo = QFileInfo(mAsrFile);
     ui->asrBox->addItem(tFileInfo.fileName());
+    mAsrFile = tFileInfo.fileName();
     ui->asrBox->insertSeparator(1);
     ui->asrBox->addItem("Select...", PrayerTimes::Asr);
 
     ui->maghribBox->clear();
-    tFileInfo = QFileInfo(AthanSettings::instance()->maghribFile());
+    tFileInfo = QFileInfo(mMaghribFile);
     ui->maghribBox->addItem(tFileInfo.fileName());
+    mMaghribFile = tFileInfo.fileName();
     ui->maghribBox->insertSeparator(1);
     ui->maghribBox->addItem("Select...", PrayerTimes::Maghrib);
 
     ui->ishaBox->clear();
-    tFileInfo = QFileInfo(AthanSettings::instance()->ishaFile());
+    tFileInfo = QFileInfo(mIshaFile);
     ui->ishaBox->addItem(tFileInfo.fileName());
+    mIshaFile = tFileInfo.fileName();
     ui->ishaBox->insertSeparator(1);
     ui->ishaBox->addItem("Select...", PrayerTimes::Isha);
-
 
 }
 
@@ -85,9 +107,10 @@ void AthanEditor::selectFajrFile(int xIndex)
     QString tFileName = QFileDialog::getOpenFileName();
     if(!tFileName.isEmpty())
     {
-        AthanSettings::instance()->setFajrFile(tFileName);
+        mFajrFile = tFileName;
     }
-    readAthanFiles();
+    initAthanFiles();
+    ui->saveButton->setEnabled(true);
 }
 
 void AthanEditor::selectDhurFile(int xIndex)
@@ -98,9 +121,10 @@ void AthanEditor::selectDhurFile(int xIndex)
     QString tFileName = QFileDialog::getOpenFileName();
     if(!tFileName.isEmpty())
     {
-        AthanSettings::instance()->setDhurFile(tFileName);
+        mDuhrFile = tFileName;
     }
-    readAthanFiles();
+    initAthanFiles();
+    ui->saveButton->setEnabled(true);
 }
 
 void AthanEditor::selectAsrFile(int xIndex)
@@ -111,9 +135,10 @@ void AthanEditor::selectAsrFile(int xIndex)
     QString tFileName = QFileDialog::getOpenFileName();
     if(!tFileName.isEmpty())
     {
-        AthanSettings::instance()->setAsrFile(tFileName);
+        mAsrFile = tFileName;
     }
-    readAthanFiles();
+    initAthanFiles();
+    ui->saveButton->setEnabled(true);
 }
 
 void AthanEditor::selectMaghribFile(int xIndex)
@@ -124,9 +149,10 @@ void AthanEditor::selectMaghribFile(int xIndex)
     QString tFileName = QFileDialog::getOpenFileName();
     if(!tFileName.isEmpty())
     {
-        AthanSettings::instance()->setMaghribFile(tFileName);
+        mMaghribFile = tFileName;
     }
-    readAthanFiles();
+    initAthanFiles();
+    ui->saveButton->setEnabled(true);
 }
 
 void AthanEditor::selectIshaFile(int xIndex)
@@ -137,7 +163,20 @@ void AthanEditor::selectIshaFile(int xIndex)
     QString tFileName = QFileDialog::getOpenFileName();
     if(!tFileName.isEmpty())
     {
-        AthanSettings::instance()->setIshaFile(tFileName);
+        mIshaFile = tFileName;
     }
-    readAthanFiles();
+    initAthanFiles();
+    ui->saveButton->setEnabled(true);
+}
+
+void AthanEditor::saveAthanFiles()
+{
+    AthanSettings::instance()->setFajrFile(mFajrFile);
+    AthanSettings::instance()->setDhurFile(mDuhrFile);
+    AthanSettings::instance()->setAsrFile(mAsrFile);
+    AthanSettings::instance()->setMaghribFile(mMaghribFile);
+    AthanSettings::instance()->setIshaFile(mIshaFile);
+
+    ui->saveButton->setDisabled(true);
+
 }

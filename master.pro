@@ -1,4 +1,7 @@
 #! [0]
+
+macx:ICON = $${PWD}/mac.icns
+
 TEMPLATE    = subdirs
 SUBDIRS	    = alquds \
               badi \

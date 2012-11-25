@@ -5,6 +5,8 @@
 #include <QDomDocument>
 #include "zipzap.h"
 #include <wakiblauncher.h>
+#include "../alquds/version.h"
+#include "../alquds/settings/pathsettings.h"
 
 UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     mLauncher(launcher), ui(new Ui::UpdateWidget)
@@ -16,7 +18,7 @@ UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/wincast.xml";
 
 #elif defined(Q_OS_MAC)
-    mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/wincast.xml";
+    mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/maccast.xml";
 #endif
 
     DownloadManager *request = new DownloadManager;
@@ -25,10 +27,10 @@ UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     connect(ui->updateButton, SIGNAL(clicked()), this, SLOT(onUpdateClicked()));
     connect(ui->laterButton, SIGNAL(clicked()), this, SLOT(onCancelClicked()));
     connect(ui->skipButton, SIGNAL(clicked()), this, SLOT(onSkipClicked()));
-    connect(ui->relaunchButton, SIGNAL(clicked()), this , SLOT(launchProgramm()));
+    connect(ui->relaunchButton, SIGNAL(clicked()), mLauncher , SIGNAL(relaunchAll()));
 
     ui->relaunchButton->setHidden(true);
-    //ui->successIcon->setHidden(true);
+    ui->successIcon->setHidden(true);
 }
 
 UpdateWidget::~UpdateWidget()
@@ -36,14 +38,34 @@ UpdateWidget::~UpdateWidget()
     delete ui;
 }
 
+bool UpdateWidget::isUpdateAvailable(QDomDocument xDoc)
+{
+    if(xDoc.firstChildElement().firstChildElement("version").isNull())
+        return false;
+
+    int tMajor = xDoc.firstChildElement().firstChildElement("version").attribute("major").toInt();
+    int tMinor = xDoc.firstChildElement().firstChildElement("version").attribute("minor").toInt();
+    int tBuild = xDoc.firstChildElement().firstChildElement("version").attribute("build").toInt();
+    if(tMajor > V_VER_MAJOR || tMinor > V_VER_MINOR || tBuild > V_VER_BUILD)
+        return true;
+
+    return false;
+}
+
+void UpdateWidget::closeEvent(QCloseEvent *event)
+{
+    hide();
+    event->ignore();
+    mLauncher->launchAlquds();
+}
+
 void UpdateWidget::onUpdateClicked()
 {
-    //connect(request, SIGNAL())
     ui->updateButton->setEnabled(false);
     ui->skipButton->setEnabled(false);
     QUrl url(mUpdateFileUrl);
     if(!url.isValid())
-        launchProgramm();
+        close();
     ui->progressBar->setVisible(true);
 
     DownloadManager *request = new DownloadManager;
@@ -54,12 +76,12 @@ void UpdateWidget::onUpdateClicked()
 
 void UpdateWidget::onCancelClicked()
 {
-    mLauncher->launchProgramm();
+    close();
 }
 
 void UpdateWidget::onSkipClicked()
 {
-    mLauncher->launchProgramm();
+    close();
 }
 
 void UpdateWidget::castFileDownloaded(QByteArray xData)
@@ -71,32 +93,31 @@ void UpdateWidget::castFileDownloaded(QByteArray xData)
     ui->descriptionLabel->setText(tDoc.firstChildElement().firstChildElement().firstChildElement("description").text());
 
     mUpdateFileUrl = "http://cloud.github.com/downloads/ghannami/Alquds/";
-    mUpdateFileUrl += tDoc.firstChildElement().firstChildElement().firstChildElement("downloads").firstChildElement("file").firstChildElement("name").text();
+    mUpdateFileUrl += tDoc.firstChildElement().firstChildElement().firstChildElement("downloads").firstChildElement("file").firstChildElement("name").text().trimmed();
+    if(!isUpdateAvailable(tDoc))
+        close();
 }
 
 void UpdateWidget::updateFileDownloaded(QByteArray xData)
 {
     QTemporaryFile file;
-         if (file.open()) {
-             file.write(xData);
-             if(ZipZap::UnzipTo(&file, QDir::currentPath()+"/"))
-             {
-                 ui->updateButton->setHidden(true);
-                 ui->skipButton->setHidden(true);
-                 ui->laterButton->setHidden(true);
-                 ui->relaunchButton->setVisible(true);
-                 ui->successIcon->setVisible(true);
-             }
+     if (file.open()) {
+         file.write(xData);
+         if(ZipZap::UnzipTo(&file, PathSettings::instance()->updateRootPath().absolutePath()+"/"))
+         {
+             ui->updateButton->setHidden(true);
+             ui->skipButton->setHidden(true);
+             ui->laterButton->setHidden(true);
+             ui->relaunchButton->setVisible(true);
+             ui->successIcon->setVisible(true);
+             return;
          }
+     }
+     close();
 }
 
 void UpdateWidget::updateProgressBar(qint64 bytesReceived, qint64 bytesTotal)
 {
     ui->progressBar->setMaximum(bytesTotal);
     ui->progressBar->setValue(bytesReceived);
-}
-
-void UpdateWidget::launchProgramm()
-{
-    mLauncher->launchProgramm();
 }

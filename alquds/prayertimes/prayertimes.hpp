@@ -66,11 +66,11 @@ using namespace std;
 class PrayerTimes
 {
 public:
-	enum
-	{
-		VERSION_MAJOR = 1,
-		VERSION_MINOR = 0,
-    };
+//	enum
+//	{
+//		VERSION_MAJOR = 1,
+//		VERSION_MINOR = 0,
+//    };
 /* --------------------- User Interface ----------------------- */
 /*
 	PrayerTimes(CalculationMethod calc_method = Jafari,

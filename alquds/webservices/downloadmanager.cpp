@@ -26,7 +26,7 @@ void DownloadManager::Download(QString url)
 {
 //    qDebug()<<"DownloadManager::doDownload "<<url;
     QNetworkReply *tReply = manager->get(QNetworkRequest(QUrl(url)));
-    //connect()
+    connect(tReply, SIGNAL(downloadProgress(qint64,qint64)), this, SIGNAL(downloadProgress(qint64,qint64)));
 
 }
 

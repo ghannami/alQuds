@@ -3,7 +3,6 @@ CONFIG  += plugin
 #CONFIG += release
 include(alquds.pri)
 
-
 SOURCES += \
     ../alquds/alqudslauncher.cpp
 

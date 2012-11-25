@@ -1,4 +1,4 @@
- #include "mainwindow.h"
+#include "mainwindow.h"
 #include "prayertimeseditor.h"
 #include <QMdiArea>
 #include "locationeditor.h"
@@ -10,6 +10,8 @@
 #include "athaneditor.h"
 #include "../webservices/islamwayparser.h"
 #include "homewidget.h"
+#include "../version.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -67,8 +69,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //         QProcess *myProcess = new QProcess(this);
 //         myProcess->start(program, arguments);
 
-    setWindowTitle("");
-    setWindowIcon(QIcon(":/icon/128x128/kubbetussahra.png"));
+
+    setWindowTitle(ALQUDS_VERSION);
+    setWindowIcon(QIcon(":/icons/128/kubbetussahra.png"));
+
 #ifdef Q_WS_WIN
     QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
                        QSettings::NativeFormat);

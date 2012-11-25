@@ -1,5 +1,30 @@
 <RCC>
     <qresource prefix="/icons">
         <file>icons/24/active.png</file>
+        <file>icons/48/about.png</file>
+        <file>icons/48/active.png</file>
+        <file>icons/48/coding.png</file>
+        <file>icons/48/compass.png</file>
+        <file>icons/48/kaba.png</file>
+        <file>icons/48/kubbetussahra.png</file>
+        <file>icons/48/kuran.png</file>
+        <file>icons/48/mescidinebevi.png</file>
+        <file>icons/48/minber.png</file>
+        <file>icons/48/preferences.png</file>
+        <file>icons/48/seccade.png</file>
+        <file>icons/48/tesbih.png</file>
+        <file>icons/48/update.png</file>
+        <file>icons/128/about.png</file>
+        <file>icons/128/coding.png</file>
+        <file>icons/128/download.png</file>
+        <file>icons/128/kaba.png</file>
+        <file>icons/128/kubbetussahra.png</file>
+        <file>icons/128/kuran.png</file>
+        <file>icons/128/mescidinebevi.png</file>
+        <file>icons/128/minber.png</file>
+        <file>icons/128/preferences.png</file>
+        <file>icons/128/seccade.png</file>
+        <file>icons/128/tesbih.png</file>
+        <file>icons/128/update.png</file>
     </qresource>
 </RCC>

@@ -2,6 +2,7 @@
 #define UPDATEWIDGET_H
 
 #include <QWidget>
+#include <QDomDocument>
 
 class WakibLauncher;
 
@@ -16,14 +17,17 @@ class UpdateWidget : public QWidget
 public:
     explicit UpdateWidget(WakibLauncher *launcher);
     ~UpdateWidget();
-    
+    bool isUpdateAvailable(QDomDocument xDoc);
+
+protected:
+    void closeEvent(QCloseEvent *event);
+
 public slots:
     void onUpdateClicked();
     void onCancelClicked();
     void onSkipClicked();
     void castFileDownloaded(QByteArray xData);
     void updateFileDownloaded(QByteArray xData);
-    void launchProgramm();
     void updateProgressBar(qint64 bytesReceived, qint64 bytesTotal);
 private:
     Ui::UpdateWidget *ui;

@@ -14,7 +14,11 @@ class WakibLauncher : public QObject, public Launcher
 public:
     WakibLauncher();
     virtual void launch();
-    void launchProgramm();
+    virtual void setPluginLoader(PluginLoader *loader);
+
+    void launchAlquds();
+signals:
+    void relaunchAll();
 
 private:
     UpdateWidget *mWidget;

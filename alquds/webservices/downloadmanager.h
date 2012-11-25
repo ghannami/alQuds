@@ -20,7 +20,7 @@ public slots:
 
 signals:
     void DownloadFinished(QByteArray);
-
+    void downloadProgress(qint64,qint64);
 private:
     QNetworkAccessManager * manager;
 

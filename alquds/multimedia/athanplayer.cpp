@@ -35,7 +35,6 @@ void AthanPlayer::stopAthan()
 
 void AthanPlayer::playFajrAthan()
 {
-
     stopAthan();
     QUrl url(mFileList[PrayerTimes::Fajr]);
     QMediaContent tContent(url);

@@ -6,6 +6,8 @@
 #include <QApplication>
 #include <QDir>
 #include <QMessageBox>
+#include "../alquds/settings/pathsettings.h"
+#include <QProcess>
 
 PluginLoader::PluginLoader(QObject *parent)
     :QPluginLoader(parent)
@@ -17,26 +19,20 @@ void PluginLoader::loadLauncher(QString fileName)
 {
     QString tFileName = fileName;
 
-    QDir pluginsDir(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
-    pluginsDir.cd("plugins");
     tFileName = tFileName+".dll";
 #elif defined(Q_OS_MAC)
-    if (pluginsDir.dirName() == "MacOS") {
-        pluginsDir.cdUp();
-        pluginsDir.cd("plugins");
-    }
     tFileName = "lib"+tFileName+".dylib";
 #endif
 
-    setFileName(pluginsDir.absoluteFilePath(tFileName));
+    setFileName(PathSettings::instance()->pluginsPath().absoluteFilePath(tFileName));
     if(!load())
     {
         QMessageBox *msg = new QMessageBox();
         msg->setWindowTitle("Error");
         msg->setText(errorString());
         msg->exec();
-        qDebug()<<"PluginLoader::loadLauncher "<<pluginsDir.absolutePath()+"/"+tFileName <<isLoaded() <<" "<<errorString();
+//        qDebug()<<"PluginLoader::loadLauncher "<<pluginsDir.absolutePath()+"/"+tFileName <<isLoaded() <<" "<<errorString();
         exit(0);
     }
     QObject *plugin = instance();
@@ -56,4 +52,10 @@ void PluginLoader::activateWindow()
 {
     if(mAlquds)
         mAlquds->activateWindow();
+}
+
+void PluginLoader::relaunchAll()
+{
+    QProcess::startDetached(QApplication::applicationFilePath());
+    exit(12);
 }

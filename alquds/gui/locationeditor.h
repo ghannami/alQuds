@@ -17,6 +17,9 @@ public:
     ~LocationEditor();
     
 public slots:
+    void readLocation();
+    void saveLocation();
+    void onValueChanged();
     void OnSearchClicked();
     void OnGeoDownloaded(QByteArray xData);
     void OnLocationItemClicked(QTreeWidgetItem *xItem);

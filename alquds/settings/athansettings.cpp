@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QUrl>
 #include <QDebug>
+#include "pathsettings.h"
 
 AthanSettings *AthanSettings::mInstance = 0;
 
@@ -13,8 +14,9 @@ AthanSettings::AthanSettings(QObject *parent) :
 
     if(mSettings->value("athan/configured").isNull() || mSettings->value("athan/configure").toBool() == false)
     {
-        QString fileUrl(QString("%1/audio/athan.mp3").arg(QDir::currentPath()));
-        QString fileUrlFajr(QString("%1/audio/athan-fajer.mp3").arg(QDir::currentPath()));
+        QString fileUrl(PathSettings::instance()->audioPath().absoluteFilePath("athan.mp3"));
+        QString fileUrlFajr(PathSettings::instance()->audioPath().absoluteFilePath("athan-fajer.mp3"));
+
         mSettings->setValue("athan/fajrfile", QUrl::fromLocalFile(fileUrlFajr).toString());
         mSettings->setValue("athan/dhurfile", QUrl::fromLocalFile(fileUrl).toString());
         mSettings->setValue("athan/asrfile", QUrl::fromLocalFile(fileUrl).toString());
@@ -62,7 +64,6 @@ QString AthanSettings::ishaFile()
 void AthanSettings::setFajrFile(QString xFile)
 {
     mSettings->setValue("athan/fajrfile", xFile);
-
     emit prayerFilesChanged();
 }
 

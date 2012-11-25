@@ -18,6 +18,9 @@ public:
 
 public slots:
     void readAthanFiles();
+    void saveAthanFiles();
+    void initAthanFiles();
+
     void selectIshaFile(int xIndex);
     void selectMaghribFile(int xIndex);
     void selectAsrFile(int xIndex);
@@ -27,6 +30,12 @@ public slots:
 private:
     Ui::AthanEditor *ui;
     AthanPlayer *mPlayer;
+
+    QString mFajrFile;
+    QString mDuhrFile;
+    QString mAsrFile;
+    QString mMaghribFile;
+    QString mIshaFile;
 };
 
 #endif // ATHANEDITOR_H

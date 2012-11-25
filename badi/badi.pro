@@ -6,6 +6,7 @@ CONFIG  += plugin
 QT  += core
 
 include(badi.pri)
+include(../alquds/alquds.pri)
 
 
 HEADERS += \
