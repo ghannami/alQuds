@@ -1,5 +1,5 @@
 QT       += core gui
-#CONFIG += release
+CONFIG += release
 
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

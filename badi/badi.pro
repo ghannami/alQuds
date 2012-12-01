@@ -1,13 +1,13 @@
 TARGET = badi
 TEMPLATE = lib
 CONFIG  += plugin
-#CONFIG += release
+CONFIG += release
 
 QT  += core
 
 include(badi.pri)
 include(../alquds/alquds.pri)
-
+include(../wakib/wakib.pri)
 
 HEADERS += \
     ../badi/pluginloaderlauncher.h
@@ -18,7 +18,7 @@ SOURCES += \
 
 
 win32{
-    DESTDIR = $$PWD/../install
+    DESTDIR = $$PWD/../install/plugins
 }
 unix{
     DESTDIR = $$PWD/../install/alquds.app/Contents/plugins

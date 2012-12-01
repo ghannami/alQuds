@@ -3,19 +3,27 @@
 
 #include <QObject>
 class Launcher;
+class QPluginLoader;
+class QTemporaryFile;
 
 class App : public QObject
 {
     Q_OBJECT
-public:
+private:
     explicit App(QObject *parent = 0);
+
+public:
+    static App* instance();
     void laodApplication();
+    void installUpdateFiles(QTemporaryFile *file);
 
 public slots:
     void activeApplication();
 
 private:
     Launcher *mLauncher;
+    static App *mInstance;
+    QPluginLoader *mPluginLoader;
 };
 
 #endif // APP_H

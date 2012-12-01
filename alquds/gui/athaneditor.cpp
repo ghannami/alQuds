@@ -10,7 +10,7 @@ AthanEditor::AthanEditor(QWidget *parent) :
     ui(new Ui::AthanEditor)
 {
     ui->setupUi(this);
-    readAthanFiles();
+
     connect(ui->fajrBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectFajrFile(int)));
     connect(ui->dhurBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectDhurFile(int)));
     connect(ui->asrBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectAsrFile(int)));
@@ -31,16 +31,14 @@ AthanEditor::AthanEditor(QWidget *parent) :
     connect(ui->stopMaghrib, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
     connect(ui->stopIsha, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
 
-    ui->enableSilent->setChecked(AthanSettings::instance()->silentMode());
-    connect(ui->enableSilent, SIGNAL(toggled(bool)), AthanSettings::instance(), SLOT(setSilentMode(bool)));
-    ui->playDua->setChecked(AthanSettings::instance()->playDua());
-    connect(ui->playDua, SIGNAL(toggled(bool)), AthanSettings::instance(), SLOT(setPlayDua(bool)));
+    connect(ui->enableSilent, SIGNAL(toggled(bool)), this, SLOT(onFieldsChanged()));
+    connect(ui->playDua, SIGNAL(toggled(bool)), this, SLOT(onFieldsChanged()));
 
-    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveAthanFiles()));
-    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(readAthanFiles()));
+    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
+    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(readSettings()));
     connect(ui->cancelButton, SIGNAL(clicked(bool)), ui->saveButton, SLOT(setEnabled(bool)));
 
-    readAthanFiles();
+    readSettings();
     ui->saveButton->setDisabled(true);
 
 }
@@ -50,14 +48,19 @@ AthanEditor::~AthanEditor()
     delete ui;
 }
 
-void AthanEditor::readAthanFiles()
+void AthanEditor::readSettings()
 {
     mFajrFile = AthanSettings::instance()->fajrFile();
     mDuhrFile = AthanSettings::instance()->dhurFile();
     mAsrFile  = AthanSettings::instance()->asrFile();
     mMaghribFile = AthanSettings::instance()->maghribFile();
     mIshaFile = AthanSettings::instance()->ishaFile();
+    ui->enableSilent->setChecked(AthanSettings::instance()->silentMode());
+    ui->playDua->setChecked(AthanSettings::instance()->playDua());
+
     initAthanFiles();
+
+    ui->saveButton->setDisabled(true);
 }
 
 void AthanEditor::initAthanFiles()
@@ -72,31 +75,33 @@ void AthanEditor::initAthanFiles()
     ui->dhurBox->clear();
     tFileInfo = QFileInfo(mDuhrFile);
     ui->dhurBox->addItem(tFileInfo.fileName());
-    mDuhrFile = tFileInfo.fileName();
     ui->dhurBox->insertSeparator(1);
     ui->dhurBox->addItem("Select...", PrayerTimes::Dhuhr);
 
     ui->asrBox->clear();
     tFileInfo = QFileInfo(mAsrFile);
     ui->asrBox->addItem(tFileInfo.fileName());
-    mAsrFile = tFileInfo.fileName();
     ui->asrBox->insertSeparator(1);
     ui->asrBox->addItem("Select...", PrayerTimes::Asr);
 
     ui->maghribBox->clear();
     tFileInfo = QFileInfo(mMaghribFile);
     ui->maghribBox->addItem(tFileInfo.fileName());
-    mMaghribFile = tFileInfo.fileName();
     ui->maghribBox->insertSeparator(1);
     ui->maghribBox->addItem("Select...", PrayerTimes::Maghrib);
 
     ui->ishaBox->clear();
     tFileInfo = QFileInfo(mIshaFile);
     ui->ishaBox->addItem(tFileInfo.fileName());
-    mIshaFile = tFileInfo.fileName();
     ui->ishaBox->insertSeparator(1);
     ui->ishaBox->addItem("Select...", PrayerTimes::Isha);
 
+    ui->saveButton->setEnabled(true);
+}
+
+void AthanEditor::onFieldsChanged()
+{
+    ui->saveButton->setEnabled(true);
 }
 
 void AthanEditor::selectFajrFile(int xIndex)
@@ -122,6 +127,7 @@ void AthanEditor::selectDhurFile(int xIndex)
     if(!tFileName.isEmpty())
     {
         mDuhrFile = tFileName;
+//        qDebug()<<"AthanEditor::selectDhurFile SELECTED FILE: "<<mDuhrFile;
     }
     initAthanFiles();
     ui->saveButton->setEnabled(true);
@@ -169,13 +175,16 @@ void AthanEditor::selectIshaFile(int xIndex)
     ui->saveButton->setEnabled(true);
 }
 
-void AthanEditor::saveAthanFiles()
+void AthanEditor::saveSettings()
 {
     AthanSettings::instance()->setFajrFile(mFajrFile);
     AthanSettings::instance()->setDhurFile(mDuhrFile);
     AthanSettings::instance()->setAsrFile(mAsrFile);
     AthanSettings::instance()->setMaghribFile(mMaghribFile);
     AthanSettings::instance()->setIshaFile(mIshaFile);
+
+    AthanSettings::instance()->setSilentMode(ui->enableSilent->isChecked());
+    AthanSettings::instance()->setPlayDua(ui->playDua->isChecked());
 
     ui->saveButton->setDisabled(true);
 

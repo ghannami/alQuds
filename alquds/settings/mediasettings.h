@@ -12,6 +12,7 @@ private:
     
 public:
     static MediaSettings *instance();
+    ~MediaSettings();
 private:
     static MediaSettings *mInstance;
     QSettings *mSettings;

@@ -27,9 +27,7 @@ UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     connect(ui->updateButton, SIGNAL(clicked()), this, SLOT(onUpdateClicked()));
     connect(ui->laterButton, SIGNAL(clicked()), this, SLOT(onCancelClicked()));
     connect(ui->skipButton, SIGNAL(clicked()), this, SLOT(onSkipClicked()));
-    connect(ui->relaunchButton, SIGNAL(clicked()), mLauncher , SIGNAL(relaunchAll()));
 
-    ui->relaunchButton->setHidden(true);
     ui->successIcon->setHidden(true);
 }
 
@@ -100,19 +98,16 @@ void UpdateWidget::castFileDownloaded(QByteArray xData)
 
 void UpdateWidget::updateFileDownloaded(QByteArray xData)
 {
-    QTemporaryFile file;
-     if (file.open()) {
-         file.write(xData);
-         if(ZipZap::UnzipTo(&file, PathSettings::instance()->updateRootPath().absolutePath()+"/"))
-         {
-             ui->updateButton->setHidden(true);
-             ui->skipButton->setHidden(true);
-             ui->laterButton->setHidden(true);
-             ui->relaunchButton->setVisible(true);
-             ui->successIcon->setVisible(true);
-             return;
-         }
+    QTemporaryFile *file = new QTemporaryFile;
+     if (file->open()) {
+         file->write(xData);
+         ui->updateButton->setHidden(true);
+         ui->skipButton->setHidden(true);
+         ui->laterButton->setHidden(true);
+         ui->successIcon->setVisible(true);
      }
+     emit updateFileDownloaded(file);
+
      close();
 }
 

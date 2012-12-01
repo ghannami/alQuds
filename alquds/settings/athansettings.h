@@ -12,6 +12,7 @@ private:
     
 public:
     static AthanSettings *instance();
+    ~AthanSettings();
     QString fajrFile();
     QString dhurFile();
     QString asrFile();

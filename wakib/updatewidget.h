@@ -5,6 +5,7 @@
 #include <QDomDocument>
 
 class WakibLauncher;
+class QTemporaryFile;
 
 namespace Ui {
 class UpdateWidget;
@@ -29,6 +30,9 @@ public slots:
     void castFileDownloaded(QByteArray xData);
     void updateFileDownloaded(QByteArray xData);
     void updateProgressBar(qint64 bytesReceived, qint64 bytesTotal);
+
+signals:
+    updateFileDownloaded(QTemporaryFile *);
 private:
     Ui::UpdateWidget *ui;
     QString mCastUrl;

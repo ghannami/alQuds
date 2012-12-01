@@ -7,6 +7,14 @@ MediaSettings::MediaSettings(QObject *parent) :
     QObject(parent)
 {
     mSettings = new QSettings("Ghannami","AlQuds");
+    mSettings->beginGroup("MediaSettings");
+
+}
+
+MediaSettings::~MediaSettings()
+{
+    if(mSettings)
+        delete mSettings;
 }
 
 MediaSettings *MediaSettings::instance()

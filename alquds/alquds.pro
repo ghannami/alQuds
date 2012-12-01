@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG  += plugin
-#CONFIG += release
+CONFIG += release
 include(alquds.pri)
 
 SOURCES += \

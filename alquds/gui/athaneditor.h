@@ -17,9 +17,10 @@ public:
     ~AthanEditor();
 
 public slots:
-    void readAthanFiles();
-    void saveAthanFiles();
+    void readSettings();
+    void saveSettings();
     void initAthanFiles();
+    void onFieldsChanged();
 
     void selectIshaFile(int xIndex);
     void selectMaghribFile(int xIndex);

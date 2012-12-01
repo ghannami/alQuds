@@ -12,6 +12,7 @@ private:
 
 public:
     static LocationSettings *instance();
+    ~LocationSettings();
     double latitude();
     double longitude();
     QString city();

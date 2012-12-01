@@ -87,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 #endif
 
+    createTrayIcon();
 }
 
 void MainWindow::setCentralWidget(WinWidget *xCurr)
@@ -102,8 +103,53 @@ void MainWindow::setCentralWidget(WinWidget *xCurr)
     mCurrentWin = xCurr;
 }
 
+void MainWindow::onSystemTrayActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if(reason == QSystemTrayIcon::Trigger)
+        wakeUpWindow();
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     hide();
     event->ignore();
+}
+
+void MainWindow::createTrayIcon()
+{
+    QMenu *trayIconMenu;
+    QAction *minimizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
+    minimizeAction = new QAction("Minimizar", this);
+    restoreAction = new QAction("Restaurar", this);
+    quitAction = new QAction("Quit", this);
+
+    connect (minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+    connect (restoreAction, SIGNAL(triggered()),this,SLOT(showNormal()));
+    connect (quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction (minimizeAction);
+    trayIconMenu->addAction (restoreAction);
+    trayIconMenu->addAction (quitAction);
+    QSystemTrayIcon* systray = new QSystemTrayIcon(this);
+    QIcon icon(":/icons/48/kubbetussahra.png");
+    systray->setIcon(icon);
+    systray->setContextMenu (trayIconMenu);
+    systray->show();
+    connect(systray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(onSystemTrayActivated(QSystemTrayIcon::ActivationReason)));
+
+#ifdef Q_WS_MACX
+    extern void qt_mac_set_dock_menu(QMenu*);
+    qt_mac_set_dock_menu(trayIconMenu);
+#endif
+
+}
+
+void MainWindow::wakeUpWindow()
+{
+    setWindowState(windowState() & ~Qt::WindowMinimized);
+    raise();
+    activateWindow();
+    showNormal();
 }

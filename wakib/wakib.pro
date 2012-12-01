@@ -1,6 +1,6 @@
 TEMPLATE  = lib
 CONFIG   += plugin
-#CONFIG   += release
+CONFIG   += release
 
 SOURCES += \
     wakiblauncher.cpp
@@ -13,22 +13,21 @@ include(../badi/badi.pri)
 include(../alquds/alquds.pri)
 include($$[QT_INSTALL_PREFIX]/src/3rdparty/zlib.pri)
 
-mac:LIBS +=/opt/local/lib/libquazip.dylib
-
 win32{
 INCLUDEPATH +=$$PWD/../third-party/win/quazip/include
-debug{
-    LIBS+=-L$$PWD/../third-party/win/quazip/lib
-    LIBS+=-lquazipd1
-}
 
-release{
+    CONFIG(release, debug|release){
     LIBS+=-L$$PWD/../third-party/win/quazip/lib
     LIBS+=-lquazip1
-}
+    }
+    CONFIG(debug, debug|release){
+    LIBS+=-L$$PWD/../third-party/win/quazip/lib
+    LIBS+=-lquazipd1
+    }
+
     DESTDIR = $$PWD/../install/plugins
 }
-
 unix{
     DESTDIR = $$PWD/../install/alquds.app/Contents/plugins
 }
+mac:LIBS +=/opt/local/lib/libquazip.dylib

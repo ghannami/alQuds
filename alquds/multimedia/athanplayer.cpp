@@ -18,13 +18,14 @@ AthanPlayer::AthanPlayer(QObject *parent):
 
 void AthanPlayer::playAthan(PrayerTimes::TimeID xTime)
 {
+    stopAthan();
+
     qDebug()<<"AthanPlayer::playAthan "<<mFileList[xTime];
     //QMediaContent tContent(QUrl::fromLocalFile("/Volumes/Data/iDevelop/Git-Projects/Alquds/src/mp3/athan.mp3"));
     QUrl url(mFileList[xTime]);
     QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);
+    mPlayer->setMedia(tContent);    
     mPlayer->play();
-
 }
 
 void AthanPlayer::stopAthan()
@@ -35,52 +36,27 @@ void AthanPlayer::stopAthan()
 
 void AthanPlayer::playFajrAthan()
 {
-    stopAthan();
-    QUrl url(mFileList[PrayerTimes::Fajr]);
-    QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);
-    mPlayer->play();
-
+    playAthan(PrayerTimes::Fajr);
 }
 
 void AthanPlayer::playDhurAthan()
 {
-    stopAthan();
-    QUrl url(mFileList[PrayerTimes::Dhuhr]);
-    QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);
-    mPlayer->play();
-
+    playAthan(PrayerTimes::Dhuhr);
 }
 
 void AthanPlayer::playAsrAthan()
 {
-    stopAthan();
-    QUrl url(mFileList[PrayerTimes::Asr]);
-    QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);
-    mPlayer->play();
-
+    playAthan(PrayerTimes::Asr);
 }
 
 void AthanPlayer::playMaghribAthan()
 {
-    stopAthan();
-    QUrl url(mFileList[PrayerTimes::Maghrib]);
-    QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);
-    mPlayer->play();
-
+    playAthan(PrayerTimes::Maghrib);
 }
 
 void AthanPlayer::playIshaAthan()
 {
-    stopAthan();
-    QUrl url(mFileList[PrayerTimes::Isha]);
-    QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);
-    mPlayer->play();
-
+    playAthan(PrayerTimes::Isha);
 }
 
 void AthanPlayer::updateAthanFiles()

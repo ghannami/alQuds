@@ -8,6 +8,8 @@ LocationSettings *LocationSettings::mInstance = 0;
 LocationSettings::LocationSettings()
 {
     mSettings = new QSettings("Ghannami","AlQuds");
+
+    mSettings->beginGroup("LocationSettings");
     if(mSettings->value("location/configured").isNull())
     {
         mSettings->setValue("location/latitude",21.408966);
@@ -25,6 +27,13 @@ LocationSettings::LocationSettings()
         mSettings->setValue("prayerConfig/dhuhrMinutes", 0);
         mSettings->setValue("prayerConfig/configured", true);
     }
+
+}
+
+LocationSettings::~LocationSettings()
+{
+    if(mSettings)
+        delete mSettings;
 }
 
 LocationSettings *LocationSettings::instance()

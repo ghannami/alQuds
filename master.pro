@@ -7,6 +7,7 @@ SUBDIRS	    = alquds \
               badi \
               wakib \
               app
+CONFIG += release
 
 #DESTDIR = $$PWD/install
 

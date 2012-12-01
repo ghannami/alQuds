@@ -1,5 +1,6 @@
 #include "mediamanager.h"
 #include "athanplayer.h"
+#include "../settings/athansettings.h"
 
 MediaManager *MediaManager::mInstance = 0;
 
@@ -18,5 +19,8 @@ MediaManager *MediaManager::instance()
 
 void MediaManager::playAthan(PrayerTimes::TimeID xTime)
 {
+    if(AthanSettings::instance()->silentMode())
+        return;
+
     mAthanPlayer->playAthan(xTime);
 }

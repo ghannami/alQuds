@@ -12,21 +12,29 @@ AthanSettings::AthanSettings(QObject *parent) :
 {
     mSettings = new QSettings("Ghannami","AlQuds");
 
-    if(mSettings->value("athan/configured").isNull() || mSettings->value("athan/configure").toBool() == false)
+    mSettings->beginGroup("AthanSettings");
+
+    if(mSettings->value("athan/configured").isNull() || mSettings->value("athan/configured").toBool() == false)
     {
         QString fileUrl(PathSettings::instance()->audioPath().absoluteFilePath("athan.mp3"));
         QString fileUrlFajr(PathSettings::instance()->audioPath().absoluteFilePath("athan-fajer.mp3"));
 
-        mSettings->setValue("athan/fajrfile", QUrl::fromLocalFile(fileUrlFajr).toString());
-        mSettings->setValue("athan/dhurfile", QUrl::fromLocalFile(fileUrl).toString());
-        mSettings->setValue("athan/asrfile", QUrl::fromLocalFile(fileUrl).toString());
-        mSettings->setValue("athan/maghribfile", QUrl::fromLocalFile(fileUrl).toString());
-        mSettings->setValue("athan/ishafile", QUrl::fromLocalFile(fileUrl).toString());
+        mSettings->setValue("athan/fajrfile", fileUrlFajr);
+        mSettings->setValue("athan/dhurfile", fileUrl);
+        mSettings->setValue("athan/asrfile", fileUrl);
+        mSettings->setValue("athan/maghribfile", fileUrl);
+        mSettings->setValue("athan/ishafile", fileUrl);
         mSettings->setValue("athan/silentmode",false);
         mSettings->setValue("athan/playdua",true);
 
         mSettings->setValue("athan/configured", true);
     }
+}
+
+AthanSettings::~AthanSettings()
+{
+    if(mSettings)
+        delete mSettings;
 }
 
 AthanSettings *AthanSettings::instance()
@@ -76,6 +84,7 @@ void AthanSettings::setDhurFile(QString xFile)
 void AthanSettings::setAsrFile(QString xFile)
 {
     mSettings->setValue("athan/asrfile", xFile);
+    qDebug()<<"AthanSettings::setAsrFile "<<xFile;
     emit prayerFilesChanged();
 }
 
