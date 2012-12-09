@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG  += plugin
-CONFIG += release
+#CONFIG += release
 include(alquds.pri)
 
 SOURCES += \
@@ -8,3 +8,6 @@ SOURCES += \
 
 HEADERS += \
     ../alquds/alqudslauncher.h
+
+win32:DESTDIR = $$PWD/../install/plugins
+unix:DESTDIR = $$PWD/../install/alquds.app/Contents/plugins

@@ -87,7 +87,7 @@ void Application::copyFolder(const QString& sourceFolder,const QString& destFold
 
 bool Application::removeDir(QDir dir)
 {
-    if ( not dir.exists() )
+    if ( ! dir.exists() )
         return false;
 
     foreach ( QFileInfo fi,

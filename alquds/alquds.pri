@@ -83,14 +83,11 @@ win32{
         LIBS+=-LC:/QtMobility/lib
         LIBS+=-lQtMultimediaKitd1
     }
-
-    DESTDIR = $$PWD/../install/plugins
 }
 
 unix{
     INCLUDEPATH += /opt/local/include/QtMultimediaKit
     INCLUDEPATH += /opt/local/include/QtMobility
-    DESTDIR = $$PWD/../install/alquds.app/Contents/plugins
 
     QT_MOBILITY_PREFIX = /Users/ghannami/ghannamis-qt-mobility/install
     QT_MOBILITY_INCLUDE = /Users/ghannami/ghannamis-qt-mobility/install/include

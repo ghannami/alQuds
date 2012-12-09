@@ -5,6 +5,7 @@
 #define V_VER_BUILD 1
 
 
+
 #define V_VERSION QString("%1.%2.%3").arg(V_VER_MAJOR).arg(V_VER_MINOR).arg(V_VER_BUILD)
 #define ALQUDS_VERSION QString("AlQuds v. %1").arg(V_VERSION)
 #define V_DATE "2012-11-18"
