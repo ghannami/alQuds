@@ -31,8 +31,6 @@ public slots:
     void updateFileDownloaded(QByteArray xData);
     void updateProgressBar(qint64 bytesReceived, qint64 bytesTotal);
 
-signals:
-    updateFileDownloaded(QTemporaryFile *);
 private:
     Ui::UpdateWidget *ui;
     QString mCastUrl;
