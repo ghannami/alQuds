@@ -38,39 +38,59 @@ QDir PathSettings::pluginsPath()
 
 QDir PathSettings::audioPath()
 {
-    QDir pluginsDir(qApp->applicationDirPath());
+    QDir tDir(qApp->applicationDirPath());
 
 #if defined(Q_OS_WIN)
-    pluginsDir.cd("audio");
+    tDir.cd("audio");
 #elif defined(Q_OS_MAC)
-    if (pluginsDir.dirName() == "MacOS") {
-        pluginsDir.cdUp();
-        pluginsDir.cd("audio");
+    if (tDir.dirName() == "MacOS") {
+        tDir.cdUp();
+        tDir.cd("audio");
     }
     else{
-        pluginsDir.cd(qApp->applicationName()+".app");
-        pluginsDir.cd("Contents");
-        pluginsDir.cd("audio");
+        tDir.cd(qApp->applicationName()+".app");
+        tDir.cd("Contents");
+        tDir.cd("audio");
     }
 #endif
-    return pluginsDir;
+    return tDir;
 
 }
 
-QDir PathSettings::updateRootPath()
+QDir PathSettings::installationRootPath()
 {
-    QDir pluginsDir(qApp->applicationDirPath());
+    QDir tDir(qApp->applicationDirPath());
 
 #if defined(Q_OS_WIN)
 
 #elif defined(Q_OS_MAC)
-    if (pluginsDir.dirName() == "MacOS") {
-        pluginsDir.cdUp();
+    if (tDir.dirName() == "MacOS") {
+        tDir.cdUp();
+        tDir.cdUp();
     }
     else{
-        pluginsDir.cd(qApp->applicationName()+".app");
-        pluginsDir.cd("Contents");
+        tDir.cd(qApp->applicationName()+".app");
+        //tDir.cd("Contents");
     }
 #endif
-    return pluginsDir;
+    return tDir;
+}
+
+QDir PathSettings::updateFilesPath()
+{
+    QDir tDir(qApp->applicationDirPath());
+
+#if defined(Q_OS_WIN)
+
+#elif defined(Q_OS_MAC)
+    if (tDir.dirName() == "MacOS") {
+        tDir.cdUp();
+    }
+    else{
+        tDir.cd(qApp->applicationName()+".app");
+        tDir.cd("Contents");
+    }
+#endif
+    qDebug()<<QDir(tDir.absolutePath()+"/update").absolutePath();
+    return QDir(tDir.absolutePath()+"/update");
 }

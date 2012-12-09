@@ -1,6 +1,7 @@
 #include "pluginloaderlauncher.h"
 #include <QtPlugin>
 #include "pluginloader.h"
+#include "application.h"
 
 PluginLoaderLauncher::PluginLoaderLauncher()
 {
@@ -18,4 +19,4 @@ void PluginLoaderLauncher::activateWindow()
     mPluginLoader->activateWindow();
 }
 
-Q_EXPORT_PLUGIN2(pluginloaderlauncher, PluginLoaderLauncher);
+//Q_EXPORT_PLUGIN2(pluginloaderlauncher, PluginLoaderLauncher);

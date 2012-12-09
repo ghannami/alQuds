@@ -1,39 +1,26 @@
-#include <qtsingleapplication.h>
-#include "app.h"
+#include "../badi/application.h"
+#include "../badi/applicationplugin.h"
+#include "../badi/pluginloader.h"
 
-class Application : public QtSingleApplication
-{
-public:
-
-    Application(int argc, char **argv)
-        :QtSingleApplication(argc,argv)
-    {
-        myApp = new App();
-        myApp->laodApplication();
-        QObject::connect(this, SIGNAL(messageReceived(const QString&)),
-                         myApp, SLOT(activeApplication()));
-    }
-
-    bool event(QEvent *event)
-    {
-        switch (event->type()) {
-        case QEvent::ApplicationActivate:
-            myApp->activeApplication();
-        default:
-            return QtSingleApplication::event(event);
-        }
-    }
-
-private:
-    App *myApp;
-};
 
 int main(int argc, char **argv)
 {
-    Application instance(argc, argv);
-    if (instance.sendMessage("Wake up!"))
-        return 0;
-    return instance.exec();
+    QtSingleApplication *app = new QtSingleApplication(argc, argv);
+    PluginLoader pluginLoader;
+    QObject *plugin = pluginLoader.loadLauncher("badi");
+    if(plugin)
+    {
+        ApplicationPlugin *appPlugin = dynamic_cast<ApplicationPlugin *>(plugin);
+        app->closeAllWindows();
+        delete app;
+        app = appPlugin->createApplication(argc, argv);
+        if(app)
+        {
+            if (app->sendMessage("Wake up!"))
+                return 0;
+            return app->exec();
+        }
+    }
 }
 //int main(int argc, char **argv)
 //{

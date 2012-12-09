@@ -12,6 +12,7 @@ include(wakib.pri)
 include(../badi/badi.pri)
 include(../alquds/alquds.pri)
 include($$[QT_INSTALL_PREFIX]/src/3rdparty/zlib.pri)
+include(../../3rdparty/qt-solutions/qtsingleapplication/src/qtsingleapplication.pri)
 
 win32{
 INCLUDEPATH +=$$PWD/../third-party/win/quazip/include

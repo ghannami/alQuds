@@ -15,7 +15,7 @@ PluginLoader::PluginLoader(QObject *parent)
     mAlquds = 0;
 }
 
-void PluginLoader::loadLauncher(QString fileName)
+QObject* PluginLoader::loadLauncher(QString fileName)
 {
     QString tFileName = fileName;
 
@@ -26,6 +26,7 @@ void PluginLoader::loadLauncher(QString fileName)
 #endif
 
     setFileName(PathSettings::instance()->pluginsPath().absoluteFilePath(tFileName));
+//    qDebug()<<PathSettings::instance()->pluginsPath().absoluteFilePath(tFileName);
     if(!load())
     {
         QMessageBox *msg = new QMessageBox();
@@ -46,6 +47,7 @@ void PluginLoader::loadLauncher(QString fileName)
                 mAlquds = launcher;
         }
     }
+    return plugin;
 }
 
 void PluginLoader::activateWindow()

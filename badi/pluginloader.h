@@ -10,7 +10,7 @@ class PluginLoader : public QPluginLoader
 
 public:
     PluginLoader(QObject *parent = 0);
-    void loadLauncher(QString fileName);
+    QObject *loadLauncher(QString fileName);
 
 public slots:
     void activateWindow();

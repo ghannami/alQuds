@@ -29,6 +29,7 @@ UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     connect(ui->skipButton, SIGNAL(clicked()), this, SLOT(onSkipClicked()));
 
     ui->successIcon->setHidden(true);
+    setWindowTitle(tr("Alquds updater v. %1").arg(V_VERSION));
 }
 
 UpdateWidget::~UpdateWidget()
@@ -98,6 +99,7 @@ void UpdateWidget::castFileDownloaded(QByteArray xData)
 
 void UpdateWidget::updateFileDownloaded(QByteArray xData)
 {
+<<<<<<< HEAD
     QTemporaryFile *file = new QTemporaryFile;
      if (file->open()) {
          file->write(xData);
@@ -105,6 +107,20 @@ void UpdateWidget::updateFileDownloaded(QByteArray xData)
          ui->skipButton->setHidden(true);
          ui->laterButton->setHidden(true);
          ui->successIcon->setVisible(true);
+=======
+    QTemporaryFile file;
+     if (file.open()) {
+         file.write(xData);
+         if(ZipZap::UnzipTo(&file, PathSettings::instance()->updateFilesPath().absolutePath()+"/"))
+         {
+             ui->updateButton->setHidden(true);
+             ui->skipButton->setHidden(true);
+             ui->laterButton->setHidden(true);
+             ui->relaunchButton->setVisible(true);
+             ui->successIcon->setVisible(true);
+             return;
+         }
+>>>>>>> Fixed start application and install updates
      }
      emit updateFileDownloaded(file);
 

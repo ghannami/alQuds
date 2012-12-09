@@ -3,6 +3,7 @@
 #include <QObject>
 #include "launcher.h"
 
+class Application;
 
 class PluginLoaderLauncher : public QObject, public Launcher
 {

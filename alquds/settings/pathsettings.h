@@ -14,7 +14,9 @@ public:
     static PathSettings *instance();
     QDir pluginsPath();
     QDir audioPath();
-    QDir updateRootPath();
+    QDir installationRootPath();
+    QDir updateFilesPath();
+
 private:
     static PathSettings *mInstance;
     QSettings *mSettings;
