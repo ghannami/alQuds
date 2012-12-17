@@ -6,99 +6,129 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
-    <height>130</height>
+    <width>459</width>
+    <height>110</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Badi the updatemanager</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="QLabel" name="titelLabel">
-     <property name="text">
-      <string>Titel</string>
+    <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
      </property>
-     <property name="wordWrap">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../alquds/src/icons.qrc">:/icons/128/update.png</pixmap>
+     </property>
+     <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="descriptionLabel">
-     <property name="text">
-      <string>Description</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>24</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="skipButton">
+      <widget class="QLabel" name="titelLabel">
        <property name="text">
-        <string>skip this version</string>
+        <string>Titel</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="successIcon">
+      <widget class="QLabel" name="descriptionLabel">
        <property name="text">
-        <string/>
+        <string>Description</string>
        </property>
-       <property name="pixmap">
-        <pixmap resource="../alquds/src/main.qrc">:/icons/12/active.png</pixmap>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="relaunchButton">
-       <property name="text">
-        <string>relaunch</string>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>24</number>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="laterButton">
-       <property name="text">
-        <string>later</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="updateButton">
-       <property name="text">
-        <string>update</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="skipButton">
+         <property name="text">
+          <string>skip this version</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="successIcon">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../alquds/src/main.qrc">:/icons/12/active.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="relaunchButton">
+         <property name="text">
+          <string>relaunch</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="laterButton">
+         <property name="text">
+          <string>later</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="updateButton">
+         <property name="text">
+          <string>update</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
  <resources>
+  <include location="../alquds/src/icons.qrc"/>
+  <include location="../alquds/src/main.qrc"/>
+  <include location="../alquds/src/icons.qrc"/>
+  <include location="../alquds/src/main.qrc"/>
+  <include location="../alquds/src/icons.qrc"/>
+  <include location="../alquds/src/main.qrc"/>
+  <include location="../alquds/src/icons.qrc"/>
   <include location="../alquds/src/main.qrc"/>
  </resources>
  <connections/>

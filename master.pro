@@ -1,13 +1,14 @@
 #! [0]
 
 macx:ICON = $${PWD}/mac.icns
+RC_FILE = winapp.rc
 
 TEMPLATE    = subdirs
 SUBDIRS	    = alquds \
               badi \
               wakib \
               app
-CONFIG += release
+#CONFIG += release
 
 #DESTDIR = $$PWD/install
 

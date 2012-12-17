@@ -55,9 +55,8 @@ bool UpdateWidget::isUpdateAvailable(QDomDocument xDoc)
 
 void UpdateWidget::closeEvent(QCloseEvent *event)
 {
-    hide();
-    event->ignore();
     mLauncher->launchAlquds();
+    QWidget::closeEvent(event);
 }
 
 void UpdateWidget::onUpdateClicked()

@@ -16,8 +16,8 @@ AthanSettings::AthanSettings(QObject *parent) :
 
     if(mSettings->value("athan/configured").isNull() || mSettings->value("athan/configured").toBool() == false)
     {
-        QString fileUrl(PathSettings::instance()->audioPath().absoluteFilePath("athan.mp3"));
-        QString fileUrlFajr(PathSettings::instance()->audioPath().absoluteFilePath("athan-fajer.mp3"));
+        QString fileUrl    (PathSettings::instance()->audioPath().absoluteFilePath("zahrani.mp3"));
+        QString fileUrlFajr(PathSettings::instance()->audioPath().absoluteFilePath("zahrani-fajr.mp3"));
 
         mSettings->setValue("athan/fajrfile", fileUrlFajr);
         mSettings->setValue("athan/dhurfile", fileUrl);
@@ -68,6 +68,7 @@ QString AthanSettings::ishaFile()
 {
     return mSettings->value("athan/ishafile").toString();
 }
+
 
 void AthanSettings::setFajrFile(QString xFile)
 {

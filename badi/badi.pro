@@ -21,8 +21,8 @@ SOURCES += \
 
 
 win32{
-    DESTDIR = $$PWD/../install/plugins
+    DESTDIR = $$PWD/../install-$$QT_VERSION/plugins
 }
 unix{
-    DESTDIR = $$PWD/../install/alquds.app/Contents/plugins
+    DESTDIR = $$PWD/../install-$$QT_VERSION/alquds.app/Contents/plugins
 }

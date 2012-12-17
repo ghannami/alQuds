@@ -2,7 +2,7 @@
 
 #define V_VER_MAJOR 1
 #define V_VER_MINOR 0
-#define V_VER_BUILD 1
+#define V_VER_BUILD 2
 
 
 

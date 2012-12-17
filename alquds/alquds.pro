@@ -9,5 +9,5 @@ SOURCES += \
 HEADERS += \
     ../alquds/alqudslauncher.h
 
-win32:DESTDIR = $$PWD/../install/plugins
-unix:DESTDIR = $$PWD/../install/alquds.app/Contents/plugins
+win32:DESTDIR = $$PWD/../install-$$QT_VERSION/plugins
+unix:DESTDIR = $$PWD/../install-$$QT_VERSION/alquds.app/Contents/plugins
