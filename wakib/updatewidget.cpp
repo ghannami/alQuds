@@ -15,10 +15,10 @@ UpdateWidget::UpdateWidget(WakibLauncher *launcher) :
     //ui->progressBar->setHidden(true);
 
 #if defined(Q_OS_WIN)
-    mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/wincast.xml";
+    mCastUrl = "http://alquds.googlecode.com/files/wincast.xml";
 
 #elif defined(Q_OS_MAC)
-    mCastUrl = "http://cloud.github.com/downloads/ghannami/Alquds/maccast.xml";
+    mCastUrl = "http://alquds.googlecode.com/files/maccast.xml";
 #endif
 
     DownloadManager *request = new DownloadManager;
@@ -92,7 +92,7 @@ void UpdateWidget::castFileDownloaded(QByteArray xData)
     ui->titelLabel->setText("<b>"+tDoc.firstChildElement().firstChildElement().firstChildElement("title").text()+"</b>");
     ui->descriptionLabel->setText(tDoc.firstChildElement().firstChildElement().firstChildElement("description").text());
 
-    mUpdateFileUrl = "http://cloud.github.com/downloads/ghannami/Alquds/";
+    mUpdateFileUrl = "http://alquds.googlecode.com/files/";
     mUpdateFileUrl += tDoc.firstChildElement().firstChildElement().firstChildElement("downloads").firstChildElement("file").firstChildElement("name").text().trimmed();
     if(!isUpdateAvailable(tDoc))
         close();

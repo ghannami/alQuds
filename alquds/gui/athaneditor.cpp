@@ -2,11 +2,12 @@
 #include "ui_athaneditor.h"
 #include "../settings/athansettings.h"
 #include <QtGui>
+#include <QtWidgets>
 #include "../prayertimes/prayertimes.hpp"
 #include "../multimedia/athanplayer.h"
 
 AthanEditor::AthanEditor(QWidget *parent) :
-    QWidget(parent),
+    WinWidget(parent),
     ui(new Ui::AthanEditor)
 {
     ui->setupUi(this);

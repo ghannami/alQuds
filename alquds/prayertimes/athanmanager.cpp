@@ -1,8 +1,8 @@
 #include "athanmanager.h"
 #include "location.h"
 #include "prayertimes.hpp"
-#include "../settings/locationsettings.h"
-#include "../multimedia/mediamanager.h"
+#include "locationsettings.h"
+#include "mediamanager.h"
 #include <QDebug>
 
 AthanManager::AthanManager(QObject *parent)
@@ -11,12 +11,15 @@ AthanManager::AthanManager(QObject *parent)
     mLocation = new Location(this);
 
     mOneSecondTimer = new QTimer(this);
+    mItsPrayerTimer = new QTimer(this);
 
     connect(this, SIGNAL(athanTime(PrayerTimes::TimeID)), MediaManager::instance(), SLOT(playAthan(PrayerTimes::TimeID)));
 
     connect(mOneSecondTimer, SIGNAL(timeout()), this,  SLOT(oneSecondTimeOut()));
     mNextPrayer = nextPrayerTime();
     mOneSecondTimer->start(1000);
+
+    connect(mItsPrayerTimer, SIGNAL(timeout()), this , SLOT(onItsPrayerTimeOut()));
 }
 
 QTime AthanManager::getFajr()
@@ -85,17 +88,25 @@ void AthanManager::oneSecondTimeOut()
     QTime untilTime = untilNextPrayer();
     int diff = start.secsTo(untilTime);
 
-    if(diff == 0)
+    if(diff == 1)
     {
-        emit athanTime(mNextPrayer);
+        itsPrayerTime();
     }
-    else emit updateUntilNextTime(untilTime);
+    else
+    {
+        emit updateUntilNextTime(untilTime);
+    }
 
     if(mNextPrayer != nextPrayerTime())
     {
         mNextPrayer = nextPrayerTime();
         emit updateNextPrayer(mNextPrayer);
     }
+}
+
+void AthanManager::onItsPrayerTimeOut()
+{
+    mOneSecondTimer->start(1000);
 }
 
 QTime AthanManager::untilNextPrayer()
@@ -117,4 +128,11 @@ QString AthanManager::prayerTimeByName(PrayerTimes::TimeID xTimeID)
         return tr("Maghrib");
     else if(xTimeID == PrayerTimes::Isha)
         return tr("Isha");
+}
+
+void AthanManager::itsPrayerTime()
+{
+    emit athanTime(mNextPrayer);
+    mOneSecondTimer->stop();
+    mItsPrayerTimer->start(20 * 60 * 1000);
 }

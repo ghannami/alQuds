@@ -1,14 +1,14 @@
 #ifndef ATHANEDITOR_H
 #define ATHANEDITOR_H
 
-#include <QWidget>
+#include "winwidget.h"
 
 namespace Ui {
 class AthanEditor;
 }
 class AthanPlayer;
 
-class AthanEditor : public QWidget
+class AthanEditor : public WinWidget
 {
     Q_OBJECT
     

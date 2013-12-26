@@ -15,6 +15,19 @@ include(../../3rdparty/qt-solutions/qtsingleapplication/src/qtsingleapplication.
 include(../badi/badiplugin.pri)
 include(../alquds/alquds.pri)
 
-DESTDIR = $$PWD/../install-$$QT_VERSION
+#DESTDIR = $$PWD/../install-$$QT_VERSION
 
-HEADERS +=
+win32{
+    CONFIG(debug, debug|release) {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_debug
+    } else {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_release
+    }
+}
+unix{
+    CONFIG(debug, debug|release) {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_debug
+    } else {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_release
+    }
+}

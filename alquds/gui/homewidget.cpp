@@ -1,8 +1,8 @@
 #include "homewidget.h"
 #include "ui_homewidget.h"
-#include "../prayertimes/athanmanager.h"
-#include "../settings/locationsettings.h"
-#include "../webservices/wathakkerservice.h"
+#include "athanmanager.h"
+#include "locationsettings.h"
+#include "wathakkerservice.h"
 
 HomeWidget::HomeWidget(QWidget *parent) :
     WinWidget(parent),
@@ -14,6 +14,7 @@ HomeWidget::HomeWidget(QWidget *parent) :
     connect(LocationSettings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(updateTimes()));
     connect(mAthanManager, SIGNAL(updateNextPrayer(PrayerTimes::TimeID)), this, SLOT(updateNextPrayerTime(PrayerTimes::TimeID)));
     connect(mAthanManager, SIGNAL(updateUntilNextTime(QTime)), this, SLOT(updateUntilNextTime(QTime)));
+    connect(mAthanManager, SIGNAL(athanTime(PrayerTimes::TimeID)), this, SLOT(itsPrayerTime(PrayerTimes::TimeID)));
 
     mPrayerLabels.insert(PrayerTimes::Fajr, ui->fajrLabel);
     mPrayerLabels.insert(PrayerTimes::Dhuhr, ui->dhurLabel);
@@ -61,11 +62,14 @@ void HomeWidget::updateTimes()
 
 void HomeWidget::updateNextPrayerTime(PrayerTimes::TimeID xTimeID)
 {
+    ui->nextPrayerLabel->setStyleSheet("font:8pt;");
+
+
     foreach(QLabel *label, mPrayerLabels)
         label->setFont(QFont());
     foreach(QLabel *label, mPrayerTimesLabels)
         label->setFont(QFont());
-    ui->nextPrayerLabel->setText(tr("The Next prayer is")+": "+ mAthanManager->prayerTimeByName(xTimeID)+" " +mAthanManager->nextPrayerTime());
+    ui->nextPrayerLabel->setText(tr("The Next prayer is")+": "+ mAthanManager->prayerTimeByName(xTimeID)+ " " +mAthanManager->nextPrayerTime());
     QFont font;
     font.setBold(true);
     mPrayerLabels.value(xTimeID)->setFont(font);
@@ -90,4 +94,12 @@ void HomeWidget::updateServiceContent(QDomDocument xDoc)
         ui->serviceContent->setText(xDoc.firstChildElement().firstChildElement("content").text());
         ui->serviceBox->setVisible(true);
     }
+}
+
+void HomeWidget::itsPrayerTime(PrayerTimes::TimeID xTimeID)
+{
+    ui->nextPrayerLabel->setStyleSheet("font:10pt;");
+
+    ui->nextPrayerLabel->setText(tr("it´s ")+ mAthanManager->prayerTimeByName(xTimeID)+ tr(" prayer time"));
+    ui->untiTimeLabel->setText("");
 }

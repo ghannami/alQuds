@@ -26,9 +26,11 @@ public:
 
     QTime untilNextPrayer();
     static QString prayerTimeByName(PrayerTimes::TimeID xTimeID);
+    void itsPrayerTime();
 
 public slots:
     void oneSecondTimeOut();
+    void onItsPrayerTimeOut();
 
 signals:
     void updateNextPrayer(PrayerTimes::TimeID);
@@ -38,6 +40,7 @@ signals:
 private:
     Location *mLocation;
     QTimer *mOneSecondTimer;
+    QTimer *mItsPrayerTimer;
     PrayerTimes::TimeID mNextPrayer;
 };
 

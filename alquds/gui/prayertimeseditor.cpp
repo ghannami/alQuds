@@ -1,7 +1,8 @@
 #include "prayertimeseditor.h"
 #include "ui_prayertimeseditor.h"
-#include "../settings/locationsettings.h"
-#include "../prayertimes/prayertimes.hpp"
+#include "locationsettings.h"
+#include "prayertimes.hpp"
+#include "generalsettings.h"
 
 PrayerTimesEditor::PrayerTimesEditor(QWidget *parent) :
     WinWidget(parent),
@@ -15,6 +16,8 @@ PrayerTimesEditor::PrayerTimesEditor(QWidget *parent) :
     connect(ui->asrMethEdit, SIGNAL(currentIndexChanged(int)), this, SLOT(onFieldChanged()));
     connect(ui->calcMethEdit, SIGNAL(currentIndexChanged(int)), this, SLOT(onFieldChanged()));
     connect(ui->dhurMinutesEdit, SIGNAL(valueChanged(double)), this, SLOT(onFieldChanged()));
+    ui->startWithSys->setChecked(GeneralSettings::instance()->startWithSystem());
+    connect(ui->startWithSys, SIGNAL(toggled(bool)), this, SLOT(onStartWithSysChanged(bool)));
 }
 
 PrayerTimesEditor::~PrayerTimesEditor()
@@ -60,10 +63,18 @@ void PrayerTimesEditor::saveSettings()
     LocationSettings::instance()->setAdjustingMethod(ui->adjMethEdit->itemData(ui->adjMethEdit->currentIndex()).toInt());
     LocationSettings::instance()->setAsrMethod(ui->asrMethEdit->itemData(ui->asrMethEdit->currentIndex()).toInt());
     LocationSettings::instance()->setDhuhrMinutes(ui->dhurMinutesEdit->value());
+    GeneralSettings::instance()->setStartWithSystem(ui->startWithSys->isChecked());
+
     ui->saveButton->setDisabled(true);
 }
 
 void PrayerTimesEditor::onFieldChanged()
 {
+    ui->saveButton->setEnabled(true);
+}
+
+void PrayerTimesEditor::onStartWithSysChanged(bool v)
+{
+    //GeneralSettings::instance()->setStartWithSystem(v);
     ui->saveButton->setEnabled(true);
 }

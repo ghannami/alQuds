@@ -1,1 +1,39 @@
-IDI_ICON1               ICON    DISCARDABLE     "win.ico"
+appicon ICON "win.ico"
+
+#include <winver.h>
+
+// Get updates from this appcast feed:
+FeedURL     APPCAST     {"http://alquds.googlecode.com/files/wincast.xml"}
+
+// Version information; this, too, is used by WinSparkle
+1 VERSIONINFO
+ FILEVERSION     1,1,0,0
+ PRODUCTVERSION  1,1,0,0
+ FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+ FILEFLAGS       0
+ FILEOS          VOS_NT_WINDOWS32
+ FILETYPE        VFT_APP
+ FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0" // US English, Unicode
+        BEGIN
+            VALUE "Comments", "Alquds Athan app."
+            VALUE "CompanyName", "ndalus.com\0"
+            VALUE "FileDescription", "Alquds Athan\0"
+            VALUE "FileVersion", "1.1\0"
+            VALUE "InternalName", "alquds\0"
+            VALUE "OriginalFilename", "alquds.exe\0"
+            VALUE "LegalCopyright", "GPL v.3\0"
+            VALUE "ProductName", "Alquds Athan\0"
+            VALUE "ProductVersion", "1.1\0"
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
+

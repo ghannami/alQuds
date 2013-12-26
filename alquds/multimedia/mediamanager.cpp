@@ -23,4 +23,6 @@ void MediaManager::playAthan(PrayerTimes::TimeID xTime)
         return;
 
     mAthanPlayer->playAthan(xTime);
+
+    qDebug()<<"MediaManager::playAthan ";
 }

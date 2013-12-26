@@ -27,6 +27,7 @@ public slots:
     void updateNextPrayerTime(PrayerTimes::TimeID xTimeID);
     void updateLocation();
     void updateServiceContent(QDomDocument xDoc);
+    void itsPrayerTime(PrayerTimes::TimeID xTimeID);
 
 private:
     Ui::HomeWidget *ui;

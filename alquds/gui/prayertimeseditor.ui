@@ -6,61 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>286</width>
-    <height>233</height>
+    <width>352</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Prayer Settings</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>12</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>12</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QGroupBox" name="advancedBox">
      <property name="title">
       <string>Prayer Configuration</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="calcMethEdit"/>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="adjMethEdit"/>
-      </item>
-      <item row="4" column="0">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Dhuhr Adjustment</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="asrMethEdit"/>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
@@ -75,6 +34,25 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="asrMethEdit"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Dhuhr Adjustment</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="adjMethEdit"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="calcMethEdit"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QDoubleSpinBox" name="dhurMinutesEdit"/>
+      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
@@ -82,13 +60,9 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QDoubleSpinBox" name="dhurMinutesEdit"/>
-      </item>
      </layout>
      <zorder>label_5</zorder>
      <zorder>label_6</zorder>
-     <zorder>verticalSpacer</zorder>
      <zorder>calcMethEdit</zorder>
      <zorder>adjMethEdit</zorder>
      <zorder>label_8</zorder>
@@ -96,6 +70,35 @@
      <zorder>label_9</zorder>
      <zorder>dhurMinutesEdit</zorder>
     </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>General</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="startWithSys">
+        <property name="text">
+         <string>Start with system</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_6">

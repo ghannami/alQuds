@@ -2,6 +2,7 @@
 #define ATHANPLAYER_H
 #include "../prayertimes/prayertimes.hpp"
 #include "playerinterface.h"
+#include <QMediaPlayer>
 
 class MediaPlayer;
 
@@ -21,6 +22,8 @@ public slots:
     void playMaghribAthan();
     void playIshaAthan();
     void stopAthan();
+    void onError(QMediaPlayer::Error);
+
 private:
     MediaPlayer *mPlayer;
     QString mFileList[PrayerTimes::TimesCount];

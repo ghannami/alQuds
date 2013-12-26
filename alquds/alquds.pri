@@ -2,7 +2,7 @@ QT  += core
 QT  += network
 QT  += xml
 CONFIG += mobility
-MOBILITY = multimedia
+MOBILITY += multimedia
 
 SOURCES += \
     ../alquds/gui/mainwindow.cpp \
@@ -27,7 +27,8 @@ SOURCES += \
     ../alquds/webservices/islamwayparser.cpp \
     ../alquds/gui/homewidget.cpp \
     ../alquds/webservices/wathakkerservice.cpp \
-    ../alquds/settings/pathsettings.cpp
+    ../alquds/settings/pathsettings.cpp \
+    main.cpp
 
 HEADERS += \
     ../alquds/gui/mainwindow.h \

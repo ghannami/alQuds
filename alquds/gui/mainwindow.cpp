@@ -6,12 +6,20 @@
 #include <QDebug>
 #include <QApplication>
 #include <QtGui>
+#include <QtWidgets>
 #include "winaction.h"
 #include "athaneditor.h"
 #include "../webservices/islamwayparser.h"
 #include "homewidget.h"
 #include "../version.h"
 #include <iostream>
+#include "../WinSparkle/winsparkle.h"
+#include "aboutwidget.h"
+
+void shutdownCallBack()
+{
+    qApp->quit();
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -22,24 +30,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mWidgetsToolBar = new QToolBar("", this);
     WinAction *tHomeAct = new WinAction(tHomeWidget, tr("Home"));
-    WinAction *tPrayerEditorAct = new WinAction(tPrayerEditor, tr("Payer settings"));
+    WinAction *tPrayerEditorAct = new WinAction(tPrayerEditor, tr("Options"));
     WinAction *tLocationEditorAct = new WinAction(tLocationEditor, tr("Location"));
 
-    WinWidget *tAthanSettings = new WinWidget;
-    QHBoxLayout *tAthanSettingsLay = new QHBoxLayout;
-    tAthanSettingsLay->addWidget(new AthanEditor);
-    tAthanSettings->setLayout(tAthanSettingsLay);
-    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan settings"));
+    AthanEditor *tAthanSettings = new AthanEditor;
+    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan"));
+
+    AboutWidget *tAboutWidget = new AboutWidget;
+    WinAction *tAboutWidgetAct = new WinAction(tAboutWidget,tr("About"));
 
     mWidgetsToolBar->addAction(tHomeAct);
     mWidgetsToolBar->addAction(tLocationEditorAct);
     mWidgetsToolBar->addAction(tAthanSettingsAct);
     mWidgetsToolBar->addAction(tPrayerEditorAct);
+    mWidgetsToolBar->addAction(tAboutWidgetAct);
 
     connect(tHomeAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
     connect(tLocationEditorAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
     connect(tPrayerEditorAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
     connect(tAthanSettingsAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
+    connect(tAboutWidgetAct, SIGNAL(clicked(WinWidget*)), this, SLOT(setCentralWidget(WinWidget*)));
 
     addToolBar(mWidgetsToolBar);
 
@@ -73,21 +83,18 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(ALQUDS_VERSION);
     setWindowIcon(QIcon(":/icons/128/kubbetussahra.png"));
 
-#ifdef Q_WS_WIN
-    QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-                       QSettings::NativeFormat);
-    if(settings.contains("alquds"))
-        qDebug()<<"MainWindow::MainWindow alquds Register ist bereit registriert ...";
-    else
-    {
-        QString file(qApp->applicationFilePath());
-        file.replace("/","\\");
-        settings.setValue("alquds", "\""+file+"\"");
-    }
-
-#endif
-
     createTrayIcon();
+
+#ifdef Q_OS_WIN
+    win_sparkle_init();
+    win_sparkle_set_shutdown_request_callback(&shutdownCallBack);
+    win_sparkle_check_update_without_ui();
+#endif
+}
+
+MainWindow::~MainWindow()
+{
+    win_sparkle_cleanup();
 }
 
 void MainWindow::setCentralWidget(WinWidget *xCurr)

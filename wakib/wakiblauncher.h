@@ -11,7 +11,6 @@ class WakibLauncher : public QObject, public Launcher
 
     Q_INTERFACES(Launcher)
 
-
 public:
     WakibLauncher();
     virtual void launch();

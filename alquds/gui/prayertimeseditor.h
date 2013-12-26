@@ -19,6 +19,7 @@ public slots:
     void saveSettings();
     void readFields();
     void onFieldChanged();
+    void onStartWithSysChanged(bool);
 
 private:
     Ui::PrayerTimesEditor *ui;

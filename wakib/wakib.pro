@@ -25,10 +25,21 @@ INCLUDEPATH +=$$PWD/../third-party/win/quazip/include
     LIBS+=-L$$PWD/../third-party/win/quazip/lib
     LIBS+=-lquazipd1
     }
+}
 
-    DESTDIR = $$PWD/../install-$$QT_VERSION/plugins
+win32{
+    CONFIG(debug, debug|release) {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_debug/plugins
+    } else {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_release/plugins
+    }
 }
 unix{
-    DESTDIR = $$PWD/../install-$$QT_VERSION/alquds.app/Contents/plugins
+    CONFIG(debug, debug|release) {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_debug/alquds.app/Contents/plugins
+    } else {
+        DESTDIR = $$PWD/../install_($$QT_VERSION)_release/alquds.app/Contents/plugins
+    }
 }
+
 mac:LIBS +=/opt/local/lib/libquazip.dylib
