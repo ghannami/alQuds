@@ -15,23 +15,39 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
-    <number>9</number>
+    <number>30</number>
    </property>
    <property name="topMargin">
     <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>9</number>
+    <number>30</number>
    </property>
    <property name="bottomMargin">
     <number>9</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="athanSettingsBox">
      <property name="title">
-      <string>Athan</string>
+      <string>Athan Settings</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item>
        <widget class="QCheckBox" name="enableSilent">
         <property name="text">
@@ -44,40 +60,111 @@
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
+        <item row="3" column="2">
+         <widget class="QPushButton" name="playMaghrib">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Fajr</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../src/icons.qrc">
+            <normaloff>:/icons/32/button-play.png</normaloff>
+            <normalon>:/icons/32/button-stop.png</normalon>:/icons/32/button-play.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="fajrBox"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_3">
+        <item row="4" column="2">
+         <widget class="QPushButton" name="playIsha">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Asr</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../src/icons.qrc">
+            <normaloff>:/icons/32/button-play.png</normaloff>
+            <normalon>:/icons/32/button-stop.png</normalon>:/icons/32/button-play.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="asrBox"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
+        <item row="2" column="2">
+         <widget class="QPushButton" name="playAsr">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Dhuhr</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../src/icons.qrc">
+            <normaloff>:/icons/32/button-play.png</normaloff>
+            <normalon>:/icons/32/button-stop.png</normalon>:/icons/32/button-play.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="dhurBox"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_5">
+        <item row="1" column="2">
+         <widget class="QPushButton" name="playDhur">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Maghrib</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../src/icons.qrc">
+            <normaloff>:/icons/32/button-play.png</normaloff>
+            <normalon>:/icons/32/button-stop.png</normalon>:/icons/32/button-play.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -91,98 +178,81 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Fajr</string>
+          </property>
+         </widget>
+        </item>
         <item row="3" column="1">
          <widget class="QComboBox" name="maghribBox"/>
         </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Maghrib</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="fajrBox"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="asrBox"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Asr</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="dhurBox"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Dhuhr</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="2">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QPushButton" name="playFajr">
-            <property name="text">
-             <string>Play</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopFajr">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="2">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QPushButton" name="playDhur">
-            <property name="text">
-             <string>Play</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopDhur">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="2">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QPushButton" name="playAsr">
-            <property name="text">
-             <string>Play</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopAsr">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="2">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QPushButton" name="playMaghrib">
-            <property name="text">
-             <string>Play</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopMaghrib">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="4" column="2">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QPushButton" name="playIsha">
-            <property name="text">
-             <string>Play</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopIsha">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QPushButton" name="playFajr">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../src/icons.qrc">
+            <normaloff>:/icons/32/button-play.png</normaloff>
+            <normalon>:/icons/32/button-stop.png</normalon>:/icons/32/button-play.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoRepeat">
+           <bool>false</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -195,19 +265,6 @@
          <string>Play dua after athan</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
@@ -245,6 +302,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../src/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

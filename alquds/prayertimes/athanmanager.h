@@ -4,9 +4,10 @@
 #include <QTime>
 #include "prayertimes.hpp"
 
-class Location;
 #include <QDate>
 #include <QTimer>
+class Location;
+class AthanTrayWidget;
 
 class AthanManager : public QObject
 {
@@ -42,6 +43,9 @@ private:
     QTimer *mOneSecondTimer;
     QTimer *mItsPrayerTimer;
     PrayerTimes::TimeID mNextPrayer;
+    AthanTrayWidget *m_trayWidget;
+    bool m_isPrayerTime;
+    int m_prayerDuration;
 };
 
 #endif // ATHANMANAGER_H

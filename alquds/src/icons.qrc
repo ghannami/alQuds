@@ -26,5 +26,13 @@
         <file>icons/128/seccade.png</file>
         <file>icons/128/tesbih.png</file>
         <file>icons/128/update.png</file>
+        <file>icons/32/gears.png</file>
+        <file>icons/32/home.png</file>
+        <file>icons/32/information.png</file>
+        <file>icons/32/search.png</file>
+        <file>icons/32/speaker.png</file>
+        <file>icons/32/speaker-mute.png</file>
+        <file>icons/32/button-play.png</file>
+        <file>icons/32/button-stop.png</file>
     </qresource>
 </RCC>

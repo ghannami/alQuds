@@ -7,5 +7,12 @@
         <file>icons/12/active.png</file>
         <file>images/moschee.jpg</file>
         <file>images/quds-moschee.png</file>
+        <file>images/notifyBackground.png</file>
+        <file>images/compass2.png</file>
+        <file>images/about.png</file>
+        <file>images/all.png</file>
+        <file>images/compass1.png</file>
+        <file>images/home.png</file>
+        <file>images/mainwin.png</file>
     </qresource>
 </RCC>

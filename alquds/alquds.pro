@@ -9,8 +9,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
 TEMPLATE = app
-#CONFIG  += plugin
-#CONFIG += release
+
 include(qtsingleapplication/src/qtsingleapplication.pri)
 
 win32:RC_FILE = winapp.rc
@@ -104,8 +103,6 @@ RESOURCES += \
 
 OTHER_FILES += \
     src/stylesheet.qss.css
-
-
 
 win32{
     CONFIG(debug, debug|release) {

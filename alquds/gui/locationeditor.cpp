@@ -5,6 +5,7 @@
 #include <QDomDocument>
 #include <QTreeWidgetItem>
 #include "../prayertimes/prayertimes.hpp"
+#include <QDebug>
 
 LocationEditor::LocationEditor(QWidget *parent) :
     WinWidget(parent),
@@ -70,6 +71,7 @@ void LocationEditor::OnGeoDownloaded(QByteArray xData)
 {
     QDomDocument doc("citysettings");
     doc.setContent(xData) ;
+    //qDebug()<<xData;
     QDomElement tLocationElement = doc.documentElement().firstChildElement("geoname");
     ui->resultView->clear();
     //ui->verticalLayout->removeItem(ui->verticalSpacer);

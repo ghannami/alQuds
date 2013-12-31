@@ -23,6 +23,7 @@ public:
 
 signals:
     void prayerFilesChanged();
+    void silentModeChanged(bool);
 public slots:
     void setFajrFile(QString xFile);
     void setDhurFile(QString xFile);

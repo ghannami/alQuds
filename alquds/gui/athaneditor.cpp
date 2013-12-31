@@ -20,17 +20,11 @@ AthanEditor::AthanEditor(QWidget *parent) :
 
     mPlayer = new AthanPlayer();
 
-    connect(ui->playFajr, SIGNAL(clicked()), mPlayer, SLOT(playFajrAthan()));
-    connect(ui->playDhur, SIGNAL(clicked()), mPlayer, SLOT(playDhurAthan()));
-    connect(ui->playAsr, SIGNAL(clicked()), mPlayer, SLOT(playAsrAthan()));
-    connect(ui->playMaghrib, SIGNAL(clicked()), mPlayer, SLOT(playMaghribAthan()));
-    connect(ui->playIsha, SIGNAL(clicked()), mPlayer, SLOT(playIshaAthan()));
-
-    connect(ui->stopFajr, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
-    connect(ui->stopDhur, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
-    connect(ui->stopAsr, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
-    connect(ui->stopMaghrib, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
-    connect(ui->stopIsha, SIGNAL(clicked()), mPlayer, SLOT(stopAthan()));
+    connect(ui->playFajr, SIGNAL(clicked()), this, SLOT(playFajrAthan()));
+    connect(ui->playDhur, SIGNAL(clicked()), this, SLOT(playDhurAthan()));
+    connect(ui->playAsr, SIGNAL(clicked()), this, SLOT(playAsrAthan()));
+    connect(ui->playMaghrib, SIGNAL(clicked()), this, SLOT(playMaghribAthan()));
+    connect(ui->playIsha, SIGNAL(clicked()), this, SLOT(playIshaAthan()));
 
     connect(ui->enableSilent, SIGNAL(toggled(bool)), this, SLOT(onFieldsChanged()));
     connect(ui->playDua, SIGNAL(toggled(bool)), this, SLOT(onFieldsChanged()));
@@ -38,6 +32,8 @@ AthanEditor::AthanEditor(QWidget *parent) :
     connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(readSettings()));
     connect(ui->cancelButton, SIGNAL(clicked(bool)), ui->saveButton, SLOT(setEnabled(bool)));
+
+    //connect(AthanSettings::instance(), SIGNAL(silentModeChanged(bool)), this, SLOT(onSilentModeChanged(bool)));
 
     readSettings();
     ui->saveButton->setDisabled(true);
@@ -117,6 +113,62 @@ void AthanEditor::selectFajrFile(int xIndex)
     }
     initAthanFiles();
     ui->saveButton->setEnabled(true);
+}
+
+void AthanEditor::onSilentModeChanged(bool v)
+{
+    if(ui->enableSilent->isChecked() != v)
+        ui->enableSilent->setChecked(v);
+}
+
+void AthanEditor::playFajrAthan()
+{
+    ui->playDhur->setChecked(false);
+    ui->playAsr->setChecked(false);
+    ui->playMaghrib->setChecked(false);
+    ui->playIsha->setChecked(false);
+
+    mPlayer->playFajrAthan(ui->playFajr->isChecked());
+}
+
+void AthanEditor::playDhurAthan()
+{
+    ui->playFajr->setChecked(false);
+    ui->playAsr->setChecked(false);
+    ui->playMaghrib->setChecked(false);
+    ui->playIsha->setChecked(false);
+
+    mPlayer->playDhurAthan(ui->playDhur->isChecked());
+}
+
+void AthanEditor::playAsrAthan()
+{
+    ui->playFajr->setChecked(false);
+    ui->playDhur->setChecked(false);
+    ui->playMaghrib->setChecked(false);
+    ui->playIsha->setChecked(false);
+
+    mPlayer->playAsrAthan(ui->playAsr->isChecked());
+}
+
+void AthanEditor::playMaghribAthan()
+{
+    ui->playFajr->setChecked(false);
+    ui->playDhur->setChecked(false);
+    ui->playAsr->setChecked(false);
+    ui->playIsha->setChecked(false);
+
+    mPlayer->playMaghribAthan(ui->playMaghrib->isChecked());
+}
+
+void AthanEditor::playIshaAthan()
+{
+    ui->playFajr->setChecked(false);
+    ui->playDhur->setChecked(false);
+    ui->playAsr->setChecked(false);
+    ui->playMaghrib->setChecked(false);
+
+    mPlayer->playIshaAthan(ui->playIsha->isChecked());
 }
 
 void AthanEditor::selectDhurFile(int xIndex)

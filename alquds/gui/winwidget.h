@@ -8,6 +8,7 @@ class WinWidget : public QWidget
     Q_OBJECT
 public:
     explicit WinWidget(QWidget *parent = 0);
+    virtual void paintEvent(QPaintEvent *);
     
 signals:
     

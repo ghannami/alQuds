@@ -15,6 +15,8 @@
 #include <iostream>
 #include "../WinSparkle/winsparkle.h"
 #include "aboutwidget.h"
+#include <QActionGroup>
+#include <QGraphicsColorizeEffect>
 
 void shutdownCallBack()
 {
@@ -29,15 +31,28 @@ MainWindow::MainWindow(QWidget *parent) :
     LocationEditor *tLocationEditor= new LocationEditor();
 
     mWidgetsToolBar = new QToolBar("", this);
-    WinAction *tHomeAct = new WinAction(tHomeWidget, tr("Home"));
-    WinAction *tPrayerEditorAct = new WinAction(tPrayerEditor, tr("Options"));
-    WinAction *tLocationEditorAct = new WinAction(tLocationEditor, tr("Location"));
+    mWidgetsToolBar->setMaximumHeight(24);
+    mWidgetsToolBar->setIconSize(QSize(32, 32));
+
+    WinAction *tHomeAct = new WinAction(tHomeWidget, tr("Home"), QIcon(":/icons/32/home.png"));
+    tHomeWidget->setObjectName("HomeWidget");
+
+    WinAction *tPrayerEditorAct = new WinAction(tPrayerEditor, tr("Options"), QIcon(":/icons/32/gears.png"));
+    WinAction *tLocationEditorAct = new WinAction(tLocationEditor, tr("Location"), QIcon(":/icons/32/search.png"));
 
     AthanEditor *tAthanSettings = new AthanEditor;
-    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan"));
+    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan"), QIcon(":/icons/32/speaker.png"));
 
     AboutWidget *tAboutWidget = new AboutWidget;
-    WinAction *tAboutWidgetAct = new WinAction(tAboutWidget,tr("About"));
+    WinAction *tAboutWidgetAct = new WinAction(tAboutWidget,tr("About"), QIcon(":/icons/32/information.png"));
+
+    QActionGroup *actGoup = new QActionGroup(this);
+    actGoup->addAction(tHomeAct);
+    actGoup->addAction(tLocationEditorAct);
+    actGoup->addAction(tAthanSettingsAct);
+    actGoup->addAction(tPrayerEditorAct);
+    actGoup->addAction(tAboutWidgetAct);
+    tHomeAct->setChecked(true);
 
     mWidgetsToolBar->addAction(tHomeAct);
     mWidgetsToolBar->addAction(tLocationEditorAct);
@@ -61,13 +76,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QMainWindow::setCentralWidget(mCentralWidget);
     setCentralWidget(tHomeWidget);
-
-    QFile tFile(":qss/stylesheet.css");
-    tFile.open(QFile::ReadOnly);
-    QString tStyleSheet = QLatin1String(tFile.readAll());
-    qApp->setStyleSheet(tStyleSheet);
-
-    //qApp->setStyleSheet("MainWindow{ background-color: red; }");
     setMaximumSize(QSize(500,400));
     setMinimumSize(QSize(500,400));
 

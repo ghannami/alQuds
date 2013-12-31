@@ -15,19 +15,17 @@ AthanPlayer::AthanPlayer(QObject *parent):
     updateAthanFiles();
     connect(AthanSettings::instance(), SIGNAL(prayerFilesChanged()), this, SLOT(updateAthanFiles()));
     connect(mPlayer, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(onError(QMediaPlayer::Error)));
-
+    connect(AthanSettings::instance(), SIGNAL(silentModeChanged(bool)), this, SLOT(onSilenModeChanged(bool)));
 }
 
 void AthanPlayer::playAthan(PrayerTimes::TimeID xTime)
 {
     stopAthan();
-
-    qDebug()<<"AthanPlayer::playAthan "<<mFileList[xTime];
     QUrl url(mFileList[xTime]);
     QMediaContent tContent(url);
-    mPlayer->setMedia(tContent);    
-    if(!AthanSettings::instance()->silentMode())
-        mPlayer->play();
+    mPlayer->setMedia(tContent);
+    //if(!AthanSettings::instance()->silentMode())
+    mPlayer->play();
 }
 
 void AthanPlayer::stopAthan()
@@ -43,29 +41,49 @@ void AthanPlayer::onError(QMediaPlayer::Error err)
     msg.exec();
 }
 
-void AthanPlayer::playFajrAthan()
+void AthanPlayer::onSilenModeChanged(bool silent)
 {
-    playAthan(PrayerTimes::Fajr);
+    mPlayer->setMuted(silent);
 }
 
-void AthanPlayer::playDhurAthan()
+void AthanPlayer::playFajrAthan(bool play)
 {
-    playAthan(PrayerTimes::Dhuhr);
+    if(play)
+        playAthan(PrayerTimes::Fajr);
+    else
+        stopAthan();
 }
 
-void AthanPlayer::playAsrAthan()
+void AthanPlayer::playDhurAthan(bool play)
 {
-    playAthan(PrayerTimes::Asr);
+    if(play)
+        playAthan(PrayerTimes::Dhuhr);
+    else
+        stopAthan();
 }
 
-void AthanPlayer::playMaghribAthan()
+void AthanPlayer::playAsrAthan(bool play)
 {
-    playAthan(PrayerTimes::Maghrib);
+    if(play)
+        playAthan(PrayerTimes::Asr);
+    else
+        stopAthan();
 }
 
-void AthanPlayer::playIshaAthan()
+void AthanPlayer::playMaghribAthan(bool play)
 {
-    playAthan(PrayerTimes::Isha);
+    if(play)
+        playAthan(PrayerTimes::Maghrib);
+    else
+        stopAthan();
+}
+
+void AthanPlayer::playIshaAthan(bool play)
+{
+    if(play)
+        playAthan(PrayerTimes::Isha);
+    else
+        stopAthan();
 }
 
 void AthanPlayer::updateAthanFiles()

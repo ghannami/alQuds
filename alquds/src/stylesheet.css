@@ -26,10 +26,94 @@ min-height: 13px;
 max-height: 13px;
 }*/
 
+QWidget *{
+    color: #7f4701;
+}
+
 QToolBar {
-    spacing: 3px; /* spacing between items in the tool bar */
+    spacing: 5px; /* spacing between items in the tool bar */
+    background-image: url(:/images/mainwin.png);
 }
 
 QToolBar::handle {
      image: url();
+}
+
+HomeWidget{
+    background-image: url(:/images/home.png);
+}
+
+LocationEditor,
+PrayerTimesEditor,
+AthanEditor{
+    background-image: url(:/images/all.png);
+}
+
+AboutWidget{
+    background-image: url(:/images/about.png);
+}
+
+QLineEdit,
+QTreeView,
+QSpinBox,
+QTextEdit,
+QDoubleSpinBox,
+QLabel#fajrTime,
+QLabel#shurukTime,
+QLabel#dhurTime,
+QLabel#asrTime,
+QLabel#maghribTime,
+QLabel#ishaTime,
+QFrame#nextPrayerFrame{
+    background-color: rgba(255, 255, 255, 150);
+}
+
+QLabel#untilTimeLabel{
+    font: bold 15px;
+}
+
+QLabel#nextPrayerLabel{
+    font-size: 13px;
+}
+
+QGroupBox#athanSettingsBox,
+QGroupBox#locationBox,
+QGroupBox#advancedBox{
+    font: bold;
+}
+AthanTrayWidget{
+/*    background-color: rgba(247, 160, 8, 200);*/
+    background-color: transparent;
+    background-image: url(:/images/notifyBackground.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+AthanTrayWidget QLabel{
+    font-size: 14px;
+}
+
+QPushButton#AthanTrayWidget_playButton {
+    background-color: transparent;
+    background-image: url(:/icons/32/speaker-mute.png);
+}
+
+QPushButton#AthanTrayWidget_playButton:pressed{
+
+}
+
+QPushButton#AthanTrayWidget_playButton:checked {
+    background-color: rgba(255, 255, 255, 100);
+    border-radius: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 50);
+    border-left: 1px solid rgba(0, 0, 0, 50);
+}
+
+QPushButton#AthanTrayWidget_playButton:hover {
+     background-color: rgba(255, 255, 255, 100);
+     border-radius: 10px;
+}
+
+QPushButton#AthanTrayWidget_playButton:default {
+     border-color: navy; /* make the default button prominent */
 }

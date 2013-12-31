@@ -109,7 +109,7 @@ bool AthanSettings::silentMode()
 void AthanSettings::setSilentMode(bool xMode)
 {
     mSettings->setValue("athan/silentmode", xMode);
-    emit prayerFilesChanged();
+    emit silentModeChanged(xMode);
 }
 
 bool AthanSettings::playDua()

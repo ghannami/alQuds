@@ -30,16 +30,16 @@ HomeWidget::HomeWidget(QWidget *parent) :
 
     updateTimes();
     updateNextPrayerTime(mAthanManager->nextPrayerTime());
-
+/*
     QPixmap bg(":/images/quds-moschee.png");
     QPalette p(palette());
     p.setBrush(QPalette::Background, bg);
     setAutoFillBackground(true);
     setPalette(p);
-
-    WathakkerService *mWathakkertService = new WathakkerService();
-    mWathakkertService->requestRandomHadith(300000);
-    connect(mWathakkertService, SIGNAL(responseXML(QDomDocument)), this, SLOT(updateServiceContent(QDomDocument)));
+*/
+//    WathakkerService *mWathakkertService = new WathakkerService();
+//    mWathakkertService->requestRandomHadith(300000);
+//    connect(mWathakkertService, SIGNAL(responseXML(QDomDocument)), this, SLOT(updateServiceContent(QDomDocument)));
     ui->serviceBox->setHidden(true);
 }
 
@@ -62,7 +62,7 @@ void HomeWidget::updateTimes()
 
 void HomeWidget::updateNextPrayerTime(PrayerTimes::TimeID xTimeID)
 {
-    ui->nextPrayerLabel->setStyleSheet("font:8pt;");
+    //ui->nextPrayerLabel->setStyleSheet("font:8pt;");
 
 
     foreach(QLabel *label, mPrayerLabels)
@@ -78,7 +78,7 @@ void HomeWidget::updateNextPrayerTime(PrayerTimes::TimeID xTimeID)
 
 void HomeWidget::updateUntilNextTime(QTime xTime)
 {
-    ui->untiTimeLabel->setText(xTime.toString());
+    ui->untilTimeLabel->setText(xTime.toString());
     ui->dateLabel->setText(QDate::currentDate().toString("dddd, dd. MMMM yyyy"));
 }
 
@@ -98,8 +98,8 @@ void HomeWidget::updateServiceContent(QDomDocument xDoc)
 
 void HomeWidget::itsPrayerTime(PrayerTimes::TimeID xTimeID)
 {
-    ui->nextPrayerLabel->setStyleSheet("font:10pt;");
+    //ui->nextPrayerLabel->setStyleSheet("font:10pt;");
 
     ui->nextPrayerLabel->setText(tr("it´s ")+ mAthanManager->prayerTimeByName(xTimeID)+ tr(" prayer time"));
-    ui->untiTimeLabel->setText("");
+    ui->untilTimeLabel->setText("");
 }

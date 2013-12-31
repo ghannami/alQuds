@@ -28,6 +28,15 @@ public slots:
     void selectDhurFile(int xIndex);
     void selectFajrFile(int xIndex);
 
+    void onSilentModeChanged(bool);
+
+    void playFajrAthan();
+    void playDhurAthan();
+    void playAsrAthan();
+    void playMaghribAthan();
+    void playIshaAthan();
+
+
 private:
     Ui::AthanEditor *ui;
     AthanPlayer *mPlayer;

@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QNetworkReply>
 
 class QNetworkAccessManager;
-class QNetworkReply;
 
 class DownloadManager: public QObject
 {
@@ -17,6 +17,7 @@ public:
 
 public slots:
     void OnDownloadFinished(QNetworkReply *reply);
+    void slotError(QNetworkReply::NetworkError error);
 
 signals:
     void DownloadFinished(QByteArray);

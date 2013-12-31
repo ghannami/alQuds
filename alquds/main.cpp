@@ -4,6 +4,7 @@
 #include <QTranslator>
 #include <QTextCodec>
 #include <QDebug>
+#include <QFile>
 
 #ifdef Q_WS_MAC
 #include <objc/objc.h>
@@ -94,6 +95,13 @@ int main(int argc, char **argv)
 
     QObject::connect(&instance, SIGNAL(messageReceived(const QString&)),
              &w, SLOT(show()));
+
+    QString fileName(":/qss/stylesheet.css");
+
+    QFile tFile(fileName);
+    tFile.open(QFile::ReadOnly);
+    QString tStyleSheet = QLatin1String(tFile.readAll());
+    qApp->setStyleSheet(tStyleSheet);
 
     return instance.exec();
 }

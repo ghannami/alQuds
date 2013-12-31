@@ -16,13 +16,14 @@ public:
 public slots:
     void playAthan(PrayerTimes::TimeID xTime);
     void updateAthanFiles();
-    void playFajrAthan();
-    void playDhurAthan();
-    void playAsrAthan();
-    void playMaghribAthan();
-    void playIshaAthan();
+    void playFajrAthan(bool play = true);
+    void playDhurAthan(bool play = true);
+    void playAsrAthan(bool play = true);
+    void playMaghribAthan(bool play = true);
+    void playIshaAthan(bool play = true);
     void stopAthan();
     void onError(QMediaPlayer::Error);
+    void onSilenModeChanged(bool silent);
 
 private:
     MediaPlayer *mPlayer;
