@@ -65,7 +65,22 @@ QLabel#asrTime,
 QLabel#maghribTime,
 QLabel#ishaTime,
 QFrame#nextPrayerFrame{
-    background-color: rgba(255, 255, 255, 150);
+    background-color: rgba(255, 255, 255, 200);
+}
+
+QLabel#fajrTime,
+QLabel#shurukTime,
+QLabel#dhurTime,
+QLabel#asrTime,
+QLabel#maghribTime,
+QLabel#ishaTime,
+QLabel#fajrLabel,
+QLabel#shurukLabel,
+QLabel#dhurLabel,
+QLabel#asrLabel,
+QLabel#maghribLabel,
+QLabel#ishaLabel{
+    font-size: 13px;
 }
 
 QLabel#untilTimeLabel{
@@ -82,11 +97,11 @@ QGroupBox#advancedBox{
     font: bold;
 }
 AthanTrayWidget{
-/*    background-color: rgba(247, 160, 8, 200);*/
-    background-color: transparent;
-    background-image: url(:/images/notifyBackground.png);
-    background-position: top left;
-    background-repeat: no-repeat;
+    background-color: rgba(248, 233, 136, 250);
+/*    background-color: transparent;*/
+/*    background-image: url(:/images/notifyBackground.png);*/
+    border-radius: 10px;
+    border: 1px solid #7f4701;
 }
 
 AthanTrayWidget QLabel{
@@ -95,7 +110,7 @@ AthanTrayWidget QLabel{
 
 QPushButton#AthanTrayWidget_playButton {
     background-color: transparent;
-    background-image: url(:/icons/32/speaker-mute.png);
+/*    background-image: url(:/icons/32/speaker-mute.png) no-repeat;*/
 }
 
 QPushButton#AthanTrayWidget_playButton:pressed{

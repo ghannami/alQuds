@@ -21,7 +21,7 @@ AthanTrayWidget::AthanTrayWidget(QWidget *parent) :
 #endif
 
     setWindowFlags(wFlags);
-    setFixedSize(300,100);
+    setFixedSize(250,50);
     QDesktopWidget * desktop = QApplication::desktop();
     QRect screen = desktop->availableGeometry(this);
     move(screen.bottomRight().x() - width() - 2, screen.bottomRight().y() - height()-2);
@@ -29,7 +29,8 @@ AthanTrayWidget::AthanTrayWidget(QWidget *parent) :
     m_textLabel = new QLabel("until next prayer",this);
     m_timeLabel = new QLabel("00:00", this);
     m_playButton = new QPushButton(this);
-    m_playButton->setIconSize(QSize(32,32));
+    m_playButton->setIconSize(QSize(24,24));
+    m_playButton->setIcon(QIcon(":/icons/32/speaker-mute.png"));
     m_playButton->setMaximumSize(32,32);
     m_playButton->setCheckable(true);
     m_playButton->setObjectName("AthanTrayWidget_playButton");
