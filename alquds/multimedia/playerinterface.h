@@ -10,8 +10,6 @@ public:
 
 public slots:
 
-signals:
-    void finished();
 };
 
 #endif // PLAYERINTERFACE_H

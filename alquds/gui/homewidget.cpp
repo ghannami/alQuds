@@ -15,6 +15,7 @@ HomeWidget::HomeWidget(QWidget *parent) :
     connect(mAthanManager, SIGNAL(updateNextPrayer(PrayerTimes::TimeID)), this, SLOT(updateNextPrayerTime(PrayerTimes::TimeID)));
     connect(mAthanManager, SIGNAL(updateUntilNextTime(QTime)), this, SLOT(updateUntilNextTime(QTime)));
     connect(mAthanManager, SIGNAL(athanTime(PrayerTimes::TimeID)), this, SLOT(itsPrayerTime(PrayerTimes::TimeID)));
+    connect(mAthanManager, SIGNAL(athanFinished()), this, SLOT(onAthanFinished()));
 
     mPrayerLabels.insert(PrayerTimes::Fajr, ui->fajrLabel);
     mPrayerLabels.insert(PrayerTimes::Dhuhr, ui->dhurLabel);
@@ -100,6 +101,13 @@ void HomeWidget::itsPrayerTime(PrayerTimes::TimeID xTimeID)
 {
     //ui->nextPrayerLabel->setStyleSheet("font:10pt;");
 
-    ui->nextPrayerLabel->setText(tr("it´s ")+ mAthanManager->prayerTimeByName(xTimeID)+ tr(" prayer time"));
-    ui->untilTimeLabel->setText("");
+    ui->nextPrayerLabel->setText(tr("Calling for")+" "+mAthanManager->prayerTimeByName(xTimeID));
+    ui->untilTimeLabel->setPixmap(QPixmap(":icons/32/speaker.png"));
+    m_currentPrayer = xTimeID;
+}
+
+void HomeWidget::onAthanFinished()
+{
+    ui->nextPrayerLabel->setText(tr("it´s")+ " "+mAthanManager->prayerTimeByName(m_currentPrayer)+ tr(" prayer time"));
+    ui->untilTimeLabel->setText(" ");
 }

@@ -8,6 +8,7 @@ MediaManager::MediaManager(QObject *parent)
     :QObject(parent)
 {
     mAthanPlayer = new AthanPlayer(this);
+    connect(mAthanPlayer, SIGNAL(finished()), this, SIGNAL(athanFinished()));
 }
 
 MediaManager *MediaManager::instance()

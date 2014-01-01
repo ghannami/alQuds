@@ -7,8 +7,8 @@ FeedURL     APPCAST     {"http://ndalus.com/files/wincast.xml"}
 
 // Version information; this, too, is used by WinSparkle
 1 VERSIONINFO
- FILEVERSION     1,1,0,0
- PRODUCTVERSION  1,1,0,0
+ FILEVERSION     1,2,0,0
+ PRODUCTVERSION  1,2,0,0
  FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
  FILEFLAGS       0
  FILEOS          VOS_NT_WINDOWS32
@@ -19,15 +19,15 @@ BEGIN
     BEGIN
         BLOCK "040904B0" // US English, Unicode
         BEGIN
-            VALUE "Comments", "Alquds Athan app."
+            VALUE "Comments", "alQuds Athan app."
             VALUE "CompanyName", "ndalus.com\0"
-            VALUE "FileDescription", "Alquds Athan\0"
-            VALUE "FileVersion", "1.1\0"
+            VALUE "FileDescription", "alQuds\0"
+            VALUE "FileVersion", "1.2\0"
             VALUE "InternalName", "alquds\0"
             VALUE "OriginalFilename", "alquds.exe\0"
             VALUE "LegalCopyright", "GPL v.3\0"
-            VALUE "ProductName", "Alquds Athan\0"
-            VALUE "ProductVersion", "1.1\0"
+            VALUE "ProductName", "alQuds\0"
+            VALUE "ProductVersion", "1.2\0"
         END
     END
 

@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     WinAction *tLocationEditorAct = new WinAction(tLocationEditor, tr("Location"), QIcon(":/icons/32/search.png"));
 
     AthanEditor *tAthanSettings = new AthanEditor;
-    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan"), QIcon(":/icons/32/speaker.png"));
+    WinAction *tAthanSettingsAct = new WinAction(tAthanSettings,tr("Athan"), QIcon(":/icons/32/megaphone.png"));
 
     AboutWidget *tAboutWidget = new AboutWidget;
     WinAction *tAboutWidgetAct = new WinAction(tAboutWidget,tr("About"), QIcon(":/icons/32/information.png"));

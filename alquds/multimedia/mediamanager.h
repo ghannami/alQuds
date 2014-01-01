@@ -18,6 +18,9 @@ public:
 
 public slots:
     void playAthan(PrayerTimes::TimeID xTime);
+signals:
+    void athanFinished();
+
 private:
     static MediaManager *mInstance;
     AthanPlayer *mAthanPlayer;

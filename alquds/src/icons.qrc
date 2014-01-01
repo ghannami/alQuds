@@ -34,5 +34,8 @@
         <file>icons/32/speaker-mute.png</file>
         <file>icons/32/button-play.png</file>
         <file>icons/32/button-stop.png</file>
+        <file>icons/32/button-check.png</file>
+        <file>icons/32/button-cross.png</file>
+        <file>icons/32/megaphone.png</file>
     </qresource>
 </RCC>

@@ -113,10 +113,10 @@ win32{
     }
     else
     {
-        #LIBS += -L$$PWD/../WinSparkle/release/ -lWinSparkle
+        LIBS += -L$$PWD/../WinSparkle/release/ -lWinSparkle
         INCLUDEPATH += $$PWD/../WinSparkle/release
         DEPENDPATH += $$PWD/../WinSparkle/release
-        #PRE_TARGETDEPS += $$PWD/../WinSparkle/release/WinSparkle.lib
+        PRE_TARGETDEPS += $$PWD/../WinSparkle/release/WinSparkle.lib
     }
 
 }

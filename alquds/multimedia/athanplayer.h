@@ -24,6 +24,10 @@ public slots:
     void stopAthan();
     void onError(QMediaPlayer::Error);
     void onSilenModeChanged(bool silent);
+    void onStateChanged(QMediaPlayer::State state);
+
+signals:
+    void finished();
 
 private:
     MediaPlayer *mPlayer;

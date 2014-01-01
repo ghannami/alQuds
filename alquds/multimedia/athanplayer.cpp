@@ -16,6 +16,7 @@ AthanPlayer::AthanPlayer(QObject *parent):
     connect(AthanSettings::instance(), SIGNAL(prayerFilesChanged()), this, SLOT(updateAthanFiles()));
     connect(mPlayer, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(onError(QMediaPlayer::Error)));
     connect(AthanSettings::instance(), SIGNAL(silentModeChanged(bool)), this, SLOT(onSilenModeChanged(bool)));
+    connect(mPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(onStateChanged(QMediaPlayer::State)));
 }
 
 void AthanPlayer::playAthan(PrayerTimes::TimeID xTime)
@@ -44,6 +45,12 @@ void AthanPlayer::onError(QMediaPlayer::Error err)
 void AthanPlayer::onSilenModeChanged(bool silent)
 {
     mPlayer->setMuted(silent);
+}
+
+void AthanPlayer::onStateChanged(QMediaPlayer::State state)
+{
+    if(state == QMediaPlayer::StoppedState)
+        emit finished();
 }
 
 void AthanPlayer::playFajrAthan(bool play)

@@ -37,6 +37,7 @@ signals:
     void updateNextPrayer(PrayerTimes::TimeID);
     void athanTime(PrayerTimes::TimeID);
     void updateUntilNextTime(QTime);
+    void athanFinished();
 
 private:
     Location *mLocation;

@@ -15,6 +15,7 @@ AthanManager::AthanManager(QObject *parent)
     mItsPrayerTimer = new QTimer(this);
 
     connect(this, SIGNAL(athanTime(PrayerTimes::TimeID)), MediaManager::instance(), SLOT(playAthan(PrayerTimes::TimeID)));
+    connect(MediaManager::instance(), SIGNAL(athanFinished()), this, SIGNAL(athanFinished()));
 
     connect(mOneSecondTimer, SIGNAL(timeout()), this,  SLOT(oneSecondTimeOut()));
     mNextPrayer = nextPrayerTime();
@@ -23,8 +24,8 @@ AthanManager::AthanManager(QObject *parent)
     connect(mItsPrayerTimer, SIGNAL(timeout()), this , SLOT(onItsPrayerTimeOut()));
 
     m_trayWidget = new AthanTrayWidget();
-    //m_trayWidget->hide();
-    m_trayWidget->show();
+    m_trayWidget->hide();
+    //m_trayWidget->show();
     m_isPrayerTime= false;
     m_prayerDuration = 20 * 60 * 1000;
 }
@@ -108,7 +109,7 @@ void AthanManager::oneSecondTimeOut()
             {
                 m_trayWidget->setPrayer(nextPrayerTime());
                 m_trayWidget->setTime(untilTime.toString("mm:ss"));
-                m_trayWidget->show();
+                //m_trayWidget->show();
             }
             if(diff <30)
             {
@@ -133,7 +134,7 @@ void AthanManager::onItsPrayerTimeOut()
 {
     m_isPrayerTime = false;
 //    m_trayWidget->hide();
-    m_trayWidget->show();
+    //m_trayWidget->show();
 }
 
 QTime AthanManager::untilNextPrayer()

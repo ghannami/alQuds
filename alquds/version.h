@@ -1,7 +1,7 @@
 #include <QString>
 
 #define V_VER_MAJOR 1
-#define V_VER_MINOR 1
+#define V_VER_MINOR 2
 #define V_VER_BUILD 0
 
 

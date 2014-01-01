@@ -28,12 +28,14 @@ public slots:
     void updateLocation();
     void updateServiceContent(QDomDocument xDoc);
     void itsPrayerTime(PrayerTimes::TimeID xTimeID);
+    void onAthanFinished();
 
 private:
     Ui::HomeWidget *ui;
     AthanManager *mAthanManager;
     QMap<PrayerTimes::TimeID, QLabel* > mPrayerLabels;
     QMap<PrayerTimes::TimeID, QLabel* > mPrayerTimesLabels;
+    PrayerTimes::TimeID m_currentPrayer;
 
 };
 
