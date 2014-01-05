@@ -21,7 +21,7 @@ AthanTrayWidget::AthanTrayWidget(QWidget *parent) :
 #endif
 
     setWindowFlags(wFlags);
-    setFixedSize(250,50);
+    setFixedSize(250,80);
     QDesktopWidget * desktop = QApplication::desktop();
     QRect screen = desktop->availableGeometry(this);
     move(screen.bottomRight().x() - width() - 2, screen.bottomRight().y() - height()-2);

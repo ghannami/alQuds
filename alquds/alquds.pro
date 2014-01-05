@@ -57,7 +57,8 @@ SOURCES += \
     settings/generalsettings.cpp \
     gui/aboutwidget.cpp \
     gui/athantraywidget.cpp \
-    prayertimes/athanmanager.cpp
+    prayertimes/athanmanager.cpp \
+    gui/notificationcenter.cpp
 
 HEADERS += \
     gui/mainwindow.h \
@@ -87,7 +88,8 @@ HEADERS += \
     settings/generalsettings.h \
     gui/aboutwidget.h \
     gui/athantraywidget.h \
-    prayertimes/athanmanager.h
+    prayertimes/athanmanager.h \
+    gui/notificationcenter.h
 
 FORMS += \
     gui/prayertimeswidget.ui \

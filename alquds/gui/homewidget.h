@@ -2,7 +2,7 @@
 #define HOMEWIDGET_H
 
 #include "winwidget.h"
-#include "../prayertimes/prayertimes.hpp"
+#include "prayertimes.hpp"
 #include <QTime>
 #include <QMap>
 #include <QDomDocument>
@@ -23,20 +23,19 @@ public:
 
 public slots:
     void updateTimes();
-    void updateUntilNextTime(QTime xTime);
+    void updateUntilNextTime(PrayerTimes::TimeID, QTime xTime);
     void updateNextPrayerTime(PrayerTimes::TimeID xTimeID);
     void updateLocation();
     void updateServiceContent(QDomDocument xDoc);
     void itsPrayerTime(PrayerTimes::TimeID xTimeID);
-    void onAthanFinished();
+    void itsAthanTime(PrayerTimes::TimeID xTimeID);
+    void itsBeforAthan(PrayerTimes::TimeID, QTime xTime);
 
 private:
     Ui::HomeWidget *ui;
     AthanManager *mAthanManager;
     QMap<PrayerTimes::TimeID, QLabel* > mPrayerLabels;
     QMap<PrayerTimes::TimeID, QLabel* > mPrayerTimesLabels;
-    PrayerTimes::TimeID m_currentPrayer;
-
 };
 
 #endif // HOMEWIDGET_H

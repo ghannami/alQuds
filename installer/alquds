@@ -90,7 +90,7 @@ InstallPassword
 {}
 
 InstallVersion
-{1.1.0.0}
+{0.0.0.0}
 
 Language,ca
 {Yes}
@@ -243,7 +243,7 @@ test
 
 }
 FileGroup 4BB0FE6A-9EFB-4B92-9F2D-A6C1F92584A4 -active Yes -name {Programm Files} -parent FileGroups -platforms {FreeBSD-7-x86 Linux-x86 Linux-x86_64 MacOS-X MacOS-X-ppc Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -setup Install
-File 474B7058-A657-4E18-9FD8-5951F142F9AE -active Yes -name C:/Users/aziz/Documents/google/alquds/install_(5.2.0)_release -type dir -parent 4BB0FE6A-9EFB-4B92-9F2D-A6C1F92584A4 -directory <%InstallDir%>
+File 693E5594-8460-4FB0-820E-D2F80FE5CBC1 -active Yes -name C:/Users/aziz/Documents/GitHub/alQuds/install_(5.2.0)_release -type dir -parent 4BB0FE6A-9EFB-4B92-9F2D-A6C1F92584A4 -directory <%InstallDir%>
 Component 7D892745-8AF8-465E-9439-E9232EB27DC9 -active Yes -name {Default Component} -parent Components -platforms {FreeBSD-7-x86 Linux-x86 Linux-x86_64 MacOS-X MacOS-X-ppc Solaris-sparc Solaris-x86 Windows} -setup Install
 SetupType EC7E15A6-83BB-4F74-BDC1-2DB7382E7230 -active Yes -name Typical -parent SetupTypes -platforms {FreeBSD-7-x86 Linux-x86 Linux-x86_64 MacOS-X MacOS-X-ppc Solaris-sparc Solaris-x86 Windows} -setup Install
 SetupType 09C28F70-6FC4-4458-AC3E-5386C995070D -active Yes -name Custom -parent SetupTypes -platforms {FreeBSD-7-x86 Linux-x86 Linux-x86_64 MacOS-X MacOS-X-ppc Solaris-sparc Solaris-x86 Windows} -setup Install
@@ -1506,10 +1506,10 @@ Windows,BuildSeparateArchives
 {No}
 
 Windows,Executable
-{<%AppName%>-<%Version%>-Setup<%Ext%>}
+{<%AppName%>-Setup<%Ext%>}
 
 Windows,FileDescription
-{<%AppName%> <%Version%> Setup}
+{<%AppName%>-Setup}
 
 Windows,InstallDir
 {<%PROGRAM_FILES%>/<%AppName%>}

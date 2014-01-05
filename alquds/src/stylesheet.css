@@ -97,9 +97,9 @@ QGroupBox#advancedBox{
     font: bold;
 }
 AthanTrayWidget{
-    background-color: rgba(248, 233, 136, 250);
-/*    background-color: transparent;*/
-/*    background-image: url(:/images/notifyBackground.png);*/
+/*    background-color: rgba(248, 233, 136, 250);*/
+    background-color: transparent;
+    background-image: url(:/images/notifyBackground.png);
     border-radius: 10px;
     border: 1px solid #7f4701;
 }

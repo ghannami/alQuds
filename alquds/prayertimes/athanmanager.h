@@ -14,6 +14,15 @@ class AthanManager : public QObject
     Q_OBJECT
 
 public:
+    enum TimeState{
+        BeforAthan  = 1,
+        AthanTime ,
+        PlayingAthan,
+        AthanFinished,
+        PrayerTime,
+        NextPrayer
+    };
+
     AthanManager(QObject *parent = 0);
     QTime getFajr();
     QTime getSunrise();
@@ -24,29 +33,31 @@ public:
     QTime getIsha();
     QTime getNextTime();
     PrayerTimes::TimeID nextPrayerTime();
+    PrayerTimes::TimeID prevPrayerTime();
 
     QTime untilNextPrayer();
     static QString prayerTimeByName(PrayerTimes::TimeID xTimeID);
-    void itsPrayerTime();
+    void updateState();
 
 public slots:
     void oneSecondTimeOut();
-    void onItsPrayerTimeOut();
+    void onAthanFinished();
 
 signals:
-    void updateNextPrayer(PrayerTimes::TimeID);
-    void athanTime(PrayerTimes::TimeID);
-    void updateUntilNextTime(QTime);
     void athanFinished();
+    void updateNextPrayer(PrayerTimes::TimeID);
+
+    void stateChanged(TimeState);
+    void beforAthan(PrayerTimes::TimeID, QTime);
+    void athanTime(PrayerTimes::TimeID);
+    void itsPrayerTime(PrayerTimes::TimeID);
+    void updateUntilNextTime(PrayerTimes::TimeID, QTime);
 
 private:
     Location *mLocation;
     QTimer *mOneSecondTimer;
-    QTimer *mItsPrayerTimer;
-    PrayerTimes::TimeID mNextPrayer;
-    AthanTrayWidget *m_trayWidget;
-    bool m_isPrayerTime;
-    int m_prayerDuration;
+    TimeState m_state;
+    PrayerTimes::TimeID m_currNextPrayer;
 };
 
 #endif // ATHANMANAGER_H

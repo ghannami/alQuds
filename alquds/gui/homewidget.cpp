@@ -12,10 +12,12 @@ HomeWidget::HomeWidget(QWidget *parent) :
     mAthanManager = new AthanManager(this);
     connect(LocationSettings::instance(), SIGNAL(locationChanged()), this, SLOT(updateTimes()));
     connect(LocationSettings::instance(), SIGNAL(prayerConfigChanged()), this, SLOT(updateTimes()));
+
     connect(mAthanManager, SIGNAL(updateNextPrayer(PrayerTimes::TimeID)), this, SLOT(updateNextPrayerTime(PrayerTimes::TimeID)));
-    connect(mAthanManager, SIGNAL(updateUntilNextTime(QTime)), this, SLOT(updateUntilNextTime(QTime)));
-    connect(mAthanManager, SIGNAL(athanTime(PrayerTimes::TimeID)), this, SLOT(itsPrayerTime(PrayerTimes::TimeID)));
-    connect(mAthanManager, SIGNAL(athanFinished()), this, SLOT(onAthanFinished()));
+    connect(mAthanManager, SIGNAL(updateUntilNextTime(PrayerTimes::TimeID, QTime)), this, SLOT(updateUntilNextTime(PrayerTimes::TimeID, QTime)));
+    connect(mAthanManager, SIGNAL(athanTime(PrayerTimes::TimeID)), this, SLOT(itsAthanTime(PrayerTimes::TimeID)));
+    connect(mAthanManager, SIGNAL(itsPrayerTime(PrayerTimes::TimeID)), this, SLOT(itsPrayerTime(PrayerTimes::TimeID)));
+    connect(mAthanManager, SIGNAL(beforAthan(PrayerTimes::TimeID, QTime)), this, SLOT(itsBeforAthan(PrayerTimes::TimeID, QTime)));
 
     mPrayerLabels.insert(PrayerTimes::Fajr, ui->fajrLabel);
     mPrayerLabels.insert(PrayerTimes::Dhuhr, ui->dhurLabel);
@@ -63,21 +65,18 @@ void HomeWidget::updateTimes()
 
 void HomeWidget::updateNextPrayerTime(PrayerTimes::TimeID xTimeID)
 {
-    //ui->nextPrayerLabel->setStyleSheet("font:8pt;");
-
-
     foreach(QLabel *label, mPrayerLabels)
         label->setFont(QFont());
     foreach(QLabel *label, mPrayerTimesLabels)
         label->setFont(QFont());
-    ui->nextPrayerLabel->setText(tr("The Next prayer is")+": "+ mAthanManager->prayerTimeByName(xTimeID)+ " " +mAthanManager->nextPrayerTime());
+    ui->nextPrayerLabel->setText(tr("The next prayer is")+": "+ mAthanManager->prayerTimeByName(xTimeID)+ " " +mAthanManager->nextPrayerTime());
     QFont font;
     font.setBold(true);
     mPrayerLabels.value(xTimeID)->setFont(font);
     mPrayerTimesLabels.value(xTimeID)->setFont(font);
 }
 
-void HomeWidget::updateUntilNextTime(QTime xTime)
+void HomeWidget::updateUntilNextTime(PrayerTimes::TimeID, QTime xTime)
 {
     ui->untilTimeLabel->setText(xTime.toString());
     ui->dateLabel->setText(QDate::currentDate().toString("dddd, dd. MMMM yyyy"));
@@ -97,17 +96,20 @@ void HomeWidget::updateServiceContent(QDomDocument xDoc)
     }
 }
 
-void HomeWidget::itsPrayerTime(PrayerTimes::TimeID xTimeID)
+void HomeWidget::itsAthanTime(PrayerTimes::TimeID xTimeID)
 {
-    //ui->nextPrayerLabel->setStyleSheet("font:10pt;");
-
     ui->nextPrayerLabel->setText(tr("Calling for")+" "+mAthanManager->prayerTimeByName(xTimeID));
     ui->untilTimeLabel->setPixmap(QPixmap(":icons/32/speaker.png"));
-    m_currentPrayer = xTimeID;
 }
 
-void HomeWidget::onAthanFinished()
+void HomeWidget::itsBeforAthan(PrayerTimes::TimeID, QTime xTime)
 {
-    ui->nextPrayerLabel->setText(tr("it´s")+ " "+mAthanManager->prayerTimeByName(m_currentPrayer)+ tr(" prayer time"));
+    ui->untilTimeLabel->setText(xTime.toString());
+}
+
+void HomeWidget::itsPrayerTime(PrayerTimes::TimeID xTimeID)
+{
+    ui->nextPrayerLabel->setText(tr("it´s")+ " "+mAthanManager->prayerTimeByName(xTimeID)+ tr(" prayer time"));
     ui->untilTimeLabel->setText(" ");
+
 }

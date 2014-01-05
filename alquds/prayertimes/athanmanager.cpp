@@ -4,7 +4,6 @@
 #include "locationsettings.h"
 #include "mediamanager.h"
 #include <QDebug>
-#include "athantraywidget.h"
 
 AthanManager::AthanManager(QObject *parent)
     :QObject(parent)
@@ -12,22 +11,12 @@ AthanManager::AthanManager(QObject *parent)
     mLocation = new Location(this);
 
     mOneSecondTimer = new QTimer(this);
-    mItsPrayerTimer = new QTimer(this);
 
     connect(this, SIGNAL(athanTime(PrayerTimes::TimeID)), MediaManager::instance(), SLOT(playAthan(PrayerTimes::TimeID)));
-    connect(MediaManager::instance(), SIGNAL(athanFinished()), this, SIGNAL(athanFinished()));
+    connect(MediaManager::instance(), SIGNAL(athanFinished()), this, SLOT(onAthanFinished()));
 
     connect(mOneSecondTimer, SIGNAL(timeout()), this,  SLOT(oneSecondTimeOut()));
-    mNextPrayer = nextPrayerTime();
     mOneSecondTimer->start(1000);
-
-    connect(mItsPrayerTimer, SIGNAL(timeout()), this , SLOT(onItsPrayerTimeOut()));
-
-    m_trayWidget = new AthanTrayWidget();
-    m_trayWidget->hide();
-    //m_trayWidget->show();
-    m_isPrayerTime= false;
-    m_prayerDuration = 20 * 60 * 1000;
 }
 
 QTime AthanManager::getFajr()
@@ -90,51 +79,56 @@ PrayerTimes::TimeID AthanManager::nextPrayerTime()
         return PrayerTimes::Fajr;
 }
 
-void AthanManager::oneSecondTimeOut()
+PrayerTimes::TimeID AthanManager::prevPrayerTime()
 {
-    if(!m_isPrayerTime)
-    {
-        QTime start(0,0,0);
-        QTime untilTime = untilNextPrayer();
-        int diff = start.secsTo(untilTime);
+    QTime tCurrTime = QTime::currentTime();
 
-        if(diff == 1)
-        {
-            itsPrayerTime();
-        }
-        else
-        {
-            emit updateUntilNextTime(untilTime);
-            if(diff == 30)
-            {
-                m_trayWidget->setPrayer(nextPrayerTime());
-                m_trayWidget->setTime(untilTime.toString("mm:ss"));
-                //m_trayWidget->show();
-            }
-            if(diff <30)
-            {
-                m_trayWidget->setTime(untilTime.toString("mm:ss"));
-            }
-        }
+    if(tCurrTime > getFajr() && tCurrTime <= getDhuhr())
+        return PrayerTimes::Fajr;
 
-        if(mNextPrayer != nextPrayerTime())
-        {
-            mNextPrayer = nextPrayerTime();
-            emit updateNextPrayer(mNextPrayer);
-        }
-    }
-    else
-    {
-        QTime sTime(0,0);
-        m_trayWidget->setTime(sTime.addMSecs(m_prayerDuration - mItsPrayerTimer->remainingTime()).toString("mm:ss"));
-    }
+    if(tCurrTime > getDhuhr() && tCurrTime <= getAsr())
+        return PrayerTimes::Dhuhr;
+
+    if(tCurrTime > getAsr() && tCurrTime <= getMaghrib())
+        return PrayerTimes::Asr;
+
+    if(tCurrTime > getMaghrib() && tCurrTime <= getIsha())
+        return PrayerTimes::Maghrib;
+
+    if(tCurrTime > getIsha() || tCurrTime <= getFajr())
+        return PrayerTimes::Isha;
 }
 
-void AthanManager::onItsPrayerTimeOut()
+void AthanManager::oneSecondTimeOut()
+{    
+    QTime start(0,0,0);
+    QTime untilTime = untilNextPrayer();
+    int diffNext = start.secsTo(untilTime);
+
+    QTime passedTime = untilNextPrayer();
+    int diffPrev = start.secsTo(passedTime);
+
+    if(diffNext == 1)
+        m_state = AthanTime;
+    else if(diffNext <= 30)
+        m_state = BeforAthan;
+    else if(diffPrev <= 20 * 60 *1000)
+    {
+        if(m_state != PlayingAthan)
+            m_state = PrayerTime;
+    }
+    else{
+        if(m_state != PlayingAthan)
+            m_state = NextPrayer;
+    }
+
+    updateState();
+}
+
+void AthanManager::onAthanFinished()
 {
-    m_isPrayerTime = false;
-//    m_trayWidget->hide();
-    //m_trayWidget->show();
+    m_state = AthanFinished;
+    emit athanFinished();
 }
 
 QTime AthanManager::untilNextPrayer()
@@ -158,13 +152,25 @@ QString AthanManager::prayerTimeByName(PrayerTimes::TimeID xTimeID)
         return tr("Isha");
 }
 
-void AthanManager::itsPrayerTime()
+void AthanManager::updateState()
 {
-    m_isPrayerTime = true;
-
-    emit athanTime(mNextPrayer);
-    mItsPrayerTimer->start(m_prayerDuration);
-    m_trayWidget->itsPrayerTime(mNextPrayer);
-    QTime sTime(0,0);
-    m_trayWidget->setTime(sTime.toString("mm:ss"));
+    if(m_currNextPrayer != nextPrayerTime())
+        emit updateNextPrayer(nextPrayerTime());
+    switch(m_state)
+    {
+    case BeforAthan:
+        emit beforAthan(nextPrayerTime(), untilNextPrayer());
+        break;
+    case AthanTime:
+        emit athanTime(nextPrayerTime());
+        m_state = PlayingAthan;
+        break;
+    case PrayerTime:
+        emit itsPrayerTime(prevPrayerTime());
+        break;
+    case NextPrayer:
+        emit updateUntilNextTime(nextPrayerTime(), untilNextPrayer());
+        break;
+    }
+    qDebug()<<"AthanManager::updateState "<<m_state;
 }
