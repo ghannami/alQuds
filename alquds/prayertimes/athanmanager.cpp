@@ -3,6 +3,7 @@
 #include "prayertimes.hpp"
 #include "locationsettings.h"
 #include "mediamanager.h"
+#include "notificationcenter.h"
 #include <QDebug>
 
 AthanManager::AthanManager(QObject *parent)
@@ -14,6 +15,7 @@ AthanManager::AthanManager(QObject *parent)
 
     connect(this, SIGNAL(athanTime(PrayerTimes::TimeID)), MediaManager::instance(), SLOT(playAthan(PrayerTimes::TimeID)));
     connect(MediaManager::instance(), SIGNAL(athanFinished()), this, SLOT(onAthanFinished()));
+    connect(MediaManager::instance(), SIGNAL(athanFinished()), NotificationCenter::instance(), SLOT(onAthanFinished()));
 
     connect(mOneSecondTimer, SIGNAL(timeout()), this,  SLOT(oneSecondTimeOut()));
     mOneSecondTimer->start(1000);
@@ -57,6 +59,11 @@ QTime AthanManager::getSunset()
 QTime AthanManager::getNextTime()
 {
     return mLocation->getPrayerTimes()[nextPrayerTime()];
+}
+
+QTime AthanManager::getPrevTime()
+{
+    return mLocation->getPrayerTimes()[prevPrayerTime()];
 }
 
 PrayerTimes::TimeID AthanManager::nextPrayerTime()
@@ -105,14 +112,14 @@ void AthanManager::oneSecondTimeOut()
     QTime untilTime = untilNextPrayer();
     int diffNext = start.secsTo(untilTime);
 
-    QTime passedTime = untilNextPrayer();
+    QTime passedTime = passedPrevPrayer();
     int diffPrev = start.secsTo(passedTime);
 
     if(diffNext == 1)
         m_state = AthanTime;
-    else if(diffNext <= 30)
+    else if(diffNext <= 30 * 60)
         m_state = BeforAthan;
-    else if(diffPrev <= 20 * 60 *1000)
+    else if(diffPrev <= 20 * 60)
     {
         if(m_state != PlayingAthan)
             m_state = PrayerTime;
@@ -131,12 +138,20 @@ void AthanManager::onAthanFinished()
     emit athanFinished();
 }
 
+QTime AthanManager::passedPrevPrayer()
+{
+    QTime tPrevTime = getPrevTime();
+    QTime tPassedTime(0,0,0);
+    return tPassedTime.addSecs(tPrevTime.secsTo(QTime::currentTime()));
+}
+
 QTime AthanManager::untilNextPrayer()
 {
     QTime tNextTime = getNextTime();
     QTime tUntilTime(0,0,0);
     return tUntilTime.addSecs(QTime::currentTime().secsTo(tNextTime));
 }
+
 
 QString AthanManager::prayerTimeByName(PrayerTimes::TimeID xTimeID)
 {
@@ -154,8 +169,6 @@ QString AthanManager::prayerTimeByName(PrayerTimes::TimeID xTimeID)
 
 void AthanManager::updateState()
 {
-    if(m_currNextPrayer != nextPrayerTime())
-        emit updateNextPrayer(nextPrayerTime());
     switch(m_state)
     {
     case BeforAthan:
@@ -169,8 +182,9 @@ void AthanManager::updateState()
         emit itsPrayerTime(prevPrayerTime());
         break;
     case NextPrayer:
+        if(m_currNextPrayer != nextPrayerTime())
+            emit updateNextPrayer(nextPrayerTime());
         emit updateUntilNextTime(nextPrayerTime(), untilNextPrayer());
         break;
     }
-    qDebug()<<"AthanManager::updateState "<<m_state;
 }

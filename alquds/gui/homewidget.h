@@ -29,7 +29,7 @@ public slots:
     void updateServiceContent(QDomDocument xDoc);
     void itsPrayerTime(PrayerTimes::TimeID xTimeID);
     void itsAthanTime(PrayerTimes::TimeID xTimeID);
-    void itsBeforAthan(PrayerTimes::TimeID, QTime xTime);
+    void itsBeforAthan(PrayerTimes::TimeID id, QTime xTime);
 
 private:
     Ui::HomeWidget *ui;

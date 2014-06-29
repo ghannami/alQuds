@@ -3,6 +3,7 @@
 #include "athanmanager.h"
 #include "locationsettings.h"
 #include "wathakkerservice.h"
+#include "notificationcenter.h"
 
 HomeWidget::HomeWidget(QWidget *parent) :
     WinWidget(parent),
@@ -69,7 +70,7 @@ void HomeWidget::updateNextPrayerTime(PrayerTimes::TimeID xTimeID)
         label->setFont(QFont());
     foreach(QLabel *label, mPrayerTimesLabels)
         label->setFont(QFont());
-    ui->nextPrayerLabel->setText(tr("The next prayer is")+": "+ mAthanManager->prayerTimeByName(xTimeID)+ " " +mAthanManager->nextPrayerTime());
+    ui->nextPrayerLabel->setText(tr("the next prayer is")+": "+ mAthanManager->prayerTimeByName(xTimeID));
     QFont font;
     font.setBold(true);
     mPrayerLabels.value(xTimeID)->setFont(font);
@@ -98,18 +99,31 @@ void HomeWidget::updateServiceContent(QDomDocument xDoc)
 
 void HomeWidget::itsAthanTime(PrayerTimes::TimeID xTimeID)
 {
-    ui->nextPrayerLabel->setText(tr("Calling for")+" "+mAthanManager->prayerTimeByName(xTimeID));
+    ui->nextPrayerLabel->setText(tr("calling for")+" "+mAthanManager->prayerTimeByName(xTimeID));
     ui->untilTimeLabel->setPixmap(QPixmap(":icons/32/speaker.png"));
+    QFont font;
+    font.setBold(true);
+    mPrayerLabels.value(xTimeID)->setFont(font);
+    mPrayerTimesLabels.value(xTimeID)->setFont(font);
+
+    NotificationCenter::instance()->itsAthanTime(xTimeID);
 }
 
-void HomeWidget::itsBeforAthan(PrayerTimes::TimeID, QTime xTime)
+void HomeWidget::itsBeforAthan(PrayerTimes::TimeID id, QTime xTime)
 {
+    QFont font;
+    font.setBold(true);
     ui->untilTimeLabel->setText(xTime.toString());
+
+    NotificationCenter::instance()->itsBeforAthan(id, xTime);
 }
 
 void HomeWidget::itsPrayerTime(PrayerTimes::TimeID xTimeID)
 {
     ui->nextPrayerLabel->setText(tr("it´s")+ " "+mAthanManager->prayerTimeByName(xTimeID)+ tr(" prayer time"));
     ui->untilTimeLabel->setText(" ");
-
+    QFont font;
+    font.setBold(true);
+    mPrayerLabels.value(xTimeID)->setFont(font);
+    mPrayerTimesLabels.value(xTimeID)->setFont(font);
 }

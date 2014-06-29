@@ -32,10 +32,13 @@ public:
     QTime getMaghrib();
     QTime getIsha();
     QTime getNextTime();
+    QTime getPrevTime();
     PrayerTimes::TimeID nextPrayerTime();
     PrayerTimes::TimeID prevPrayerTime();
 
     QTime untilNextPrayer();
+    QTime passedPrevPrayer();
+
     static QString prayerTimeByName(PrayerTimes::TimeID xTimeID);
     void updateState();
 

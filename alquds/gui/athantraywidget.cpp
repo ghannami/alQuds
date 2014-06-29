@@ -48,29 +48,24 @@ AthanTrayWidget::AthanTrayWidget(QWidget *parent) :
     setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
-void AthanTrayWidget::setPrayer(PrayerTimes::TimeID prayer)
+void AthanTrayWidget::itsAthanTime(PrayerTimes::TimeID timeID)
 {
     QString sText;
-    sText += tr("time to");
+    sText += tr("calling for");
     sText +=" ";
-    sText += AthanManager::prayerTimeByName(prayer);
+    sText += AthanManager::prayerTimeByName(timeID);
     m_textLabel->setText(sText);
+    m_timeLabel->clear();
 }
 
-void AthanTrayWidget::setTime(QString sTime)
-{
-    m_timeLabel->setText(sTime);
-}
-
-void AthanTrayWidget::itsPrayerTime(PrayerTimes::TimeID prayer)
+void AthanTrayWidget::itsBeforAthan(PrayerTimes::TimeID id, QTime time)
 {
     QString sText;
-    sText += tr("it´s");
-    sText += " ";
-    sText += AthanManager::prayerTimeByName(prayer);
-    sText += " ";
-    sText += tr("time");
+    sText += tr("until");
+    sText +=" ";
+    sText += AthanManager::prayerTimeByName(id);
     m_textLabel->setText(sText);
+    m_timeLabel->setText(time.toString());
 }
 
 void AthanTrayWidget::onPlayClicked(bool v)

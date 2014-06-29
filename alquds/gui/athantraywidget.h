@@ -12,9 +12,8 @@ class AthanTrayWidget : public QWidget
     Q_OBJECT
 public:
     explicit AthanTrayWidget(QWidget *parent = 0);
-    void setPrayer(PrayerTimes::TimeID prayer);
-    void setTime(QString sTime);
-    void itsPrayerTime(PrayerTimes::TimeID prayer);
+    void itsAthanTime(PrayerTimes::TimeID timeID);
+    void itsBeforAthan(PrayerTimes::TimeID id, QTime time);
     virtual void paintEvent(QPaintEvent *);
 
 signals:

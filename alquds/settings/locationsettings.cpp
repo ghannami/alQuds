@@ -21,13 +21,12 @@ LocationSettings::LocationSettings()
     }
     if(mSettings->value("prayerConfig/configured").isNull())
     {
-        mSettings->setValue("prayerConfig/calculationMethod", PrayerTimes::Makkah);
+        mSettings->setValue("prayerConfig/calculationMethod", PrayerTimes::MWL);
         mSettings->setValue("prayerConfig/asrMethod", PrayerTimes::Shafii);
-        mSettings->setValue("prayerConfig/adjustingMethod", PrayerTimes::MidNight);
+        mSettings->setValue("prayerConfig/adjustingMethod", PrayerTimes::AngleBased);
         mSettings->setValue("prayerConfig/dhuhrMinutes", 0);
         mSettings->setValue("prayerConfig/configured", true);
     }
-
 }
 
 LocationSettings::~LocationSettings()
